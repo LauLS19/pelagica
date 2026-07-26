@@ -83,3 +83,25 @@ export async function installPelagicaPlugin(): Promise<void> {
 export async function restartJellyfinServer(): Promise<void> {
     await getSystemApi(getApi()).restartApplication();
 }
+
+export function getPluginLogoUrl(serverUrl: string, mode: 'light' | 'dark'): string {
+    return pluginUrl(serverUrl, `/Pelagica/Logo/${mode}`);
+}
+
+export async function uploadPluginLogo(
+    serverUrl: string,
+    mode: 'light' | 'dark',
+    file: File
+): Promise<void> {
+    const response = await fetch(getPluginLogoUrl(serverUrl, mode), {
+        method: 'POST',
+        headers: {
+            'Content-Type': file.type,
+            Authorization: getAuthorizationHeader(),
+        },
+        body: file,
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to upload ${mode} logo: ${response.statusText}`);
+    }
+}

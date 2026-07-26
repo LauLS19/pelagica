@@ -113,7 +113,7 @@
     "server_name_description": "Set a custom name for your server to be displayed in the UI. If left empty, a default name will be used.",
     "logo_light_url_label": "Light Mode Logo URL",
     "logo_dark_url_label": "Dark Mode Logo URL",
-    "logo_url_placeholder": "/api/branding/logo/light",
+    "logo_url_placeholder": "https://example.com/logo.png",
     "logo_light_url_description": "URL used for the sidebar logo in light mode.",
     "logo_dark_url_description": "URL used for the sidebar logo in dark mode.",
     "upload_light_logo_label": "Upload Light Mode Logo",
