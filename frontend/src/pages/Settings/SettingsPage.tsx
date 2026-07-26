@@ -12,6 +12,9 @@ import { ItemPageTab } from './tabs/ItemPageTab';
 import { BrandingTab } from './tabs/BrandingTab';
 import { ThemesTab } from './tabs/ThemesTab';
 import { LinksTab } from './tabs/LinksTab';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { getServerUrl } from '../../utils/localstorageCredentials';
 
 const SettingsPage = () => {
     const { t } = useTranslation('settings');
@@ -19,6 +22,12 @@ const SettingsPage = () => {
     const pluginStatus = usePelagicaPluginStatus();
     const [searchParams, setSearchParams] = useSearchParams();
     const activeTab = searchParams.get('tab') || 'general';
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        queryClient.invalidateQueries({ queryKey: ['config', getServerUrl()] });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (loading || pluginStatus.status === 'checking') {
         return (
