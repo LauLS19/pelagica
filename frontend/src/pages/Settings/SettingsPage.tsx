@@ -4,6 +4,8 @@ import Page from '../Page';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAutoSaveConfig } from './useAutoSaveConfig';
 import { SettingsSkeleton } from './components/SettingsSkeleton';
+import { PluginRequiredNotice } from './components/PluginRequiredNotice';
+import { usePelagicaPluginStatus } from '@/hooks/api/usePelagicaPluginStatus';
 import { GeneralTab } from './tabs/GeneralTab';
 import { HomeSectionsTab } from './tabs/HomeSectionsTab';
 import { ItemPageTab } from './tabs/ItemPageTab';
@@ -14,10 +16,11 @@ import { LinksTab } from './tabs/LinksTab';
 const SettingsPage = () => {
     const { t } = useTranslation('settings');
     const { config, loading, error, saveConfig } = useAutoSaveConfig();
+    const pluginStatus = usePelagicaPluginStatus();
     const [searchParams, setSearchParams] = useSearchParams();
     const activeTab = searchParams.get('tab') || 'general';
 
-    if (loading) {
+    if (loading || pluginStatus.status === 'checking') {
         return (
             <Page title={t('title')} requiresAuth>
                 <SettingsSkeleton />
@@ -29,6 +32,20 @@ const SettingsPage = () => {
         return (
             <Page title={t('title')} requiresAuth>
                 Error loading settings.
+            </Page>
+        );
+    }
+
+    if (pluginStatus.status !== 'active') {
+        return (
+            <Page title={t('title')} requireAdmin requiresAuth>
+                <PluginRequiredNotice
+                    status={pluginStatus.status}
+                    installing={pluginStatus.installing}
+                    restarting={pluginStatus.restarting}
+                    onInstall={pluginStatus.install}
+                    onRestart={pluginStatus.restart}
+                />
             </Page>
         );
     }
