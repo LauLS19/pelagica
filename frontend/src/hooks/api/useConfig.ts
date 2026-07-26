@@ -227,8 +227,6 @@ export interface ConfigLink {
 }
 
 export interface AppConfig {
-    /** Optional server address to automatically choose */
-    serverAddress?: string;
     /** Optional URL for Streamystats integration */
     streamystatsUrl?: string;
     /** Optional URL for Seer integration */

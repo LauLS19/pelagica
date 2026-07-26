@@ -4,7 +4,6 @@ type AppConfig struct {
 	JsonSchema                  string              `json:"$schema,omitempty"`
 	HomeScreenSections          []HomeScreenSection `json:"homeScreenSections,omitempty"`
 	ItemPage                    *ItemPageSettings   `json:"itemPage,omitempty"`
-	ServerAddress               string              `json:"serverAddress,omitempty"`
 	LogoLightURL                string              `json:"logoLightUrl,omitempty"`
 	LogoDarkURL                 string              `json:"logoDarkUrl,omitempty"`
 	ShowStreamystatsButton      *bool               `json:"showStreamystatsButton,omitempty"`
