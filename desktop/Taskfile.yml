@@ -17,6 +17,11 @@ tasks:
         cmds:
             - go build -o bin/pelagica .
 
+    generate-bindings:
+        desc: Regenerate the Wails TypeScript bindings (frontend/src/bindings) from the Go services
+        cmds:
+            - wails3 generate bindings -ts -d ../frontend/src/bindings ./...
+
     package:macos:
         desc: Build a macOS .app bundle for the desktop app (unsigned/ad-hoc)
         deps:
