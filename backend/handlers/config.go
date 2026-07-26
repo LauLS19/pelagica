@@ -31,8 +31,6 @@ func GetConfig(c fiber.Ctx) error {
 		}
 	}
 
-	cfg.ServerAddress = os.Getenv("SERVER_ADDRESS")
-
 	out, err := json.MarshalIndent(cfg, "", "    ")
 	if err != nil {
 		slog.Error("Failed to encode config", "error", err)
@@ -42,4 +40,10 @@ func GetConfig(c fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).
 		Type("json").
 		Send(out)
+}
+
+func GetServerAddress(c fiber.Ctx) error {
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"serverAddress": os.Getenv("SERVER_ADDRESS"),
+	})
 }

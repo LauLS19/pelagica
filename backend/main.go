@@ -54,6 +54,7 @@ func main() {
 	api := app.Group("/api")
 
 	api.Get("/config", handlers.GetConfig)
+	api.Get("/server-address", handlers.GetServerAddress)
 	api.Get("/branding/logo/:mode", handlers.GetBrandingLogo)
 	api.Post("/branding/logo/:mode", protected, handlers.UploadBrandingLogo)
 	api.Delete("/branding/logo/:mode", protected, handlers.ResetBrandingLogo)
