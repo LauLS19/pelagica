@@ -1,5 +1,8 @@
 export function isDesktopApp(): boolean {
-    return typeof window !== 'undefined' && typeof (window as unknown as { _wails?: unknown })._wails !== 'undefined';
+    return (
+        typeof window !== 'undefined' &&
+        typeof (window as unknown as { _wails?: unknown })._wails !== 'undefined'
+    );
 }
 
 export function isMacOS(): boolean {

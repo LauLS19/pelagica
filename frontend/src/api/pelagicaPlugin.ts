@@ -53,7 +53,9 @@ export async function savePluginConfig(serverUrl: string, config: AppConfig): Pr
 
 export async function getInstalledPluginInfo(): Promise<PluginInfo | undefined> {
     const { data: plugins } = await getPluginsApi(getApi()).getPlugins();
-    return plugins.find((p) => !!p.Id && normalizeGuid(p.Id) === normalizeGuid(PELAGICA_PLUGIN_GUID));
+    return plugins.find(
+        (p) => !!p.Id && normalizeGuid(p.Id) === normalizeGuid(PELAGICA_PLUGIN_GUID)
+    );
 }
 
 export async function installPelagicaPlugin(): Promise<void> {
