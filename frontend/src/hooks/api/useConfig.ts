@@ -2,7 +2,7 @@ import type { BaseItemKind, ItemSortBy } from '@jellyfin/sdk/lib/generated-clien
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { RecommendationTypeFilter } from './useRecommendedItems';
 import { getServerUrl } from '@/utils/localstorageCredentials';
-import { getAuthorizationHeader } from '@/api/getApi';
+import { fetchPluginConfig, savePluginConfig } from '@/api/pelagicaPlugin';
 
 interface BaseHomeScreenSection {
     /** Whether the section is enabled. Mostly intended for testing purposes */
@@ -368,14 +368,19 @@ const DEFAULT_CONFIG: AppConfig = {
 };
 
 const fetchConfig = async (): Promise<AppConfig> => {
-    const response = await fetch(
-        '/api/config?jellyfin_url=' + encodeURIComponent(getServerUrl() || '')
-    );
-    if (!response.ok) {
-        console.warn('Config file not found, using default configuration');
+    const serverUrl = getServerUrl();
+    if (!serverUrl) {
         return DEFAULT_CONFIG;
     }
-    const data: AppConfig = await response.json();
+
+    let data: AppConfig;
+    try {
+        data = await fetchPluginConfig(serverUrl);
+    } catch {
+        console.warn('Pelagica plugin config not available, using default configuration');
+        return DEFAULT_CONFIG;
+    }
+
     // Merge with defaults to ensure all required fields exist
     return {
         ...DEFAULT_CONFIG,
@@ -407,20 +412,11 @@ export const useUpdateConfig = () => {
 
     const mutation = useMutation({
         mutationFn: async (newConfig: AppConfig): Promise<void> => {
-            const response = await fetch(
-                '/api/config?jellyfin_url=' + encodeURIComponent(getServerUrl() || ''),
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: getAuthorizationHeader(),
-                    },
-                    body: JSON.stringify(newConfig),
-                }
-            );
-            if (!response.ok) {
-                throw new Error(`Failed to update config: ${response.statusText}`);
+            const serverUrl = getServerUrl();
+            if (!serverUrl) {
+                throw new Error('Server URL not set');
             }
+            await savePluginConfig(serverUrl, newConfig);
         },
         onSuccess: (_data, newConfig) => {
             queryClient.setQueryData(['config', getServerUrl()], {
