@@ -21,6 +21,7 @@ import {
     EmptyMedia,
     EmptyTitle,
 } from '../../../components/ui/empty';
+import { ExternalAnchor } from '@/components/ExternalAnchor';
 
 interface PluginRequiredNoticeProps {
     status: Extract<PelagicaPluginStatus, 'not-installed' | 'needs-restart'>;
@@ -92,10 +93,10 @@ export const PluginRequiredNotice = ({
             </EmptyHeader>
             <EmptyContent className="flex-row justify-center gap-2">
                 <Button variant="outline" asChild>
-                    <a href={PELAGICA_PLUGIN_REPO_URL} target="_blank" rel="noopener noreferrer">
+                    <ExternalAnchor href={PELAGICA_PLUGIN_REPO_URL}>
                         <ExternalLink />
                         {t('plugin_install_instructions_button')}
-                    </a>
+                    </ExternalAnchor>
                 </Button>
                 <Button onClick={onInstall} disabled={installing}>
                     {installing ? <Loader2 className="animate-spin" /> : <Download />}

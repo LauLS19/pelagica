@@ -11,6 +11,22 @@ export function isMacOS(): boolean {
 
 const isDesktopBuild = import.meta.env.VITE_IS_DESKTOP_BUILD === 'true';
 
+/**
+ * Intercepts a click on an external link and opens it in the user's default browser if the app is running in desktop mode.
+ * @param url The URL to open in the user's default browser.
+ * @returns true if the click was intercepted and the URL was opened in the user's default browser, false otherwise.
+ */
+export function interceptExternalLinkClick(url: string): boolean {
+    if (!isDesktopBuild || !isDesktopApp()) return false;
+    void import('@wailsio/runtime').then(({ Browser }) => Browser.OpenURL(url));
+    return true;
+}
+
+export function openExternalUrl(url: string): void {
+    if (interceptExternalLinkClick(url)) return;
+    window.open(url, '_blank', 'noopener,noreferrer');
+}
+
 export async function hideTrafficLights(): Promise<void> {
     if (!isDesktopBuild || !isDesktopApp()) return;
     const { WindowService } = await import('@/bindings/pelagica-desktop');

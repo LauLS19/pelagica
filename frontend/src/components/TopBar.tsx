@@ -112,7 +112,9 @@ import {
     isWindowMaximised,
     closeWindow,
     onWindowMaximiseChange,
+    openExternalUrl,
 } from '../utils/desktopApp';
+import { ExternalAnchor } from './ExternalAnchor';
 
 const noDragStyle = { '--wails-draggable': 'no-drag' } as CSSProperties;
 
@@ -581,15 +583,13 @@ const UserMenu = () => {
                             <DropdownMenuPortal>
                                 <DropdownMenuSubContent>
                                     <DropdownMenuItem asChild>
-                                        <a
+                                        <ExternalAnchor
                                             href={config.seerrUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
                                             className="flex items-center gap-2"
                                         >
                                             <ExternalLink />
                                             {t('seerr_open')}
-                                        </a>
+                                        </ExternalAnchor>
                                     </DropdownMenuItem>
                                     {isSeerrLoggedIn === false ? (
                                         <SeerrLoginDialog
@@ -873,11 +873,8 @@ const TopBar = ({ overlay = false }: { overlay?: boolean }) => {
                                 variant="ghost"
                                 size="sm"
                                 onClick={() =>
-                                    window.open(
-                                        config.streamystatsUrl,
-                                        '_blank',
-                                        'noopener,noreferrer'
-                                    )
+                                    config.streamystatsUrl &&
+                                    openExternalUrl(config.streamystatsUrl)
                                 }
                                 className="cursor-pointer"
                             >
@@ -891,9 +888,7 @@ const TopBar = ({ overlay = false }: { overlay?: boolean }) => {
                                 key={i}
                                 variant="ghost"
                                 size="sm"
-                                onClick={() =>
-                                    window.open(link.url, '_blank', 'noopener,noreferrer')
-                                }
+                                onClick={() => openExternalUrl(link.url)}
                                 className="cursor-pointer"
                             >
                                 <DynamicIcon
@@ -946,9 +941,7 @@ const TopBar = ({ overlay = false }: { overlay?: boolean }) => {
                                 key={i}
                                 variant="ghost"
                                 size="sm"
-                                onClick={() =>
-                                    window.open(link.url, '_blank', 'noopener,noreferrer')
-                                }
+                                onClick={() => openExternalUrl(link.url)}
                             >
                                 <DynamicIcon
                                     name={(link.icon || 'link-2') as IconName}
