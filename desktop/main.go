@@ -16,6 +16,7 @@ var assets embed.FS
 func newAssetHandler() http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /api/studios/{name}/logo", handleStudioLogo)
+	registerSeerRoutes(mux)
 	mux.Handle("/", application.AssetFileServerFS(assets))
 	return mux
 }
