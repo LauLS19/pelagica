@@ -147,6 +147,10 @@ tasks:
         deps:
             - install
             - :build-frontend-desktop
+        sources:
+            - ../frontend/dist/**/*
+        generates:
+            - frontend/dist/**/*
         cmds:
             - rm -rf frontend/dist
             - mkdir -p frontend/dist

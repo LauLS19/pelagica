@@ -29,6 +29,16 @@ tasks:
         desc: Build the frontend for the desktop app
         deps:
             - install-frontend
+        sources:
+            - src/**/*
+            - public/**/*
+            - index.html
+            - vite.config.ts
+            - tsconfig*.json
+            - package.json
+            - .env.desktop
+        generates:
+            - dist/**/*
         cmds:
             - pnpm run build:desktop
 
