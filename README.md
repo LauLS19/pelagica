@@ -11,7 +11,7 @@
   <a href="https://stats.pelagica.app/"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fstats.pelagica.app%2Fstats&label=active%20instances&query=%24.active_instances&color=brightgreen" alt="Active Instances"></a>
 </p>
 
-<p align="center">Pelagica is an alternative web frontend for <a href="https://jellyfin.org">Jellyfin</a> built using React. It aims to provide a fast, modern, and customizable user experience for browsing and watching your media library.</p>
+<p align="center">Pelagica is a web and desktop client for <a href="https://jellyfin.org">Jellyfin</a> built using React. It aims to provide a fast, modern, and customizable user experience for browsing and watching your media library. It's available both as a self-hosted web app and as a native desktop app for macOS, Windows, and Linux.</p>
 
 <!-- p align="center">A fast, modern web frontend for Jellyfin</p> -->
 
@@ -20,8 +20,9 @@
 ## Table of Contents
 
 - [Features](#features)
-- [Demo](#demo)
-- [Installation](#installation)
+- [Web Demo](#web-demo)
+- [Web Installation](#web-installation)
+- [Desktop App](#desktop-app)
 - [Discord](#discord)
 - [Localization](#localization)
 - [Development Setup](#development-setup)
@@ -39,6 +40,7 @@
 - **Video Player:** Integrated video player for movies and TV shows.
 - **Music Player:** A music player that allows you to listen to your music albums or playlists while browsing your library.
 - **Responsive Design:** Works seamlessly on both desktop and mobile devices.
+- **Desktop App:** Native apps for macOS, Windows, and Linux, built with [Wails](https://v3.wails.io).
 - **Theming:** Light and dark mode support as well as custom themes
 - **Localization:** Supports multiple languages through [community contributions](#localization).
 
@@ -75,9 +77,9 @@ If you want to suggest new features or report bugs, please use the [GitHub Issue
 
 > Screenshots may include media artwork used for demonstration purposes only.
 
-## Demo
+## Web Demo
 
-You can find a live demo of Pelagica at:
+You can find a live demo of Pelagica web at:
 
 https://demo.pelagica.app/
 
@@ -87,9 +89,19 @@ For production use, you should self-host Pelagica using Docker or another method
 
 Thank you to [Streamyfin](https://streamyfin.app/) for providing a demo Jellyfin server for testing!
 
-## Installation
+## Web Installation
 
-Pelagica is distributed as a Docker image. See the [Installation](https://pelagica.app/docs/installation) and [Configuration](https://pelagica.app/docs/configuration) docs for setup instructions, and [Themes](https://pelagica.app/docs/themes) for applying custom themes.
+Pelagica web is distributed as a Docker image. See the [Installation](https://pelagica.app/docs/installation) and [Configuration](https://pelagica.app/docs/configuration) docs for setup instructions, and [Themes](https://pelagica.app/docs/themes) for applying custom themes.
+
+## Desktop App
+
+Pelagica is also available as a native desktop app for macOS, Windows, and Linux, built with [Wails v3](https://v3.wails.io). Download the latest build for your platform from the [Releases](https://github.com/PelagicaApp/pelagica/releases/latest) page.
+
+- **macOS:** Not notarized, so Gatekeeper will flag it — right-click the app and choose "Open" to bypass.
+- **Windows:** Not signed with an Authenticode certificate, so SmartScreen will flag it.
+- **Linux:** Available as a `.deb` package or an `.AppImage`.
+
+See the [desktop README](./desktop/README.md) for build and packaging instructions if you'd rather build it yourself.
 
 ## Discord
 
