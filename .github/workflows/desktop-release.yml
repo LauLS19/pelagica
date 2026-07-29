@@ -99,6 +99,10 @@ jobs:
 
             - name: Install NSIS
               run: choco install nsis -y
+              
+            - name: Add NSIS to PATH
+              shell: bash
+              run: echo "C:\Program Files (x86)\NSIS" >> "$GITHUB_PATH"
 
             - name: Build Windows installer
               run: task desktop:installer:windows
