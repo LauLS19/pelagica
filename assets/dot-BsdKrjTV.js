@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-QTnfLwEv.js";import{t}from"./createLucideIcon-C8bdPDXm.js";var n=e({__iconNode:()=>r,default:()=>i}),r=[[`circle`,{cx:`12.1`,cy:`12.1`,r:`1`,key:`18d7e5`}]],i=t(`dot`,r);export{n,i as t};

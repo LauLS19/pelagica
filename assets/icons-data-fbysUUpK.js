@@ -1,1 +1,0 @@
-import{t as e}from"./SettingsPage-UTwVofGw.js";export{e as iconsData};
