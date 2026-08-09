@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-hePW80VL.js";import{t}from"./createLucideIcon-DyPl-lIq.js";var n=e({__iconNode:()=>r,default:()=>i}),r=[[`circle`,{cx:`12.1`,cy:`12.1`,r:`1`,key:`18d7e5`}]],i=t(`dot`,r);export{n,i as t};

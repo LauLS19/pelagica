@@ -1,0 +1,1 @@
+import{At as e,V as t}from"./useMusicPlayback-DyNU6Q5N.js";var n=e();function r({className:e,...r}){return(0,n.jsx)(`div`,{"data-slot":`skeleton`,className:t(`bg-accent animate-pulse rounded-md`,e),...r})}export{r as t};
