@@ -44,8 +44,6 @@
 - **Theming:** Light and dark mode support as well as custom themes
 - **Localization:** Supports multiple languages through [community contributions](#localization).
 
-You can find a roadmap of planned features and improvements in the [GitHub Projects](https://github.com/users/KartoffelChipss/projects/7).
-
 If you want to suggest new features or report bugs, please use the [GitHub Issues](https://github.com/KartoffelChipss/pelagica/issues) section.
 
 ### Integrated Services
