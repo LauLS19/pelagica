@@ -8,12 +8,6 @@ export function useSeasons(seriesId: string | null | undefined) {
     return useQuery<BaseItemDto[]>({
         queryKey: ['seasons', seriesId],
         queryFn: async (): Promise<BaseItemDto[]> => {
-            // return Array.from({ length: 50 }, (_, i) => ({
-            //     Id: `season-${i + 1}`,
-            //     Name: `Season ${i + 1}`,
-            //     IndexNumber: i + 1,
-            //     Type: 'Season',
-            // }));
             const api = getApi();
             const itemsApi = getItemsApi(api);
             const response = await itemsApi.getItems({

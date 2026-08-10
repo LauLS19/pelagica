@@ -186,6 +186,9 @@ export type HomeScreenSection =
 export const EPISODE_DISPLAYS = ['grid', 'row'] as const;
 export type EpisodeDisplay = (typeof EPISODE_DISPLAYS)[number];
 
+export const SERIES_VIEWS = ['episodes', 'seasons'] as const;
+export type SeriesView = (typeof SERIES_VIEWS)[number];
+
 export const DETAIL_BADGES = [
     'ReleaseYear',
     'ReleaseYearAndMonth',
@@ -205,6 +208,8 @@ export type DetailBadge = (typeof DETAIL_BADGES)[number];
 export interface ItemPageSettings {
     /** How to display episodes on series pages */
     episodeDisplay?: EpisodeDisplay;
+    /** Which view to show by default on series pages with more than one season */
+    seriesView?: SeriesView;
     /** Which badges to show on item detail pages */
     detailBadges?: DetailBadge[];
     /** The item types to show the favorite button for. Empty array means no favorite button */
@@ -265,6 +270,7 @@ export interface AppConfig {
 
 const DEFAULT_ITEM_PAGE_SETTINGS: ItemPageSettings = {
     episodeDisplay: 'row',
+    seriesView: 'episodes',
     detailBadges: ['ReleaseYear', 'CommunityRating', 'AgeRating', 'EpisodeNumber'],
     favoriteButton: ['Movie', 'Series'],
     showWatchlistButton: true,

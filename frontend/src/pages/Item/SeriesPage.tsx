@@ -23,6 +23,7 @@ import SeerRecommendationsRow from './SeerrRecommendationsRow';
 import { type AppConfig } from '@/hooks/api/useConfig';
 import DetailBadges from './DetailBadges';
 import EpisodesDisplay from './EpisodesDisplay';
+import SeasonsDisplay from './SeasonsDisplay';
 import FavoriteButton from '../../components/FavoriteButton';
 import WatchListButton from '../../components/WatchlistButton';
 import PlayStateButton from '../../components/PlayStateButton';
@@ -50,6 +51,9 @@ const SeriesPage = ({ item, config }: SeriesPageProps) => {
     const [failedLogo, setFailedLogo] = useState(false);
 
     const { data: upcomingEpisodes } = useUpcomingEpisodes(item.Id || '');
+
+    const hasMultipleSeasons = seasons ? seasons.length > 1 : (item.ChildCount ?? 0) !== 1;
+    const showSeasonsView = config.itemPage?.seriesView === 'seasons' && hasMultipleSeasons;
 
     const effectiveSelectedSeason =
         selectedSeason ||
@@ -201,35 +205,47 @@ const SeriesPage = ({ item, config }: SeriesPageProps) => {
                 )}
 
                 <div className="flex flex-col gap-4">
-                    <EpisodesDisplay
-                        title={
-                            <div className="flex flex-wrap items-center gap-4">
-                                <h3 className="text-3xl font-bold">{t('episodes')}</h3>
-                                {seasons && seasons.length > 1 && (
-                                    <Select
-                                        value={effectiveSelectedSeason || ''}
-                                        onValueChange={(value) => setSelectedSeason(value || null)}
-                                        disabled={isLoading || !seasons || seasons.length === 0}
-                                    >
-                                        <SelectTrigger>
-                                            <SelectValue placeholder={t('select_season')} />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {seasons?.map((season) => (
-                                                <SelectItem key={season.Id} value={season.Id || ''}>
-                                                    {season.Name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                )}
-                            </div>
-                        }
-                        seasonsLoading={isLoading}
-                        seriesId={item.Id || null}
-                        seasonId={effectiveSelectedSeason}
-                        episodeDisplay={config.itemPage?.episodeDisplay || 'row'}
-                    />
+                    {showSeasonsView ? (
+                        <SeasonsDisplay
+                            seriesId={item.Id || null}
+                            title={<h3 className="text-3xl font-bold">{t('seasons')}</h3>}
+                        />
+                    ) : (
+                        <EpisodesDisplay
+                            title={
+                                <div className="flex flex-wrap items-center gap-4">
+                                    <h3 className="text-3xl font-bold">{t('episodes')}</h3>
+                                    {seasons && seasons.length > 1 && (
+                                        <Select
+                                            value={effectiveSelectedSeason || ''}
+                                            onValueChange={(value) =>
+                                                setSelectedSeason(value || null)
+                                            }
+                                            disabled={isLoading || !seasons || seasons.length === 0}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder={t('select_season')} />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {seasons?.map((season) => (
+                                                    <SelectItem
+                                                        key={season.Id}
+                                                        value={season.Id || ''}
+                                                    >
+                                                        {season.Name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    )}
+                                </div>
+                            }
+                            seasonsLoading={isLoading}
+                            seriesId={item.Id || null}
+                            seasonId={effectiveSelectedSeason}
+                            episodeDisplay={config.itemPage?.episodeDisplay || 'row'}
+                        />
+                    )}
                     {error && (
                         <p className="text-destructive">
                             Error loading seasons: {(error as Error).message}
