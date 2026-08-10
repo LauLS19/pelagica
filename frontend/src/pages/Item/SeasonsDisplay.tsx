@@ -60,7 +60,7 @@ const SeasonsDisplay = ({
         return (
             <div className="flex flex-col gap-4">
                 {title}
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
                     {Array.from({ length: 6 }, (_, i) => (
                         <div key={i} className="animate-pulse">
                             <Skeleton className="w-full aspect-2/3 rounded-md" />
@@ -86,7 +86,7 @@ const SeasonsDisplay = ({
     return (
         <div className="flex flex-col gap-4">
             {title}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
                 {seasons?.map((season) => (
                     <SeasonCard key={season.Id} season={season} />
                 ))}
