@@ -158,6 +158,37 @@ export interface SeerrItemDetails {
     seasons?: SeerrSeason[];
 }
 
+export interface SeerrPersonCastCredit {
+    id: number;
+    mediaType: SeerrMediaType;
+    title?: string;
+    name?: string;
+    character?: string;
+    posterPath?: string;
+    releaseDate?: string;
+    firstAirDate?: string;
+    mediaInfo?: SeerrMediaInfo;
+}
+
+export interface SeerrPersonCrewCredit {
+    id: number;
+    mediaType: SeerrMediaType;
+    title?: string;
+    name?: string;
+    job?: string;
+    department?: string;
+    posterPath?: string;
+    releaseDate?: string;
+    firstAirDate?: string;
+    mediaInfo?: SeerrMediaInfo;
+}
+
+export interface SeerrPersonCombinedCreditsResponse {
+    id: number;
+    cast: SeerrPersonCastCredit[];
+    crew: SeerrPersonCrewCredit[];
+}
+
 export interface SeerrRequestPayload {
     mediaType: SeerrMediaType;
     mediaId: number;

@@ -26,6 +26,8 @@ import UpcomingEpisodeComponent from './UpcomingEpisodeComponent';
 import { getLogoUrl } from '@/utils/jellyfinUrls';
 import ItemMetadataBadges from './ItemMetadataBadges';
 import Overview from './Overview';
+import { Link } from 'react-router';
+import JellyfinItemKindIcon from '../../components/JellyfinItemKindIcon';
 
 interface SeasonPageProps {
     item: BaseItemDto;
@@ -89,6 +91,20 @@ const SeasonPage = ({ item, config }: SeasonPageProps) => {
 
                     {/* Details */}
                     <div className="flex-1 flex flex-col gap-5 w-full text-left">
+                        {/* Breadcrumb */}
+                        <div className="flex flex-wrap items-center text-sm text-muted-foreground">
+                            <Link
+                                to={`/item/${item.SeriesId}`}
+                                className="hover:underline flex items-center gap-2"
+                            >
+                                <JellyfinItemKindIcon kind="Series" className="h-4 w-4" />
+                                <span className="line-clamp-1 text-ellipsis break-all">
+                                    {item.SeriesName || t('no_title')}
+                                </span>
+                            </Link>
+                        </div>
+
+                        {/* Title */}
                         {!failedLogo && item.Id ? (
                             <img
                                 src={getLogoUrl(item.Id, { maxHeight: 150 }, item.ImageTags?.Logo)}
@@ -104,6 +120,7 @@ const SeasonPage = ({ item, config }: SeasonPageProps) => {
 
                         <DetailBadges item={item} appConfig={config} />
 
+                        {/* Actions */}
                         <div className="flex flex-wrap gap-2.5 items-center mt-2">
                             <FavoriteButton
                                 item={item}

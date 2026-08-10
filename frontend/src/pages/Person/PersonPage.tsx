@@ -9,9 +9,11 @@ import { getUserId } from '@/utils/localstorageCredentials';
 import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import FilmographyRow from './FilmographyRow';
+import SeerrPersonCreditsRow from './SeerrPersonCreditsRow';
 import type { TFunction } from 'i18next';
 import { Button } from '@/components/ui/button';
 import { ImageOff } from 'lucide-react';
+import { useConfig } from '@/hooks/api/useConfig';
 
 const PersonPageSkeleton = memo(() => {
     return (
@@ -66,6 +68,7 @@ interface PersonPageProps {
 
 const PersonPageContent = ({ item, t }: PersonPageProps) => {
     const { setBackground } = usePageBackground();
+    const { config } = useConfig();
     const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
     const [primaryImageError, setPrimaryImageError] = useState(false);
 
@@ -170,6 +173,12 @@ const PersonPageContent = ({ item, t }: PersonPageProps) => {
                     personId={item.Id || ''}
                     title={<h3 className="text-3xl font-bold">{t('filmography')}</h3>}
                 />
+                {config.seerrUrl && item.ProviderIds?.Tmdb && (
+                    <SeerrPersonCreditsRow
+                        tmdbPersonId={item.ProviderIds.Tmdb}
+                        title={<h3 className="text-3xl font-bold">{t('known_for')}</h3>}
+                    />
+                )}
             </div>
         </div>
     );

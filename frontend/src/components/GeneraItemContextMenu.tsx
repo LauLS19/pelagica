@@ -18,6 +18,7 @@ import {
     PencilLine,
     Play,
     RotateCcw,
+    ScanSearch,
     Trash2,
 } from 'lucide-react';
 import { useFavorite } from '../hooks/api/useFavorite';
@@ -27,6 +28,7 @@ import { useLike } from '../hooks/api/useLike';
 import { WATCHLISTABLE_ITEM_TYPES } from '../utils/watchlistableItems';
 import { DOWNLOADABLE_ITEM_TYPES } from '../utils/downloadableItems';
 import { getDownloadurl } from '../utils/jellyfinUrls';
+import { isIdentifiable } from '../utils/identifiableTypes';
 
 interface GeneralItemContextMenuProps {
     item: BaseItemDto;
@@ -115,6 +117,12 @@ const GeneralItemContextMenu = ({ item, playLink, children }: GeneralItemContext
                             <PencilLine />
                             {t('editMetadata')}
                         </ContextMenuItem>
+                        {item.Type && isIdentifiable(item.Type) && (
+                            <ContextMenuItem onClick={() => openDialog(item, 'identify')}>
+                                <ScanSearch />
+                                {t('identify')}
+                            </ContextMenuItem>
+                        )}
                         <ContextMenuItem onClick={() => openDialog(item, 'delete')}>
                             <Trash2 />
                             {t('deleteItem')}

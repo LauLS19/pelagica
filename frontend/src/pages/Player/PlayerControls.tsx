@@ -461,7 +461,7 @@ const PlayerControls = ({
                     <h1>{title}</h1>
                 ) : (
                     <img
-                        className="h-6 object-contain"
+                        className="h-9 object-contain"
                         src={getLogoUrl(backButtonImageId!, { maxHeight: 40 }, backButtonImageTag)}
                         onError={() => setBackButtonLogoFailed(true)}
                     />

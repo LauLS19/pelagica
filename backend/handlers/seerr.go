@@ -194,6 +194,11 @@ func GetSeerTvDetails(c fiber.Ctx) error {
 	return proxySeerRequest(c, "/api/v1/tv/"+tvId)
 }
 
+func GetSeerPersonCombinedCredits(c fiber.Ctx) error {
+	personId := c.Params("personId")
+	return proxySeerRequest(c, "/api/v1/person/"+personId+"/combined_credits")
+}
+
 func GetSeerDiscoverTrending(c fiber.Ctx) error {
 	return proxySeerRequest(c, "/api/v1/discover/trending")
 }

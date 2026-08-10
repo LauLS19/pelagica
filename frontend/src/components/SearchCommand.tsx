@@ -244,7 +244,7 @@ export const SearchCommand = () => {
                             return (
                                 <CommandItem
                                     key={item.Id}
-                                    value={item.Name!}
+                                    value={item.Id}
                                     onSelect={() => {
                                         if (item.Type === 'Audio') {
                                             loadTrack(
