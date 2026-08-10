@@ -1,0 +1,1 @@
+var e=[`Movie`,`Series`],t=t=>e.includes(t);export{t};
