@@ -10,7 +10,7 @@ import {
     useSimilarItems,
 } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
-import { ImageOff } from 'lucide-react';
+import { ImageOff, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
 import { useScrollIntoViewOnFocus } from '@/lib/use-scroll-into-view-on-focus';
@@ -88,6 +88,28 @@ const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?:
                     {episode.Overview}
                 </p>
             )}
+            <div className="flex flex-wrap items-center gap-2 mt-2">
+                {episode.IndexNumber !== undefined && (
+                    <Badge variant={'outline'}>
+                        S{episode.ParentIndexNumber} E{episode.IndexNumber}
+                    </Badge>
+                )}
+                {episode.CommunityRating !== undefined && (
+                    <Badge variant={'outline'}>
+                        <Star size={14} />
+                        {episode.CommunityRating?.toFixed(1)}
+                    </Badge>
+                )}
+                {episode.PremiereDate && (
+                    <Badge variant={'outline'}>
+                        {new Date(episode.PremiereDate).toLocaleDateString(undefined, {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                        })}
+                    </Badge>
+                )}
+            </div>
         </button>
     );
 };
