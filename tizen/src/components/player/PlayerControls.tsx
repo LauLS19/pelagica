@@ -15,7 +15,7 @@ import {
     Check,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { setFocus, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { pause, resume, setFocus, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import type {
     BaseItemDto,
     MediaSegmentDto,
@@ -108,9 +108,6 @@ const PlayerControls = ({
         };
     }, [resetHideTimeout]);
 
-    // Any remote press keeps the (possibly hidden) controls visible. The button that's
-    // spatially focused keeps that focus regardless of visibility - toggling opacity below
-    // doesn't unmount anything - so this only needs to handle the reveal, not refocusing.
     useEffect(() => {
         function handleKeyDown(event: KeyboardEvent) {
             if (
@@ -120,13 +117,14 @@ const PlayerControls = ({
                 event.key === 'ArrowRight' ||
                 event.key === 'Enter'
             ) {
+                if (!showControls) setFocus(PLAY_PAUSE_FOCUS_KEY);
                 resetHideTimeout();
             }
         }
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [resetHideTimeout]);
+    }, [resetHideTimeout, showControls]);
 
     // Close an open track menu on the TV remote's back key instead of exiting the player.
     // Runs before the page-level back-key handler because child effects commit first on mount.
