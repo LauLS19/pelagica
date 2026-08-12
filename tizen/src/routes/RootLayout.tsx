@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { clearCredentials } from '@pelagica/core';
 import { cn } from '@/lib/utils';
 import { useTvBackKey } from '@/lib/use-tv-back-key';
+import { FocusableButton } from '@/components/FocusableButton';
 
 const links = [
     { to: '/', label: 'Home' },
@@ -35,12 +37,29 @@ function NavLink({ to, label, autoFocus }: { to: string; label: string; autoFocu
     );
 }
 
+function LogoutButton() {
+    const navigate = useNavigate();
+
+    return (
+        <FocusableButton
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+                clearCredentials();
+                navigate('/login', { replace: true });
+            }}
+        >
+            Log out
+        </FocusableButton>
+    );
+}
+
 export function RootLayout() {
     useTvBackKey();
 
     return (
         <div className="flex min-h-svh flex-col">
-            <header className="flex items-center gap-4 border-b px-6 py-4">
+            <header className="flex items-center justify-between gap-4 border-b px-6 py-4">
                 <nav className="flex gap-4">
                     {links.map((link, i) => (
                         <NavLink
@@ -51,6 +70,7 @@ export function RootLayout() {
                         />
                     ))}
                 </nav>
+                <LogoutButton />
             </header>
             <main className="flex-1 p-6">
                 <Outlet />
