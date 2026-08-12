@@ -10,6 +10,8 @@ import Login from '@/routes/Login';
 import Settings from './routes/Settings';
 import Library from './routes/Library';
 import LibraryDetail from './routes/LibraryDetail';
+import MovieDetail from './routes/MovieDetail';
+import SeriesDetail from './routes/SeriesDetail';
 
 function App() {
     return (
@@ -30,6 +32,8 @@ function App() {
                         <Route path="settings" element={<Settings />} />
                         <Route path="library" element={<Library />} />
                         <Route path="library/:libraryId" element={<LibraryDetail />} />
+                        <Route path="movie/:itemId" element={<MovieDetail />} />
+                        <Route path="series/:itemId" element={<SeriesDetail />} />
                     </Route>
                 </Routes>
             </HashRouter>

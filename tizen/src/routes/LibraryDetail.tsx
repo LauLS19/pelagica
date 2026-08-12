@@ -1,55 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-    COLLECTION_ITEM_TYPES,
-    getPrimaryImageUrl,
-    useLibraryItems,
-    useUserViews,
-} from '@pelagica/core';
-import type { BaseItemDto, CollectionType } from '@jellyfin/sdk/lib/generated-client/models';
-import { ImageOff } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
-import FocusableCard from '../components/FocusableCard';
+import { COLLECTION_ITEM_TYPES, useLibraryItems, useUserViews } from '@pelagica/core';
+import type { CollectionType } from '@jellyfin/sdk/lib/generated-client/models';
+import ItemCard from '../components/ItemCard';
 import ItemPagination from '../components/ItemPagination';
 
 const MIN_CARD_WIDTH = 160;
 const GRID_GAP = 16;
 const ROWS_PER_PAGE = 5;
-
-const ItemCard = ({ item, autoFocus }: { item: BaseItemDto; autoFocus?: boolean }) => {
-    const [imageError, setImageError] = useState(false);
-
-    return (
-        <FocusableCard to="/about" autoFocus={autoFocus} className="w-40">
-            {(focused) => (
-                <>
-                    <div
-                        className={cn(
-                            'aspect-2/3 w-full overflow-hidden rounded-md border border-border bg-muted',
-                            focused && FOCUS_RING_LARGE
-                        )}
-                    >
-                        {imageError || !item.Id ? (
-                            <div className="flex h-full w-full items-center justify-center">
-                                <ImageOff className="h-8 w-8 text-muted-foreground" />
-                            </div>
-                        ) : (
-                            <img
-                                src={getPrimaryImageUrl(item.Id, { width: 320 })}
-                                alt={item.Name || 'Item'}
-                                className="h-full w-full object-cover"
-                                onError={() => setImageError(true)}
-                            />
-                        )}
-                    </div>
-                    <p className="mt-2 truncate text-sm font-medium">{item.Name}</p>
-                    <p className="text-xs text-muted-foreground">{item.ProductionYear}</p>
-                </>
-            )}
-        </FocusableCard>
-    );
-};
 
 const LibraryDetail = () => {
     const { libraryId } = useParams<{ libraryId: string }>();
