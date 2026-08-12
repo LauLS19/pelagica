@@ -6,6 +6,7 @@ import { RequireAuth } from '@/routes/RequireAuth';
 import Home from '@/routes/Home';
 import About from '@/routes/About';
 import Login from '@/routes/Login';
+import Settings from './routes/Settings';
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                     >
                         <Route index element={<Home />} />
                         <Route path="about" element={<About />} />
+                        <Route path="settings" element={<Settings />} />
                     </Route>
                 </Routes>
             </HashRouter>

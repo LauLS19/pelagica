@@ -1,16 +1,13 @@
-import { clearCredentials, useConfig } from '@pelagica/core';
+import { useConfig } from '@pelagica/core';
 import { useEffect, useState } from 'react';
 import { cn } from '../lib/utils';
-import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { House, Library, Search } from 'lucide-react';
-import FocusableButton from './FocusableButton';
+import { House, Library, Search, Settings } from 'lucide-react';
 import FocusableNavLink from './FocusableNavLink';
 
 const TopBar = () => {
     const { config } = useConfig();
     const [scrolled, setScrolled] = useState(false);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -67,16 +64,10 @@ const TopBar = () => {
                             Search
                         </FocusableNavLink>
 
-                        <FocusableButton
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                                clearCredentials();
-                                navigate('/login', { replace: true });
-                            }}
-                        >
-                            Log out
-                        </FocusableButton>
+                        <FocusableNavLink to="/settings">
+                            <Settings className="h-4 w-4" />
+                            Settings
+                        </FocusableNavLink>
                     </nav>
                 </div>
             </div>
