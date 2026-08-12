@@ -36,10 +36,6 @@ import {
 const SEEK_SECONDS = 10;
 const HIDE_CONTROLS_TIMEOUT_MS = 5000;
 
-// The shared focus ring offsets against --background, which looks right on opaque app
-// backgrounds but shows up as a solid box on buttons floating directly over video.
-const FLOATING_BUTTON_CLASS = 'ring-offset-transparent';
-
 type TrackMenu = 'audio' | 'subtitle' | null;
 
 interface PlayerControlsProps {
@@ -287,11 +283,7 @@ const PlayerControls = ({
                     pointerEvents: showControls ? 'auto' : 'none',
                 }}
             >
-                <FocusableButton
-                    variant="ghost"
-                    className={FLOATING_BUTTON_CLASS}
-                    onClick={() => navigate(-1)}
-                >
+                <FocusableButton variant="ghost" floating onClick={() => navigate(-1)}>
                     <ArrowLeft />
                 </FocusableButton>
                 {backButtonLogoFailed ? (
@@ -310,7 +302,7 @@ const PlayerControls = ({
                     <FocusableButton
                         autoFocus
                         variant="default"
-                        className={FLOATING_BUTTON_CLASS}
+                        floating
                         onClick={() => handleSkipSegment('Intro')}
                     >
                         <SkipForward />
@@ -321,7 +313,7 @@ const PlayerControls = ({
                     <FocusableButton
                         autoFocus
                         variant="default"
-                        className={FLOATING_BUTTON_CLASS}
+                        floating
                         onClick={() => handleSkipSegment('Outro')}
                     >
                         <SkipForward />
@@ -436,7 +428,7 @@ const PlayerControls = ({
                             <FocusableButton
                                 variant="ghost"
                                 size="icon-lg"
-                                className={FLOATING_BUTTON_CLASS}
+                                floating
                                 title="Previous episode"
                                 onClick={() => navigate(`/player/${previousItem.Id}`)}
                             >
@@ -447,7 +439,7 @@ const PlayerControls = ({
                             <FocusableButton
                                 variant="ghost"
                                 size="icon-lg"
-                                className={FLOATING_BUTTON_CLASS}
+                                floating
                                 title="Rewind 10 seconds"
                                 onClick={handleSeekBackward}
                             >
@@ -458,7 +450,7 @@ const PlayerControls = ({
                             autoFocus
                             variant="ghost"
                             size="icon-lg"
-                            className={FLOATING_BUTTON_CLASS}
+                            floating
                             onClick={togglePlay}
                         >
                             {isPlaying ? <Pause size={24} /> : <Play size={24} />}
@@ -467,7 +459,7 @@ const PlayerControls = ({
                             <FocusableButton
                                 variant="ghost"
                                 size="icon-lg"
-                                className={FLOATING_BUTTON_CLASS}
+                                floating
                                 title="Forward 10 seconds"
                                 onClick={handleSeekForward}
                             >
@@ -478,7 +470,7 @@ const PlayerControls = ({
                             <FocusableButton
                                 variant="ghost"
                                 size="icon-lg"
-                                className={FLOATING_BUTTON_CLASS}
+                                floating
                                 title="Next episode"
                                 onClick={() => navigate(`/player/${nextItem.Id}`)}
                             >
@@ -502,6 +494,7 @@ const PlayerControls = ({
                             <FocusableButton
                                 variant="ghost"
                                 size="icon-lg"
+                                floating
                                 onClick={() => setOpenMenu('subtitle')}
                             >
                                 <Subtitles />
@@ -511,12 +504,18 @@ const PlayerControls = ({
                             <FocusableButton
                                 variant="ghost"
                                 size="icon-lg"
+                                floating
                                 onClick={() => setOpenMenu('audio')}
                             >
                                 <AudioLines />
                             </FocusableButton>
                         )}
-                        <FocusableButton variant="ghost" size="icon-lg" onClick={toggleMute}>
+                        <FocusableButton
+                            variant="ghost"
+                            size="icon-lg"
+                            floating
+                            onClick={toggleMute}
+                        >
                             {isMuted ? <VolumeX /> : <Volume2 />}
                         </FocusableButton>
                     </div>

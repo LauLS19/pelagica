@@ -11,8 +11,9 @@ const FocusableButton = ({
     autoFocus,
     className,
     size = 'default',
+    floating = false,
     ...props
-}: React.ComponentProps<typeof Button> & { autoFocus?: boolean }) => {
+}: React.ComponentProps<typeof Button> & { autoFocus?: boolean; floating?: boolean }) => {
     const { ref, focused, focusSelf } = useFocusable<object, HTMLButtonElement>({
         onEnterPress: () => ref.current?.click(),
     });
@@ -24,6 +25,19 @@ const FocusableButton = ({
     useScrollIntoViewOnFocus(ref, focused);
 
     const compact = COMPACT_SIZES.has(String(size));
+
+    if (floating) {
+        return (
+            <div
+                className={cn(
+                    'inline-flex rounded-xl border-4 border-transparent p-0.5 transition-colors',
+                    focused && 'border-ring'
+                )}
+            >
+                <Button ref={ref} size={size} className={className} {...props} />
+            </div>
+        );
+    }
 
     return (
         <Button
