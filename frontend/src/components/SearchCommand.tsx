@@ -17,7 +17,7 @@ import JellyfinItemKindIcon from './JellyfinItemKindIcon';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import type { BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models/base-item-kind';
-import { getPrimaryImageUrl } from '../utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import { getItemUrl } from '@/utils/itemUrl';
 import { cn } from '@/lib/utils';
 import { renderItemFallbackIcon } from '@/utils/itemFallbackIcon';

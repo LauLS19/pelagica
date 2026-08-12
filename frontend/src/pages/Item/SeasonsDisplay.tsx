@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { useSeasons } from '@pelagica/core';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { ImageOff } from 'lucide-react';
 import { memo, useState } from 'react';

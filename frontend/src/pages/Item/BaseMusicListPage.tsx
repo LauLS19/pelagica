@@ -1,5 +1,5 @@
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import { getItemUrl } from '@/utils/itemUrl';
 import { usePageBackground } from '@/hooks/usePageBackground';
 import { Link } from 'react-router';

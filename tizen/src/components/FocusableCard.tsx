@@ -3,10 +3,8 @@ import type { ReactNode } from 'react';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { FOCUS_RING_COMPACT } from '@/lib/focus-styles';
-import { Button } from '@/components/ui/button';
 
-const FocusableNavLink = ({
+const FocusableCard = ({
     to,
     autoFocus,
     className,
@@ -15,7 +13,7 @@ const FocusableNavLink = ({
     to: string;
     autoFocus?: boolean;
     className?: string;
-    children: ReactNode;
+    children: (focused: boolean) => ReactNode;
 }) => {
     const { ref, focused, focusSelf } = useFocusable<object, HTMLAnchorElement>({
         onEnterPress: () => ref.current?.click(),
@@ -25,17 +23,21 @@ const FocusableNavLink = ({
         if (autoFocus) focusSelf();
     }, [autoFocus, focusSelf]);
 
+    useEffect(() => {
+        if (focused) {
+            ref.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'nearest',
+            });
+        }
+    }, [focused, ref]);
+
     return (
-        <Button
-            render={<Link ref={ref} to={to} />}
-            nativeButton={false}
-            variant="ghost"
-            size="sm"
-            className={cn(focused && FOCUS_RING_COMPACT, className)}
-        >
-            {children}
-        </Button>
+        <Link ref={ref} to={to} className={cn('block shrink-0 scroll-m-3 outline-none', className)}>
+            {children(focused)}
+        </Link>
     );
 };
 
-export default FocusableNavLink;
+export default FocusableCard;

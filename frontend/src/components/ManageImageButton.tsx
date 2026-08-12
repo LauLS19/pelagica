@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogFooter, DialogTrigger } from './ui/dialog'
 import { Button } from './ui/button';
 import { ArrowLeft, Image, Loader2, PackageOpen, Search, Trash2, Upload } from 'lucide-react';
 import type { BaseItemDto, ImageType } from '@jellyfin/sdk/lib/generated-client/models';
-import { getItemImageUrl } from '@/utils/jellyfinUrls';
+import { getItemImageUrl } from '@pelagica/core';
 import { Card, CardContent } from './ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Switch } from './ui/switch';

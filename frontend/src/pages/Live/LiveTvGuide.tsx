@@ -15,7 +15,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useLiveTvChannels, type UseLiveTvChannelsOptions } from '@pelagica/core';
 import { useLiveTvPrograms } from '@pelagica/core';
-import { getPrimaryImageUrl, type ImageSize } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl, type ImageSize } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { cn } from '@/lib/utils';
 

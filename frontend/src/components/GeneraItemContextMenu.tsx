@@ -27,7 +27,7 @@ import { Link } from 'react-router';
 import { useLike } from '@pelagica/core';
 import { WATCHLISTABLE_ITEM_TYPES } from '../utils/watchlistableItems';
 import { DOWNLOADABLE_ITEM_TYPES } from '../utils/downloadableItems';
-import { getDownloadurl } from '../utils/jellyfinUrls';
+import { getDownloadurl } from '@pelagica/core';
 import { isIdentifiable } from '../utils/identifiableTypes';
 
 interface GeneralItemContextMenuProps {

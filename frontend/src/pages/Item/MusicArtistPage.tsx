@@ -7,7 +7,7 @@ import type { AppConfig } from '@pelagica/core';
 import { useArtistAlbumCount, useArtistItems, useArtistTracks } from '@pelagica/core';
 import { useImagePalette } from '@/hooks/useImagePalette';
 import { useMusicPlayback } from '@/hooks/useMusicPlayback';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import { getItemUrl } from '@/utils/itemUrl';
 import { cn } from '@/lib/utils';
 import FavoriteButton from '@/components/FavoriteButton';

@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { Heart, ListMusic, Mic2, Disc3 } from 'lucide-react';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import { getItemUrl } from '@/utils/itemUrl';
 import { usePlaylists } from '@pelagica/core';
 import { useCurrentUser } from '@pelagica/core';

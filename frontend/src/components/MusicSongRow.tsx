@@ -1,7 +1,7 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 import { Play } from 'lucide-react';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import { ticksToReadableMusicTime } from '@/utils/timeConversion';
 import type { MusicPlaybackTrack } from '@/context/MusicPlaybackContext';
 import MusicItemContextMenu from '@/components/MusicItemContextMenu';

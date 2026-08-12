@@ -39,7 +39,7 @@ import { isDesktopApp } from '@/utils/desktopApp';
 import { useTranslation } from 'react-i18next';
 import { usePlayerKeyboardControls } from '@/hooks/usePlayerKeyboardControls';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getLogoUrl, getPrimaryImageUrl, getTrickplayImageUrl } from '@/utils/jellyfinUrls';
+import { getLogoUrl, getPrimaryImageUrl, getTrickplayImageUrl } from '@pelagica/core';
 import { useReportPlaybackProgress } from '@pelagica/core';
 import { getRuntimePlaybackStats, type RuntimePlaybackStats } from '@/utils/playbackStats';
 import { useSession } from '@pelagica/core';

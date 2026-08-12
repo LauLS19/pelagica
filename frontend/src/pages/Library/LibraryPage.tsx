@@ -36,8 +36,8 @@ import type { BaseItemDto, CollectionType, ItemSortBy, SortOrder } from '@jellyf
 import { ButtonGroup } from '@/components/ui/button-group';
 import LibraryItem from './LibraryItem';
 import HomeVideoGrid, { TARGET_ROW_HEIGHT } from './HomeVideoGrid';
-import { SUPPORTED_LIBRARY_COLLECTION_TYPES } from '@/utils/itemTypes';
-import { getPrimaryImageUrl, type ImageSize } from '@/utils/jellyfinUrls';
+import { SUPPORTED_LIBRARY_COLLECTION_TYPES } from '../../utils/itemTypes';
+import { getPrimaryImageUrl, type ImageSize } from '@pelagica/core';
 
 const ITEM_ROWS = 5;
 const HOME_VIDEO_PAGE_SIZE = 50;

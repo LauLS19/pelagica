@@ -3,7 +3,7 @@ import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import BaseMediaPage from './BaseMediaPage';
 import { Dot, ImageOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { getPrimaryImageUrl, getThumbUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl, getThumbUrl } from '@pelagica/core';
 import DetailBadges from './DetailBadges';
 import { useState } from 'react';
 import { useSeasons } from '@pelagica/core';

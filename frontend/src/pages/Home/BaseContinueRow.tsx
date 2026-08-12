@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { getDetailLineText, getTitleLineText } from './continueWatchingLines';
 import { buildPlayerUrl } from '@/utils/playerUrl';
 import { Dot, ImageOff, Play } from 'lucide-react';
-import { getPrimaryImageUrl, getThumbUrl, getBackdropUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl, getThumbUrl, getBackdropUrl } from '@pelagica/core';
 import { Skeleton } from '@/components/ui/skeleton';
 import SectionScroller from '@/components/SectionScroller';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';

@@ -10,7 +10,7 @@ import { ChevronRight, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
 import ScrollableSectionPoster from '@/components/ScrollableSectionPoster';
-import { getPrimaryImageUrl, getThumbUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl, getThumbUrl } from '@pelagica/core';
 import { buildSectionItemsLink } from '@/utils/sectionItemsLink';
 import ItemContextMenu from '@/components/ItemContextMenu';
 

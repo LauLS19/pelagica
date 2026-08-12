@@ -3,7 +3,7 @@ import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import BaseMediaPage from './BaseMediaPage';
 import DetailBadges from './DetailBadges';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import { useState } from 'react';
 import { useBoxSetItems } from '@pelagica/core';
 import SectionScroller from '@/components/SectionScroller';
@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import ScrollableSectionPoster from '@/components/ScrollableSectionPoster';
 import ItemAdminButton from '@/components/ItemAdminButton';
 import { ImageOff } from 'lucide-react';
-import { getLogoUrl } from '@/utils/jellyfinUrls';
+import { getLogoUrl } from '@pelagica/core';
 import Overview from './Overview';
 import ItemMetadataBadges from './ItemMetadataBadges';
 

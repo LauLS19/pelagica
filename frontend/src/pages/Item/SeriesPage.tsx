@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useSeasons } from '@pelagica/core';
-import { getPrimaryImageUrl, getLogoUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl, getLogoUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { ImageOff, Play } from 'lucide-react';
 import { useState } from 'react';

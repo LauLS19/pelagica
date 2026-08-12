@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { EpisodeDisplay } from '@pelagica/core';
 import { useEpisodes } from '@pelagica/core';
-import { getPrimaryImageUrl, getThumbUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl, getThumbUrl } from '@pelagica/core';
 import { ticksToReadableTime } from '@/utils/timeConversion';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { ImageOff, Play, Star } from 'lucide-react';

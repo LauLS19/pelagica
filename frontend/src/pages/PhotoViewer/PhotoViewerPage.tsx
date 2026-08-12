@@ -4,7 +4,7 @@ import { Button } from '../../components/ui/button';
 import Page from '../Page';
 import { useItem } from '@pelagica/core';
 import { getUserId } from '@pelagica/core';
-import { getPrimaryImageUrl } from '../../utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import { useNavigate, useParams } from 'react-router';
 import { Spinner } from '../../components/ui/spinner';
 

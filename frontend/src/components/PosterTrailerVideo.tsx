@@ -1,5 +1,5 @@
 import { useLocalTrailers } from '@pelagica/core';
-import { getDirectStreamUrl } from '@/utils/jellyfinUrls';
+import { getDirectStreamUrl } from '@pelagica/core';
 import { Volume2, VolumeOff } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 

@@ -32,6 +32,15 @@ body {
         scale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* There's no mouse on a TV, so a scrollbar is just visual noise. */
+.scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

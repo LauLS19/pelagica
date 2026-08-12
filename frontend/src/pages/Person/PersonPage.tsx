@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { usePageBackground } from '@/hooks/usePageBackground';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { memo, useEffect, useState } from 'react';
 import Page from '../Page';

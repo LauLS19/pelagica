@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useLocalTrailers } from '@pelagica/core';
-import { getDirectStreamUrl } from '@/utils/jellyfinUrls';
+import { getDirectStreamUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { CirclePlay, CircleStop, Volume2, VolumeOff } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';

@@ -1,5 +1,5 @@
 import type { GenreWithItem } from '@pelagica/core';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import { getItemUrl } from '@/utils/itemUrl';
 import { useState } from 'react';
 import { Link } from 'react-router';

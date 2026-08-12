@@ -4,7 +4,7 @@ import {
     type MusicPlaybackContextType,
     type MusicPlaybackTrack,
 } from './MusicPlaybackContext';
-import { getAudioStreamUrl } from '@/utils/jellyfinUrls';
+import { getAudioStreamUrl } from '@pelagica/core';
 import { usePlaybackStart } from '@pelagica/core';
 import { useReportPlaybackProgress } from '@pelagica/core';
 import { usePlaybackStop } from '@pelagica/core';

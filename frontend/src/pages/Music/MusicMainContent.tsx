@@ -4,7 +4,7 @@ import { Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import { renderItemFallbackIcon } from '@/utils/itemFallbackIcon';
 import { getItemUrl } from '@/utils/itemUrl';
 import { useMusicPlayback } from '@/hooks/useMusicPlayback';

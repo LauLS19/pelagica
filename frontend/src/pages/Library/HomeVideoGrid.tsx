@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useMemo } from 'react';
 import type { BaseItemDto, BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models';
 import { Link, useNavigate } from 'react-router';
 import { Eye, ImageOff, Play } from 'lucide-react';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import { useConfig } from '@pelagica/core';
 import WatchedStateBadge from '@/components/WatchedStateBadge';
 import { useTranslation } from 'react-i18next';

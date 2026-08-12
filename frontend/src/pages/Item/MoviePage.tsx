@@ -1,6 +1,6 @@
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import BaseMediaPage from './BaseMediaPage';
-import { getPrimaryImageUrl, getLogoUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl, getLogoUrl } from '@pelagica/core';
 import { ImageOff } from 'lucide-react';
 import PeopleRow from './PeopleRow';
 import { useTranslation } from 'react-i18next';

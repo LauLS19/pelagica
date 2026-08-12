@@ -15,7 +15,7 @@ import {
     getSubtitleUrl,
     getPlaybackStreamUrl,
     getAttachmentUrl,
-} from '@/utils/jellyfinUrls';
+} from '@pelagica/core';
 import { usePlaybackInfo } from '@pelagica/core';
 import { useMediaSegments } from '@pelagica/core';
 import { useAdjacentItems } from '@pelagica/core';

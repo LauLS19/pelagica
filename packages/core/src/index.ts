@@ -104,6 +104,7 @@ export * from './utils/authErrorHandler';
 export * from './utils/deviceId';
 export * from './utils/genreItemCache';
 export * from './utils/genreTint';
+export * from './utils/jellyfinUrls';
 export * from './utils/localstorageCredentials';
 export * from './utils/videoCodecDetection';
 export * from './utils/collectionItemTypes';

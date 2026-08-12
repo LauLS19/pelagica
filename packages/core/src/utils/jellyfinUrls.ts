@@ -1,6 +1,6 @@
-import { getAccessToken, getServerUrl } from '@pelagica/core';
-import { getSupportedVideoCodecs } from '@pelagica/core';
-import type { PlayMethod } from '@pelagica/core';
+import { getAccessToken, getServerUrl } from './localstorageCredentials';
+import { getSupportedVideoCodecs } from './videoCodecDetection';
+import type { PlayMethod } from '../hooks/usePlaybackInfo';
 
 interface Credentials {
     server: string;
