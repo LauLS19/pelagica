@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import {
     getPrimaryImageUrl,
@@ -25,6 +25,7 @@ import ItemRow from '../components/ItemRow';
 
 const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?: boolean }) => {
     const [imageError, setImageError] = useState(false);
+    const navigate = useNavigate();
     const { ref, focused, focusSelf } = useFocusable<object, HTMLButtonElement>({
         onEnterPress: () => ref.current?.click(),
     });
@@ -45,7 +46,12 @@ const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?:
               : 0;
 
     return (
-        <button ref={ref} type="button" className="w-64 shrink-0 scroll-m-6 text-left outline-none">
+        <button
+            ref={ref}
+            onClick={() => episode && episode.Id && navigate(`/player/${episode.Id}`)}
+            type="button"
+            className="w-64 shrink-0 scroll-m-6 text-left outline-none"
+        >
             <div
                 className={cn(
                     'relative aspect-video w-full overflow-hidden rounded-md border border-border bg-muted',
