@@ -32,6 +32,15 @@ const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?:
 
     useScrollIntoViewOnFocus(ref, focused);
 
+    const watched = episode.UserData?.PlaybackPositionTicks ?? 0;
+    const runtime = episode.RunTimeTicks ?? 0;
+    const progress =
+        episode.UserData?.Played && watched <= 0
+            ? 100
+            : runtime > 0
+              ? (watched / runtime) * 100
+              : 0;
+
     return (
         <button ref={ref} type="button" className="w-64 shrink-0 scroll-m-6 text-left outline-none">
             <div
@@ -60,6 +69,14 @@ const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?:
                     <Badge className="absolute top-2 right-2 bg-black/70 text-white">
                         {formatRuntime(episode.RunTimeTicks)}
                     </Badge>
+                )}
+                {progress > 0 && (
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-700">
+                        <div
+                            style={{ width: `${progress}%` }}
+                            className="h-full bg-brand transition-width"
+                        />
+                    </div>
                 )}
             </div>
             <p className="mt-2 truncate text-sm font-medium">
