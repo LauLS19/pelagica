@@ -4,7 +4,7 @@ import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { clearCredentials } from '@pelagica/core';
 import { cn } from '@/lib/utils';
 import { useTvBackKey } from '@/lib/use-tv-back-key';
-import { FocusableButton } from '@/components/FocusableButton';
+import FocusableButton from '@/components/FocusableButton';
 
 const links = [
     { to: '/', label: 'Home' },

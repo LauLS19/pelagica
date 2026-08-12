@@ -1,14 +1,9 @@
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { getServerUrl, useCurrentUser } from '@pelagica/core';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import FocusableButton from '../components/FocusableButton';
 
 const Home = () => {
     const serverUrl = getServerUrl();
     const { data: user, isLoading, refetch, isFetching } = useCurrentUser();
-    const { ref, focused } = useFocusable<object, HTMLButtonElement>({
-        onEnterPress: () => refetch(),
-    });
 
     return (
         <div className="flex flex-col items-start gap-4">
@@ -17,14 +12,9 @@ const Home = () => {
             <p className="text-muted-foreground">
                 Signed in as: {isLoading ? 'Loading…' : (user?.Name ?? 'unknown')}
             </p>
-            <Button
-                ref={ref}
-                onClick={() => refetch()}
-                disabled={isFetching}
-                className={cn(focused && 'border-ring ring-3 ring-ring/50')}
-            >
+            <FocusableButton onClick={() => refetch()} disabled={isFetching}>
                 Refetch
-            </Button>
+            </FocusableButton>
         </div>
     );
 };

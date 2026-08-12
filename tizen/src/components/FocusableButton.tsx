@@ -19,7 +19,10 @@ const FocusableButton = ({
     return (
         <Button
             ref={ref}
-            className={cn(focused && 'border-ring ring-3 ring-ring/50', className)}
+            className={cn(
+                focused && 'scale-105 ring-4 ring-ring ring-offset-4 ring-offset-background',
+                className
+            )}
             {...props}
         />
     );
