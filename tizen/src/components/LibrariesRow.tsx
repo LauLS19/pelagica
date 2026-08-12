@@ -1,44 +1,6 @@
-import { useState } from 'react';
-import { getPrimaryImageUrl, useUserViews } from '@pelagica/core';
-import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
-import { ImageOff } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
-import FocusableCard from './FocusableCard';
+import { useUserViews } from '@pelagica/core';
+import LibraryCard from './LibraryCard';
 import { SUPPORTED_LIBRARY_COLLECTION_TYPES } from '../utils/supportedLibraryCollectionTypes';
-
-const LibraryCard = ({ item }: { item: BaseItemDto }) => {
-    const [imageError, setImageError] = useState(false);
-
-    return (
-        <FocusableCard to="/about" className="w-56">
-            {(focused) => (
-                <>
-                    <div
-                        className={cn(
-                            'aspect-video w-full overflow-hidden rounded-md border border-border bg-muted',
-                            focused && FOCUS_RING_LARGE
-                        )}
-                    >
-                        {imageError || !item.Id ? (
-                            <div className="flex h-full w-full items-center justify-center">
-                                <ImageOff className="h-8 w-8 text-muted-foreground" />
-                            </div>
-                        ) : (
-                            <img
-                                src={getPrimaryImageUrl(item.Id, { width: 448 })}
-                                alt={item.Name || 'Library'}
-                                className="h-full w-full object-cover"
-                                onError={() => setImageError(true)}
-                            />
-                        )}
-                    </div>
-                    <p className="mt-2 truncate text-sm font-medium">{item.Name}</p>
-                </>
-            )}
-        </FocusableCard>
-    );
-};
 
 const LibrariesRow = () => {
     const { data, isLoading } = useUserViews();

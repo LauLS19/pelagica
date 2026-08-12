@@ -49,12 +49,12 @@ const TopBar = () => {
 
                     {/* Desktop nav */}
                     <nav className="hidden md:flex items-center gap-0.5">
-                        <FocusableNavLink to="/" autoFocus>
+                        <FocusableNavLink to="/">
                             <House className="h-4 w-4" />
                             Home
                         </FocusableNavLink>
 
-                        <FocusableNavLink to="/about">
+                        <FocusableNavLink to="/library">
                             <Library className="h-4 w-4" />
                             Library
                         </FocusableNavLink>

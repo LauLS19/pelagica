@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import type { InputHTMLAttributes } from 'react';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { cn } from '@/lib/utils';
+import { useScrollIntoViewOnFocus } from '@/lib/use-scroll-into-view-on-focus';
 
 const FocusableField = ({
     autoFocus,
@@ -14,6 +15,8 @@ const FocusableField = ({
     useEffect(() => {
         if (autoFocus) focusSelf();
     }, [autoFocus, focusSelf]);
+
+    useScrollIntoViewOnFocus(ref, focused);
 
     return (
         <input

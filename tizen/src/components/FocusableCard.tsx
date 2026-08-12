@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useScrollIntoViewOnFocus } from '@/lib/use-scroll-into-view-on-focus';
 
 const FocusableCard = ({
     to,
@@ -23,15 +24,7 @@ const FocusableCard = ({
         if (autoFocus) focusSelf();
     }, [autoFocus, focusSelf]);
 
-    useEffect(() => {
-        if (focused) {
-            ref.current?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'nearest',
-            });
-        }
-    }, [focused, ref]);
+    useScrollIntoViewOnFocus(ref, focused);
 
     return (
         <Link ref={ref} to={to} className={cn('block shrink-0 scroll-m-3 outline-none', className)}>
