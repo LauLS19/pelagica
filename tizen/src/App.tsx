@@ -4,16 +4,18 @@ import { queryClient } from '@/lib/query-client';
 import { RootLayout } from '@/routes/RootLayout';
 import { RequireAuth } from '@/routes/RequireAuth';
 import { ScrollToTop } from '@/components/ScrollToTop';
-import Home from '@/routes/Home';
-import About from '@/routes/About';
-import Login from '@/routes/Login';
-import Settings from './routes/Settings';
-import Library from './routes/Library';
-import LibraryDetail from './routes/LibraryDetail';
-import MovieDetail from './routes/MovieDetail';
-import SeriesDetail from './routes/SeriesDetail';
-import BoxSetDetail from './routes/BoxSetDetail';
-import Player from './routes/Player';
+import { lazy } from 'react';
+
+const LoginPage = lazy(() => import('./routes/Login'));
+const HomePage = lazy(() => import('./routes/Home'));
+const AboutPage = lazy(() => import('./routes/About'));
+const LibraryPage = lazy(() => import('./routes/Library'));
+const LibraryDetailPage = lazy(() => import('./routes/LibraryDetail'));
+const MovieDetailPage = lazy(() => import('./routes/MovieDetail'));
+const SeriesDetailPage = lazy(() => import('./routes/SeriesDetail'));
+const BoxSetDetailPage = lazy(() => import('./routes/BoxSetDetail'));
+const PlayerPage = lazy(() => import('./routes/Player'));
+const SettingsPage = lazy(() => import('./routes/Settings'));
 
 function App() {
     return (
@@ -21,12 +23,12 @@ function App() {
             <HashRouter>
                 <ScrollToTop />
                 <Routes>
-                    <Route path="login" element={<Login />} />
+                    <Route path="login" element={<LoginPage />} />
                     <Route
                         path="player/:itemId"
                         element={
                             <RequireAuth>
-                                <Player />
+                                <PlayerPage />
                             </RequireAuth>
                         }
                     />
@@ -37,14 +39,14 @@ function App() {
                             </RequireAuth>
                         }
                     >
-                        <Route index element={<Home />} />
-                        <Route path="about" element={<About />} />
-                        <Route path="settings" element={<Settings />} />
-                        <Route path="library" element={<Library />} />
-                        <Route path="library/:libraryId" element={<LibraryDetail />} />
-                        <Route path="movie/:itemId" element={<MovieDetail />} />
-                        <Route path="series/:itemId" element={<SeriesDetail />} />
-                        <Route path="boxset/:itemId" element={<BoxSetDetail />} />
+                        <Route index element={<HomePage />} />
+                        <Route path="about" element={<AboutPage />} />
+                        <Route path="settings" element={<SettingsPage />} />
+                        <Route path="library" element={<LibraryPage />} />
+                        <Route path="library/:libraryId" element={<LibraryDetailPage />} />
+                        <Route path="movie/:itemId" element={<MovieDetailPage />} />
+                        <Route path="series/:itemId" element={<SeriesDetailPage />} />
+                        <Route path="boxset/:itemId" element={<BoxSetDetailPage />} />
                     </Route>
                 </Routes>
             </HashRouter>
