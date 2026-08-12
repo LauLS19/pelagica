@@ -76,7 +76,8 @@ const LibraryDetail = () => {
         limit: pageSize,
         startIndex: page * pageSize,
         includeItemTypes: COLLECTION_ITEM_TYPES[library?.CollectionType as CollectionType],
-        recursive: true,
+        sortBy: ['DateCreated'],
+        sortOrder: 'Descending',
     });
 
     const totalPages = data?.totalCount ? Math.ceil(data.totalCount / pageSize) : 0;
