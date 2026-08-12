@@ -5,7 +5,7 @@ import { FOCUS_RING_COMPACT, FOCUS_RING_LARGE } from '@/lib/focus-styles';
 import { useScrollIntoViewOnFocus } from '@/lib/use-scroll-into-view-on-focus';
 import { Button } from '@/components/ui/button';
 
-const COMPACT_SIZES = new Set(['sm', 'xs', 'icon', 'icon-sm', 'icon-xs']);
+const COMPACT_SIZES = new Set(['sm', 'xs', 'icon', 'icon-sm', 'icon-xs', 'icon-lg']);
 
 const FocusableButton = ({
     autoFocus,
@@ -29,10 +29,7 @@ const FocusableButton = ({
         <Button
             ref={ref}
             size={size}
-            className={cn(
-                focused && (compact ? FOCUS_RING_COMPACT : FOCUS_RING_LARGE),
-                className
-            )}
+            className={cn(focused && (compact ? FOCUS_RING_COMPACT : FOCUS_RING_LARGE), className)}
             {...props}
         />
     );

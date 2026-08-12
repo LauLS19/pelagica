@@ -23,6 +23,14 @@ function App() {
                 <Routes>
                     <Route path="login" element={<Login />} />
                     <Route
+                        path="player/:itemId"
+                        element={
+                            <RequireAuth>
+                                <Player />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
                         element={
                             <RequireAuth>
                                 <RootLayout />
@@ -37,7 +45,6 @@ function App() {
                         <Route path="movie/:itemId" element={<MovieDetail />} />
                         <Route path="series/:itemId" element={<SeriesDetail />} />
                         <Route path="boxset/:itemId" element={<BoxSetDetail />} />
-                        <Route path="player/:itemId" element={<Player />} />
                     </Route>
                 </Routes>
             </HashRouter>

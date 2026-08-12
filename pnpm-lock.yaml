@@ -255,6 +255,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      jassub:
+        specifier: ^2.5.7
+        version: 2.5.14
       lucide-react:
         specifier: ^1.31.0
         version: 1.31.0(react@19.2.8)
@@ -279,6 +282,9 @@ importers:
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
+      video.js:
+        specifier: ^8.23.7
+        version: 8.24.0
     devDependencies:
       '@types/node':
         specifier: ^24.13.3
