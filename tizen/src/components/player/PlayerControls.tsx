@@ -38,6 +38,25 @@ const HIDE_CONTROLS_TIMEOUT_MS = 5000;
 
 const PLAY_PAUSE_FOCUS_KEY = 'player-play-pause';
 
+// Some TV browsers (older Tizen WebKit included) still report the pre-standardization
+// key names ('Up'/'Down'/'Left'/'Right') instead of 'ArrowUp' etc.
+const NAV_KEY_CODES = new Set([13, 37, 38, 39, 40]); // Enter, Left, Up, Right, Down
+const NAV_KEY_NAMES = new Set([
+    'Enter',
+    'ArrowUp',
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'Up',
+    'Down',
+    'Left',
+    'Right',
+]);
+
+function isNavigationKey(event: KeyboardEvent) {
+    return NAV_KEY_CODES.has(event.keyCode) || NAV_KEY_NAMES.has(event.key);
+}
+
 type TrackMenu = 'audio' | 'subtitle' | null;
 
 interface PlayerControlsProps {
@@ -89,10 +108,12 @@ const PlayerControls = ({
     );
 
     const resetHideTimeout = useCallback(() => {
+        resume();
         setShowControls(true);
         if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
         hideTimeoutRef.current = setTimeout(() => {
             setShowControls(false);
+            pause();
         }, HIDE_CONTROLS_TIMEOUT_MS);
     }, []);
 
@@ -105,21 +126,15 @@ const PlayerControls = ({
         resetHideTimeout();
         return () => {
             if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+            resume();
         };
     }, [resetHideTimeout]);
 
     useEffect(() => {
         function handleKeyDown(event: KeyboardEvent) {
-            if (
-                event.key === 'ArrowUp' ||
-                event.key === 'ArrowDown' ||
-                event.key === 'ArrowLeft' ||
-                event.key === 'ArrowRight' ||
-                event.key === 'Enter'
-            ) {
-                if (!showControls) setFocus(PLAY_PAUSE_FOCUS_KEY);
-                resetHideTimeout();
-            }
+            if (!isNavigationKey(event)) return;
+            if (!showControls) setFocus(PLAY_PAUSE_FOCUS_KEY);
+            resetHideTimeout();
         }
 
         window.addEventListener('keydown', handleKeyDown);
