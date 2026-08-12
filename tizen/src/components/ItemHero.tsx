@@ -1,35 +1,26 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
-import {
-    getBackdropUrl,
-    getLogoUrl,
-    getPrimaryImageUrl,
-    useFavorite,
-    useLike,
-} from '@pelagica/core';
+import { getBackdropUrl, getLogoUrl, getPrimaryImageUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
-import { Bookmark, Heart, ImageOff, Play, Star } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { ImageOff, Play, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import FocusableButton from './FocusableButton';
 
 const ItemHero = ({
     item,
     isLoading,
     extraBadge,
+    mainButtonRow,
 }: {
     item?: BaseItemDto;
     isLoading: boolean;
     extraBadge?: ReactNode;
+    mainButtonRow?: ReactNode;
 }) => {
     const [backdropError, setBackdropError] = useState(false);
     const [postersFailed, setPostersFailed] = useState(false);
     const [isPosterLoaded, setIsPosterLoaded] = useState(false);
     const [failedLogo, setFailedLogo] = useState(false);
-
-    const { isFavorite, toggleFavorite, isLoading: isFavoriteLoading } = useFavorite(item?.Id);
-    const { isLiked, toggleLike, isLoading: isLikeLoading } = useLike(item?.Id);
 
     if (isLoading) {
         return (
@@ -130,29 +121,7 @@ const ItemHero = ({
                         </p>
                     )}
 
-                    <div className="mt-2 flex gap-3">
-                        <FocusableButton autoFocus size="lg">
-                            <Play /> Play
-                        </FocusableButton>
-                        <FocusableButton
-                            variant="outline"
-                            size="lg"
-                            onClick={() => toggleLike(!isLiked)}
-                            disabled={isLikeLoading}
-                        >
-                            <Bookmark className={cn(isLiked && 'fill-current')} />
-                            {isLiked ? 'Added to Watchlist' : 'Add to Watchlist'}
-                        </FocusableButton>
-                        <FocusableButton
-                            variant="outline"
-                            size="lg"
-                            onClick={() => toggleFavorite(!isFavorite)}
-                            disabled={isFavoriteLoading}
-                        >
-                            <Heart className={cn(isFavorite && 'fill-current')} />
-                            {isFavorite ? 'Favorited' : 'Favorite'}
-                        </FocusableButton>
-                    </div>
+                    {mainButtonRow && <div className="mt-2 flex gap-3">{mainButtonRow}</div>}
                 </div>
             </div>
         </div>

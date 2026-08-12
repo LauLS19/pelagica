@@ -10,7 +10,7 @@ import {
     useSimilarItems,
 } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
-import { ImageOff, Star } from 'lucide-react';
+import { ImageOff, Play, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
 import { useScrollIntoViewOnFocus } from '@/lib/use-scroll-into-view-on-focus';
@@ -19,6 +19,8 @@ import { formatRuntime } from '@/lib/formatRuntime';
 import ItemHero from '../components/ItemHero';
 import ItemCard from '../components/ItemCard';
 import FocusableButton from '../components/FocusableButton';
+import WatchlistButton from '../components/WatchlistButton';
+import FavoriteButton from '../components/FavoriteButton';
 
 const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?: boolean }) => {
     const [imageError, setImageError] = useState(false);
@@ -147,6 +149,17 @@ const SeriesDetail = () => {
                             {item.ChildCount} {item.ChildCount === 1 ? 'Season' : 'Seasons'}
                         </Badge>
                     )
+                }
+                mainButtonRow={
+                    <>
+                        <FocusableButton autoFocus size="lg">
+                            <Play /> Play
+                        </FocusableButton>
+
+                        {item && <WatchlistButton item={item} />}
+
+                        {item && <FavoriteButton item={item} />}
+                    </>
                 }
             />
 

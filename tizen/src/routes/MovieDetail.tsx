@@ -4,6 +4,10 @@ import { Badge } from '@/components/ui/badge';
 import { formatRuntime } from '@/lib/formatRuntime';
 import ItemHero from '../components/ItemHero';
 import ItemCard from '../components/ItemCard';
+import FocusableButton from '../components/FocusableButton';
+import { Play } from 'lucide-react';
+import WatchlistButton from '../components/WatchlistButton';
+import FavoriteButton from '../components/FavoriteButton';
 
 const MovieDetail = () => {
     const { itemId } = useParams<{ itemId: string }>();
@@ -19,6 +23,17 @@ const MovieDetail = () => {
                     item?.RunTimeTicks && (
                         <Badge variant="outline">{formatRuntime(item.RunTimeTicks)}</Badge>
                     )
+                }
+                mainButtonRow={
+                    <>
+                        <FocusableButton autoFocus size="lg">
+                            <Play /> Play
+                        </FocusableButton>
+
+                        {item && <WatchlistButton item={item} />}
+
+                        {item && <FavoriteButton item={item} />}
+                    </>
                 }
             />
 
