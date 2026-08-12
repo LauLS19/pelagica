@@ -1,6 +1,6 @@
 import SectionScroller from '@/components/SectionScroller';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useUserViews } from '@/hooks/api/useUserViews';
+import { useUserViews } from '@pelagica/core';
 import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
 import { SUPPORTED_LIBRARY_COLLECTION_TYPES } from '@/utils/itemTypes';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';

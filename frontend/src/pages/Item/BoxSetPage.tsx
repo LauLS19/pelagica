@@ -1,11 +1,11 @@
-import type { AppConfig } from '@/hooks/api/useConfig';
+import type { AppConfig } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import BaseMediaPage from './BaseMediaPage';
 import DetailBadges from './DetailBadges';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
 import { useState } from 'react';
-import { useBoxSetItems } from '@/hooks/api/useBoxSetItems';
+import { useBoxSetItems } from '@pelagica/core';
 import SectionScroller from '@/components/SectionScroller';
 import { useTranslation } from 'react-i18next';
 import ScrollableSectionPoster from '@/components/ScrollableSectionPoster';

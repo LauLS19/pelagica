@@ -1,4 +1,4 @@
-import type { GenreWithItem } from '@/hooks/api/genres/useGenresWithItems';
+import type { GenreWithItem } from '@pelagica/core';
 import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
 import { getItemUrl } from '@/utils/itemUrl';
 import { useState } from 'react';

@@ -13,8 +13,8 @@ import {
     EmptyTitle,
 } from '@/components/ui/empty';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useLiveTvChannels, type UseLiveTvChannelsOptions } from '@/hooks/api/useLiveTvChannels';
-import { useLiveTvPrograms } from '@/hooks/api/useLiveTvPrograms';
+import { useLiveTvChannels, type UseLiveTvChannelsOptions } from '@pelagica/core';
+import { useLiveTvPrograms } from '@pelagica/core';
 import { getPrimaryImageUrl, type ImageSize } from '@/utils/jellyfinUrls';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { cn } from '@/lib/utils';

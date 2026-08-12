@@ -8,12 +8,12 @@ import { Button } from '@/components/ui/button';
 import { EllipsisVertical, ImageOff, Info, Play } from 'lucide-react';
 import FavoriteButton from '@/components/FavoriteButton';
 import { Skeleton } from '@/components/ui/skeleton';
-import type { AppConfig } from '@/hooks/api/useConfig';
-import { useAlbumTracks } from '@/hooks/api/useAlbumTracks';
-import { usePlaylistItems } from '@/hooks/api/playlist/usePlaylistItems';
+import type { AppConfig } from '@pelagica/core';
+import { useAlbumTracks } from '@pelagica/core';
+import { usePlaylistItems } from '@pelagica/core';
 import { useMusicPlayback } from '@/hooks/useMusicPlayback';
 import { useTranslation } from 'react-i18next';
-import { getUserId } from '@/utils/localstorageCredentials';
+import { getUserId } from '@pelagica/core';
 import {
     DropdownMenu,
     DropdownMenuContent,

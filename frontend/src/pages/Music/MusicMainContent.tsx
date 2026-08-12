@@ -16,9 +16,9 @@ import {
     useAllAlbums,
     useAllArtists,
     useMusicSearch,
-} from '@/hooks/api/useMusicItems';
-import { usePlaylists } from '@/hooks/api/playlist/usePlaylists';
-import { useCurrentUser } from '@/hooks/api/useCurrentUser';
+} from '@pelagica/core';
+import { usePlaylists } from '@pelagica/core';
+import { useCurrentUser } from '@pelagica/core';
 import SectionScroller from '@/components/SectionScroller';
 import MusicAlbumCard from '@/components/MusicAlbumCard';
 import MusicSongRow from '@/components/MusicSongRow';

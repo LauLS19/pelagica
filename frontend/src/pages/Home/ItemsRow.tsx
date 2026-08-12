@@ -1,7 +1,7 @@
 import SectionScroller from '@/components/SectionScroller';
 import { Skeleton } from '@/components/ui/skeleton';
-import type { DetailField, SectionItemsConfig } from '@/hooks/api/useConfig';
-import { useRowItems } from '@/hooks/api/useRowItems';
+import type { DetailField, SectionItemsConfig } from '@pelagica/core';
+import { useRowItems } from '@pelagica/core';
 import { Link } from 'react-router';
 import { useEffect, useMemo, type ReactNode } from 'react';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';

@@ -40,15 +40,15 @@ import { useTranslation } from 'react-i18next';
 import { usePlayerKeyboardControls } from '@/hooks/usePlayerKeyboardControls';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getLogoUrl, getPrimaryImageUrl, getTrickplayImageUrl } from '@/utils/jellyfinUrls';
-import { useReportPlaybackProgress } from '@/hooks/api/usePlaybackProgress';
+import { useReportPlaybackProgress } from '@pelagica/core';
 import { getRuntimePlaybackStats, type RuntimePlaybackStats } from '@/utils/playbackStats';
-import { useSession } from '@/hooks/api/useSession';
+import { useSession } from '@pelagica/core';
 import {
     removeLastSubtitleLanguage,
     setLastAudioLanguage,
     setLastSubtitleLanguage,
 } from '@/utils/localstorageLastlanguage';
-import { useConfig } from '../../hooks/api/useConfig';
+import { useConfig } from '@pelagica/core';
 
 function getPrimaryTrickplayInfo(trickplay?: BaseItemDto['Trickplay']) {
     if (!trickplay) return null;

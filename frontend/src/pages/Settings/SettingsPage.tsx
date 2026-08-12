@@ -14,7 +14,7 @@ import { ThemesTab } from './tabs/ThemesTab';
 import { LinksTab } from './tabs/LinksTab';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { getServerUrl } from '../../utils/localstorageCredentials';
+import { getServerUrl } from '@pelagica/core';
 
 const SettingsPage = () => {
     const { t } = useTranslation('settings');

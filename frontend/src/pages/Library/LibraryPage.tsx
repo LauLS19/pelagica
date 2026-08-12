@@ -1,8 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Page from '../Page';
-import { useUserViews } from '@/hooks/api/useUserViews';
+import { useUserViews } from '@pelagica/core';
 import { useMemo, useState, useEffect } from 'react';
-import { useLibraryItems } from '@/hooks/api/useLibraryItems';
+import { useLibraryItems } from '@pelagica/core';
 import { useSearchParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from '@/components/ui/skeleton';

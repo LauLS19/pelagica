@@ -1,4 +1,4 @@
-import { useLocalTrailers } from '@/hooks/api/useLocalTrailers';
+import { useLocalTrailers } from '@pelagica/core';
 import { getDirectStreamUrl } from '@/utils/jellyfinUrls';
 import { Volume2, VolumeOff } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';

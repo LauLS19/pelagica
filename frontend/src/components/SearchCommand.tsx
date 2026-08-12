@@ -7,7 +7,7 @@ import {
     CommandList,
 } from '@/components/ui/command';
 import { useSearch, type SearchMode } from '@/context/SearchContext';
-import { useSearchItems } from '@/hooks/api/useSearchItems';
+import { useSearchItems } from '@pelagica/core';
 import { useMusicPlayback } from '@/hooks/useMusicPlayback';
 import { useNavigate } from 'react-router';
 import { Skeleton } from './ui/skeleton';

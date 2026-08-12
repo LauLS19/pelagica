@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import {
     useLiveTvChannels,
     type UseLiveTvChannelsOptions,
-} from '../../hooks/api/useLiveTvChannels';
+} from '@pelagica/core';
 import { useMemo } from 'react';
 import { getPrimaryImageUrl, type ImageSize } from '../../utils/jellyfinUrls';
 import { Skeleton } from '../../components/ui/skeleton';

@@ -11,8 +11,8 @@ import {
 } from '@/components/ui/carousel';
 import { Skeleton } from '@/components/ui/skeleton';
 import WatchListButton from '@/components/WatchlistButton';
-import type { MediabarSize, SectionItemsConfig } from '@/hooks/api/useConfig';
-import { useMediaBarItems } from '@/hooks/api/useMediaBarItems';
+import type { MediabarSize, SectionItemsConfig } from '@pelagica/core';
+import { useMediaBarItems } from '@pelagica/core';
 import { getBackdropUrl, getLogoUrl } from '@/utils/jellyfinUrls';
 import { getEndsAt, ticksToReadableTime } from '@/utils/timeConversion';
 import { Play, Star } from 'lucide-react';

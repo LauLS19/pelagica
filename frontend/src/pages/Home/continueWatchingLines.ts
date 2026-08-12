@@ -1,4 +1,4 @@
-import type { ContinueWatchingDetailLine, ContinueWatchingTitleLine } from '@/hooks/api/useConfig';
+import type { ContinueWatchingDetailLine, ContinueWatchingTitleLine } from '@pelagica/core';
 import { ticksToReadableTime } from '@/utils/timeConversion';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import type { TFunction } from 'i18next';

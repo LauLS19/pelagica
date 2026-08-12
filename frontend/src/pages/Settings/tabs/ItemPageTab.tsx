@@ -5,7 +5,7 @@ import {
     SERIES_VIEWS,
     type AppConfig,
     type DetailBadge,
-} from '@/hooks/api/useConfig';
+} from '@pelagica/core';
 import type { BaseItemKind } from '@jellyfin/sdk/lib/generated-client/models';
 import { BooleanInput, SelectInput, MultiSelectInput } from '../components/SettingsInputs';
 

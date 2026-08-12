@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import {
     useRecommendedItems,
     type RecommendationTypeFilter,
-} from '@/hooks/api/useRecommendedItems';
+} from '@pelagica/core';
 import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
 import { Star, TrendingUp } from 'lucide-react';
 import { useMemo } from 'react';

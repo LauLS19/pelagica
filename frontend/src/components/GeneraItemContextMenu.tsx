@@ -8,7 +8,7 @@ import {
     ContextMenuTrigger,
 } from './ui/context-menu';
 import { useAdminItemDialogs } from '../context/AdminItemDialogsContext';
-import { useCurrentUser } from '../hooks/api/useCurrentUser';
+import { useCurrentUser } from '@pelagica/core';
 import { useTranslation } from 'react-i18next';
 import {
     Bookmark,
@@ -21,10 +21,10 @@ import {
     ScanSearch,
     Trash2,
 } from 'lucide-react';
-import { useFavorite } from '../hooks/api/useFavorite';
-import { useConfig } from '../hooks/api/useConfig';
+import { useFavorite } from '@pelagica/core';
+import { useConfig } from '@pelagica/core';
 import { Link } from 'react-router';
-import { useLike } from '../hooks/api/useLike';
+import { useLike } from '@pelagica/core';
 import { WATCHLISTABLE_ITEM_TYPES } from '../utils/watchlistableItems';
 import { DOWNLOADABLE_ITEM_TYPES } from '../utils/downloadableItems';
 import { getDownloadurl } from '../utils/jellyfinUrls';

@@ -1,4 +1,4 @@
-import type { AppConfig } from '@/hooks/api/useConfig';
+import type { AppConfig } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import BaseMediaPage from './BaseMediaPage';
 import { Dot, ImageOff } from 'lucide-react';
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { getPrimaryImageUrl, getThumbUrl } from '@/utils/jellyfinUrls';
 import DetailBadges from './DetailBadges';
 import { useState } from 'react';
-import { useSeasons } from '@/hooks/api/useSeasons';
+import { useSeasons } from '@pelagica/core';
 import EpisodesDisplay from './EpisodesDisplay';
 import {
     Select,
@@ -19,7 +19,7 @@ import PeopleRow from './PeopleRow';
 import JellyfinItemKindIcon from '@/components/JellyfinItemKindIcon';
 import MediaInfoDialog from '../../components/MediaInfoDialog';
 import FavoriteButton from '../../components/FavoriteButton';
-import { getUserId } from '@/utils/localstorageCredentials';
+import { getUserId } from '@pelagica/core';
 import PlayStateButton from '../../components/PlayStateButton';
 import ItemAdminButton from '@/components/ItemAdminButton';
 import ItemDownloadButton from '../../components/ItemDownloadButton';

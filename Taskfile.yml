@@ -12,6 +12,9 @@ includes:
     desktop:
         taskfile: ./desktop/Taskfile.yml
         dir: ./desktop
+    tizen:
+        taskfile: ./tizen/Taskfile.yml
+        dir: ./tizen
 
 tasks:
     dev:

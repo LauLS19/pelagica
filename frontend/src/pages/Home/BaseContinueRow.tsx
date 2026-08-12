@@ -1,4 +1,4 @@
-import type { ContinueWatchingDetailLine, ContinueWatchingTitleLine } from '@/hooks/api/useConfig';
+import type { ContinueWatchingDetailLine, ContinueWatchingTitleLine } from '@pelagica/core';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router';

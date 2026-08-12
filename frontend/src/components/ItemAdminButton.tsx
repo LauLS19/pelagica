@@ -16,7 +16,7 @@ import {
     ScanSearch,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useCurrentUser } from '@/hooks/api/useCurrentUser';
+import { useCurrentUser } from '@pelagica/core';
 import { useRef } from 'react';
 import { useAdminItemDialogs } from '../context/AdminItemDialogsContext';
 import SubtitleDownloadDialog from '../pages/Item/SubtitleDownloadDialog';

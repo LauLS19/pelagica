@@ -1,5 +1,5 @@
 import { useTheme } from '@/components/theme-provider';
-import type { StudioSummary } from '@/hooks/api/useStudiosApi';
+import type { StudioSummary } from '@pelagica/core';
 import { getEffectiveTheme } from '@/utils/effectiveTheme';
 import { getStudioImageUrl } from '@/utils/jellyfinUrls';
 import { useState } from 'react';

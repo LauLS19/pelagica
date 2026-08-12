@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { Skeleton } from './ui/skeleton';
 import { getPrimaryImageUrl, type ImageSize } from '@/utils/jellyfinUrls';
 import { getItemUrl } from '@/utils/itemUrl';
-import { useConfig } from '@/hooks/api/useConfig';
+import { useConfig } from '@pelagica/core';
 import WatchedStateBadge from './WatchedStateBadge';
 import { forwardRef, useState, type ComponentPropsWithoutRef } from 'react';
 import PosterTrailerVideo from './PosterTrailerVideo';

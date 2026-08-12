@@ -1,11 +1,11 @@
-import type { AppConfig } from '@/hooks/api/useConfig';
+import type { AppConfig } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import BaseMediaPage from './BaseMediaPage';
 import { useTranslation } from 'react-i18next';
 import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
 import DetailBadges from './DetailBadges';
 import { useState } from 'react';
-import { useSeasons } from '@/hooks/api/useSeasons';
+import { useSeasons } from '@pelagica/core';
 import EpisodesDisplay from './EpisodesDisplay';
 import {
     Select,
@@ -19,9 +19,9 @@ import FavoriteButton from '../../components/FavoriteButton';
 import { Skeleton } from '@/components/ui/skeleton';
 import ItemAdminButton from '@/components/ItemAdminButton';
 import { ImageOff } from 'lucide-react';
-import { getUserId } from '../../utils/localstorageCredentials';
+import { getUserId } from '@pelagica/core';
 import PlayStateButton from '../../components/PlayStateButton';
-import { useUpcomingEpisodes } from '../../hooks/api/useUpcomingEpisodes';
+import { useUpcomingEpisodes } from '@pelagica/core';
 import UpcomingEpisodeComponent from './UpcomingEpisodeComponent';
 import { getLogoUrl } from '@/utils/jellyfinUrls';
 import ItemMetadataBadges from './ItemMetadataBadges';

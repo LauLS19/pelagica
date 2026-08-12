@@ -2,7 +2,7 @@ import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { COLLECTION_ITEM_TYPES, SUPPORTED_LIBRARY_COLLECTION_TYPES } from '../../utils/itemTypes';
 import ItemsRow from './ItemsRow';
 import { useTranslation } from 'react-i18next';
-import type { DetailField, RecentlyAddedSection } from '../../hooks/api/useConfig';
+import type { DetailField, RecentlyAddedSection } from '@pelagica/core';
 
 interface RecentlyAddedRowProps {
     view: BaseItemDto;

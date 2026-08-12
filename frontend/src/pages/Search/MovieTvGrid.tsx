@@ -5,7 +5,7 @@ import { ImageOff } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router';
 import WatchedStateBadge from '@/components/WatchedStateBadge';
-import { useConfig } from '@/hooks/api/useConfig';
+import { useConfig } from '@pelagica/core';
 
 interface MovieTvGridProps {
     items: BaseItemDto[];
