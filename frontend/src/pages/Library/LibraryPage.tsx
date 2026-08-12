@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Page from '../Page';
-import { useUserViews } from '@pelagica/core';
+import { COLLECTION_ITEM_TYPES, DIRECT_PLAY_COLLECTION_TYPES, useUserViews } from '@pelagica/core';
 import { useMemo, useState, useEffect } from 'react';
 import { useLibraryItems } from '@pelagica/core';
 import { useSearchParams } from 'react-router';
@@ -36,7 +36,7 @@ import type { BaseItemDto, CollectionType, ItemSortBy, SortOrder } from '@jellyf
 import { ButtonGroup } from '@/components/ui/button-group';
 import LibraryItem from './LibraryItem';
 import HomeVideoGrid, { TARGET_ROW_HEIGHT } from './HomeVideoGrid';
-import { COLLECTION_ITEM_TYPES, DIRECT_PLAY_TYPES, SUPPORTED_LIBRARY_COLLECTION_TYPES } from '@/utils/itemTypes';
+import { SUPPORTED_LIBRARY_COLLECTION_TYPES } from '@/utils/itemTypes';
 import { getPrimaryImageUrl, type ImageSize } from '@/utils/jellyfinUrls';
 
 const ITEM_ROWS = 5;
@@ -149,7 +149,7 @@ const LibraryContent = ({
     const totalPages = libraryData?.totalCount ? Math.ceil(libraryData.totalCount / pageSize) : 0;
     const gridCols = getGridConfig(collectionType).cols;
     const posterAspectRatio = ITEM_POSTER_ASPECT_RATIOS[collectionType] || DEFAULT_POSTER_ASPECT_RATIO;
-    const isDirectPlay = DIRECT_PLAY_TYPES.includes(collectionType);
+    const isDirectPlay = DIRECT_PLAY_COLLECTION_TYPES.includes(collectionType);
     const isHomeVideos = collectionType === 'homevideos';
 
     return (

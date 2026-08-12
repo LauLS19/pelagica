@@ -106,3 +106,5 @@ export * from './utils/genreItemCache';
 export * from './utils/genreTint';
 export * from './utils/localstorageCredentials';
 export * from './utils/videoCodecDetection';
+export * from './utils/collectionItemTypes';
+export * from './utils/directplayCollectionTypes';

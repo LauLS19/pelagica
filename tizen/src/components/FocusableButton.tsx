@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { cn } from '@/lib/utils';
+import { FOCUS_RING_COMPACT, FOCUS_RING_LARGE } from '@/lib/focus-styles';
 import { Button } from '@/components/ui/button';
+
+const COMPACT_SIZES = new Set(['sm', 'xs', 'icon', 'icon-sm', 'icon-xs']);
 
 const FocusableButton = ({
     autoFocus,
     className,
+    size = 'default',
     ...props
 }: React.ComponentProps<typeof Button> & { autoFocus?: boolean }) => {
     const { ref, focused, focusSelf } = useFocusable<object, HTMLButtonElement>({
@@ -16,11 +20,14 @@ const FocusableButton = ({
         if (autoFocus) focusSelf();
     }, [autoFocus, focusSelf]);
 
+    const compact = COMPACT_SIZES.has(String(size));
+
     return (
         <Button
             ref={ref}
+            size={size}
             className={cn(
-                focused && 'scale-105 ring-4 ring-ring ring-offset-4 ring-offset-background',
+                focused && (compact ? FOCUS_RING_COMPACT : FOCUS_RING_LARGE),
                 className
             )}
             {...props}

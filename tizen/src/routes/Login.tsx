@@ -222,6 +222,7 @@ const Login = () => {
                     </label>
                     <FocusableField
                         id="username"
+                        placeholder="Username"
                         autoFocus
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -232,6 +233,7 @@ const Login = () => {
                     <FocusableField
                         id="password"
                         type="password"
+                        placeholder="••••••••"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />

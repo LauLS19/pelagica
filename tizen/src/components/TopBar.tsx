@@ -1,0 +1,87 @@
+import { clearCredentials, useConfig } from '@pelagica/core';
+import { useEffect, useState } from 'react';
+import { cn } from '../lib/utils';
+import { useNavigate } from 'react-router-dom';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { House, Library, Search } from 'lucide-react';
+import FocusableButton from './FocusableButton';
+import FocusableNavLink from './FocusableNavLink';
+
+const TopBar = () => {
+    const { config } = useConfig();
+    const [scrolled, setScrolled] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20);
+        };
+
+        handleScroll();
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const logoSrc = config?.logoDarkUrl || 'logo.svg';
+
+    return (
+        <header className="relative z-50 w-full h-17 flex items-center justify-center">
+            {!scrolled && (
+                <div className="pointer-events-none absolute inset-0 -bottom-5 bg-linear-to-b from-background/70 to-transparent" />
+            )}
+
+            <div
+                className={cn(
+                    'pointer-events-auto relative flex h-11 items-center px-2 sm:px-4 mx-3 w-full md:w-auto rounded-full transition-all duration-300 border',
+                    'justify-between md:justify-start gap-1 md:gap-2',
+                    scrolled
+                        ? 'border-border bg-background/60 backdrop-blur shadow-sm'
+                        : 'border-white/10 bg-background/20 backdrop-blur-md'
+                )}
+            >
+                <div className="flex items-center gap-1 md:gap-2">
+                    {/* Logo */}
+                    {config?.showLogoInTopBar !== false && (
+                        <Avatar className="h-6 w-6 p-0.5 rounded-md">
+                            <AvatarImage src={logoSrc} alt="logo" />
+                            <AvatarFallback className="rounded-md text-xs">PE</AvatarFallback>
+                        </Avatar>
+                    )}
+
+                    {/* Desktop nav */}
+                    <nav className="hidden md:flex items-center gap-0.5">
+                        <FocusableNavLink to="/" autoFocus>
+                            <House className="h-4 w-4" />
+                            Home
+                        </FocusableNavLink>
+
+                        <FocusableNavLink to="/about">
+                            <Library className="h-4 w-4" />
+                            Library
+                        </FocusableNavLink>
+
+                        <FocusableNavLink to="/search">
+                            <Search className="h-4 w-4" />
+                            Search
+                        </FocusableNavLink>
+
+                        <FocusableButton
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                                clearCredentials();
+                                navigate('/login', { replace: true });
+                            }}
+                        >
+                            Log out
+                        </FocusableButton>
+                    </nav>
+                </div>
+            </div>
+        </header>
+    );
+};
+
+export default TopBar;
