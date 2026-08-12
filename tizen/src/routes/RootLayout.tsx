@@ -8,7 +8,7 @@ export function RootLayout() {
     return (
         <div className="flex min-h-svh flex-col">
             <TopBar />
-            <main className="min-w-0 flex-1 p-6">
+            <main className="min-w-0 flex-1 p-6 pt-3">
                 <Outlet />
             </main>
         </div>
