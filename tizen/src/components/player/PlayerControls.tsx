@@ -15,7 +15,7 @@ import {
     Check,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { setFocus, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import type {
     BaseItemDto,
     MediaSegmentDto,
@@ -35,6 +35,8 @@ import {
 
 const SEEK_SECONDS = 10;
 const HIDE_CONTROLS_TIMEOUT_MS = 5000;
+
+const PLAY_PAUSE_FOCUS_KEY = 'player-play-pause';
 
 type TrackMenu = 'audio' | 'subtitle' | null;
 
@@ -94,6 +96,11 @@ const PlayerControls = ({
         }, HIDE_CONTROLS_TIMEOUT_MS);
     }, []);
 
+    const closeTrackMenu = useCallback(() => {
+        setOpenMenu(null);
+        setFocus(PLAY_PAUSE_FOCUS_KEY);
+    }, []);
+
     useEffect(() => {
         resetHideTimeout();
         return () => {
@@ -128,12 +135,12 @@ const PlayerControls = ({
             const keyName = (event as TizenHwKeyEvent).keyName;
             if (keyName !== 'back' || !openMenu) return;
             event.stopImmediatePropagation();
-            setOpenMenu(null);
+            closeTrackMenu();
         }
 
         window.addEventListener('tizenhwkey', handleHwKey);
         return () => window.removeEventListener('tizenhwkey', handleHwKey);
-    }, [openMenu]);
+    }, [openMenu, closeTrackMenu]);
 
     useEffect(() => {
         if (!player || player.isDisposed?.()) return;
@@ -204,7 +211,7 @@ const PlayerControls = ({
     const handleAudioTrackChange = (index: number) => {
         onAudioTrackChange(index);
         setLastAudioLanguage(item.Id || '', index);
-        setOpenMenu(null);
+        closeTrackMenu();
     };
 
     const handleSubtitleTrackChange = (index: number | null) => {
@@ -215,7 +222,7 @@ const PlayerControls = ({
             onSubtitleTrackChange(index);
             setLastSubtitleLanguage(item.Id || '', index);
         }
-        setOpenMenu(null);
+        closeTrackMenu();
     };
 
     const getMediaSegment = (type: MediaSegmentType) => {
@@ -229,6 +236,7 @@ const PlayerControls = ({
         if (segment?.EndTicks) {
             player.currentTime(ticksToSeconds(segment.EndTicks));
         }
+        setFocus(PLAY_PAUSE_FOCUS_KEY);
     };
 
     const introSegment = getMediaSegment('Intro');
@@ -353,7 +361,10 @@ const PlayerControls = ({
                             <FocusableButton
                                 variant="outline"
                                 className="flex-1"
-                                onClick={() => setDismissedNextItemPrompt(true)}
+                                onClick={() => {
+                                    setDismissedNextItemPrompt(true);
+                                    setFocus(PLAY_PAUSE_FOCUS_KEY);
+                                }}
                             >
                                 Dismiss
                             </FocusableButton>
@@ -365,7 +376,7 @@ const PlayerControls = ({
             {openMenu && (
                 <TrackMenuPanel
                     title={openMenu === 'audio' ? 'Audio Tracks' : 'Subtitles'}
-                    onClose={() => setOpenMenu(null)}
+                    onClose={closeTrackMenu}
                 >
                     {openMenu === 'subtitle' && (
                         <TrackOption
@@ -448,6 +459,7 @@ const PlayerControls = ({
                         )}
                         <FocusableButton
                             autoFocus
+                            focusKey={PLAY_PAUSE_FOCUS_KEY}
                             variant="ghost"
                             size="icon-lg"
                             floating

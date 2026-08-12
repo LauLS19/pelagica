@@ -12,9 +12,15 @@ const FocusableButton = ({
     className,
     size = 'default',
     floating = false,
+    focusKey,
     ...props
-}: React.ComponentProps<typeof Button> & { autoFocus?: boolean; floating?: boolean }) => {
+}: React.ComponentProps<typeof Button> & {
+    autoFocus?: boolean;
+    floating?: boolean;
+    focusKey?: string;
+}) => {
     const { ref, focused, focusSelf } = useFocusable<object, HTMLButtonElement>({
+        focusKey,
         onEnterPress: () => ref.current?.click(),
     });
 
