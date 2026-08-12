@@ -13,6 +13,8 @@ export function getItemLink(
             return `/movie/${id}`;
         case 'Series':
             return `/series/${id}`;
+        case 'BoxSet':
+            return `/boxset/${id}`;
         default:
             return '/';
     }

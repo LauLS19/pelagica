@@ -12,6 +12,8 @@ import Library from './routes/Library';
 import LibraryDetail from './routes/LibraryDetail';
 import MovieDetail from './routes/MovieDetail';
 import SeriesDetail from './routes/SeriesDetail';
+import BoxSetDetail from './routes/BoxSetDetail';
+import Player from './routes/Player';
 
 function App() {
     return (
@@ -34,6 +36,8 @@ function App() {
                         <Route path="library/:libraryId" element={<LibraryDetail />} />
                         <Route path="movie/:itemId" element={<MovieDetail />} />
                         <Route path="series/:itemId" element={<SeriesDetail />} />
+                        <Route path="boxset/:itemId" element={<BoxSetDetail />} />
+                        <Route path="player/:itemId" element={<Player />} />
                     </Route>
                 </Routes>
             </HashRouter>
