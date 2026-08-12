@@ -13,8 +13,16 @@ import {
 } from '@pelagica/core';
 import FocusableButton from '@/components/FocusableButton';
 import FocusableField from '@/components/FocusableField';
+import { AlertTriangle } from 'lucide-react';
 
 type Step = 'server' | 'method' | 'quickconnect' | 'password';
+
+const ErrorMessage = ({ message }: { message: string }) => (
+    <div className="flex items-center gap-1 text-sm text-destructive">
+        <AlertTriangle className="inline-block mr-1 w-4 h-4" />
+        <p>{message}</p>
+    </div>
+);
 
 const Login = () => {
     const navigate = useNavigate();
@@ -143,7 +151,10 @@ const Login = () => {
 
     return (
         <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6">
-            <h1 className="text-2xl font-semibold">Pelagica</h1>
+            <div className="flex flex-col items-center gap-2">
+                <img src="logo.svg" alt="Pelagica logo" className="h-8 w-8" />
+                <h1 className="text-2xl font-semibold">Pelagica</h1>
+            </div>
 
             {step === 'server' && (
                 <form onSubmit={onSubmitServer} className="flex w-full max-w-sm flex-col gap-3">
@@ -156,9 +167,7 @@ const Login = () => {
                         placeholder="jellyfin.example.com"
                         autoFocus
                     />
-                    {serverCheckError && (
-                        <p className="text-sm text-destructive">{serverCheckError}</p>
-                    )}
+                    {serverCheckError && <ErrorMessage message={serverCheckError} />}
                     <FocusableButton type="submit" disabled={checkingServer}>
                         {checkingServer ? 'Connecting…' : 'Connect'}
                     </FocusableButton>
@@ -196,9 +205,7 @@ const Login = () => {
                     <p className="text-4xl font-semibold tracking-[0.3em]">
                         {quickConnectCode ?? '……'}
                     </p>
-                    {quickConnectError && (
-                        <p className="text-sm text-destructive">{quickConnectError}</p>
-                    )}
+                    {quickConnectError && <ErrorMessage message={quickConnectError} />}
                     <FocusableButton
                         autoFocus
                         variant="ghost"
@@ -237,7 +244,7 @@ const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    {loginError && <p className="text-sm text-destructive">{loginError}</p>}
+                    {loginError && <ErrorMessage message={loginError} />}
                     <FocusableButton type="submit" disabled={login.isPending}>
                         {login.isPending ? 'Signing in…' : 'Sign in'}
                     </FocusableButton>
