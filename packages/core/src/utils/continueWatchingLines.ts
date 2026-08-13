@@ -1,8 +1,10 @@
-import type { ContinueWatchingDetailLine, ContinueWatchingTitleLine } from '@pelagica/core';
+import type {
+    ContinueWatchingDetailLine,
+    ContinueWatchingTitleLine,
+    TranslateFn,
+} from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { ticksToReadableTime } from './timeConversion';
-
-type TranslateFn = (key: string, options?: Record<string, unknown>) => string;
 
 export function getTitleLineText(
     item: BaseItemDto,

@@ -101,6 +101,7 @@ export * from './hooks/useStudiosApi';
 export * from './hooks/useUpcomingEpisodes';
 export * from './hooks/useUserViews';
 export * from './types/items';
+export * from './types/locales';
 export * from './utils/authErrorHandler';
 export * from './utils/deviceId';
 export * from './utils/genreItemCache';

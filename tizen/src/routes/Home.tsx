@@ -54,6 +54,7 @@ const Home = () => {
                                 title={section.title || t('items')}
                                 items={section.items}
                                 useThumbImage={section.useThumbImage}
+                                detailFields={section.detailFields}
                             />
                         );
                     default:

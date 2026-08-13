@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { getPrimaryImageUrl, getThumbUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { useTranslation } from 'react-i18next';
@@ -13,11 +13,13 @@ const ItemCard = ({
     autoFocus,
     className,
     useThumb,
+    detail,
 }: {
     item: BaseItemDto;
     autoFocus?: boolean;
     className?: string;
     useThumb?: boolean;
+    detail?: ReactNode;
 }) => {
     const { t } = useTranslation('item');
     const [imageError, setImageError] = useState(false);
@@ -58,7 +60,11 @@ const ItemCard = ({
                         )}
                     </div>
                     <p className="mt-2 truncate text-sm font-medium">{item.Name}</p>
-                    <p className="text-xs text-muted-foreground">{item.ProductionYear}</p>
+                    {detail ? (
+                        detail
+                    ) : (
+                        <p className="text-xs text-muted-foreground">{item.ProductionYear}</p>
+                    )}
                 </>
             )}
         </FocusableCard>
