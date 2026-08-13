@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
     Play,
     Pause,
@@ -13,68 +13,61 @@ import {
     Subtitles,
     Dot,
     Check,
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import {
+    FocusContext,
     pause,
     resume,
     setFocus,
     useFocusable,
-} from "@noriginmedia/norigin-spatial-navigation";
+} from '@noriginmedia/norigin-spatial-navigation';
 import type {
     BaseItemDto,
     MediaSegmentDto,
     MediaSegmentType,
-} from "@jellyfin/sdk/lib/generated-client/models";
-import { Button } from "@/components/ui/button";
-import FocusableButton from "@/components/FocusableButton";
-import { cn } from "@/lib/utils";
-import { FOCUS_RING_COMPACT } from "@/lib/focus-styles";
-import {
-    formatPlayTime,
-    ticksToReadableTime,
-    ticksToSeconds,
-} from "@/lib/timeConversion";
-import {
-    getLogoUrl,
-    getPrimaryImageUrl,
-    useReportPlaybackProgress,
-} from "@pelagica/core";
+} from '@jellyfin/sdk/lib/generated-client/models';
+import { Button } from '@/components/ui/button';
+import FocusableButton from '@/components/FocusableButton';
+import { cn } from '@/lib/utils';
+import { FOCUS_RING_COMPACT } from '@/lib/focus-styles';
+import { formatPlayTime, ticksToReadableTime, ticksToSeconds } from '@/lib/timeConversion';
+import { getLogoUrl, getPrimaryImageUrl, useReportPlaybackProgress } from '@pelagica/core';
 import {
     removeLastSubtitleLanguage,
     setLastAudioLanguage,
     setLastSubtitleLanguage,
-} from "@/lib/localstorageLastlanguage";
+} from '@/lib/localstorageLastlanguage';
 
 const SEEK_SECONDS = 10;
 const HIDE_CONTROLS_TIMEOUT_MS = 5000;
 
-const PLAY_PAUSE_FOCUS_KEY = "player-play-pause";
+const PLAY_PAUSE_FOCUS_KEY = 'player-play-pause';
 
 // Some TV browsers (older Tizen WebKit included) still report the pre-standardization
 // key names ('Up'/'Down'/'Left'/'Right') instead of 'ArrowUp' etc.
 const NAV_KEY_CODES = new Set([13, 37, 38, 39, 40]); // Enter, Left, Up, Right, Down
 const NAV_KEY_NAMES = new Set([
-    "Enter",
-    "ArrowUp",
-    "ArrowDown",
-    "ArrowLeft",
-    "ArrowRight",
-    "Up",
-    "Down",
-    "Left",
-    "Right",
+    'Enter',
+    'ArrowUp',
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'Up',
+    'Down',
+    'Left',
+    'Right',
 ]);
 
 function isNavigationKey(event: KeyboardEvent) {
     return NAV_KEY_CODES.has(event.keyCode) || NAV_KEY_NAMES.has(event.key);
 }
 
-type TrackMenu = "audio" | "subtitle" | null;
+type TrackMenu = 'audio' | 'subtitle' | null;
 
 interface PlayerControlsProps {
     item: BaseItemDto;
-    player: ReturnType<typeof import("video.js").default> | null;
+    player: ReturnType<typeof import('video.js').default> | null;
     audioTrackIndex: number | null;
     onAudioTrackChange: (index: number) => void;
     subtitleTrackIndex: number | null;
@@ -102,8 +95,7 @@ const PlayerControls = ({
     const [isMuted, setIsMuted] = useState(false);
     const [showControls, setShowControls] = useState(true);
     const [openMenu, setOpenMenu] = useState<TrackMenu>(null);
-    const [dismissedNextItemPrompt, setDismissedNextItemPrompt] =
-        useState(false);
+    const [dismissedNextItemPrompt, setDismissedNextItemPrompt] = useState(false);
     const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const navigate = useNavigate();
     const { reportProgress } = useReportPlaybackProgress();
@@ -118,7 +110,7 @@ const PlayerControls = ({
                 isPaused: true,
             });
         },
-        [item.RunTimeTicks, reportProgress],
+        [item.RunTimeTicks, reportProgress]
     );
 
     const resetHideTimeout = useCallback(() => {
@@ -151,8 +143,8 @@ const PlayerControls = ({
             resetHideTimeout();
         }
 
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
     }, [resetHideTimeout, showControls]);
 
     // Close an open track menu on the TV remote's back key instead of exiting the player.
@@ -160,13 +152,13 @@ const PlayerControls = ({
     useEffect(() => {
         function handleHwKey(event: Event) {
             const keyName = (event as TizenHwKeyEvent).keyName;
-            if (keyName !== "back" || !openMenu) return;
+            if (keyName !== 'back' || !openMenu) return;
             event.stopImmediatePropagation();
             closeTrackMenu();
         }
 
-        window.addEventListener("tizenhwkey", handleHwKey);
-        return () => window.removeEventListener("tizenhwkey", handleHwKey);
+        window.addEventListener('tizenhwkey', handleHwKey);
+        return () => window.removeEventListener('tizenhwkey', handleHwKey);
     }, [openMenu, closeTrackMenu]);
 
     useEffect(() => {
@@ -189,24 +181,24 @@ const PlayerControls = ({
             navigate(`/player/${nextItem.Id}`);
         };
 
-        player.on("play", updatePlayState);
-        player.on("pause", updatePlayState);
-        player.on("timeupdate", updateTime);
-        player.on("timeupdate", updateBuffered);
-        player.on("loadedmetadata", updateDuration);
-        player.on("progress", updateBuffered);
-        player.on("volumechange", updateMuted);
-        player.on("ended", handleEnded);
+        player.on('play', updatePlayState);
+        player.on('pause', updatePlayState);
+        player.on('timeupdate', updateTime);
+        player.on('timeupdate', updateBuffered);
+        player.on('loadedmetadata', updateDuration);
+        player.on('progress', updateBuffered);
+        player.on('volumechange', updateMuted);
+        player.on('ended', handleEnded);
 
         return () => {
-            player.off("play", updatePlayState);
-            player.off("pause", updatePlayState);
-            player.off("timeupdate", updateTime);
-            player.off("timeupdate", updateBuffered);
-            player.off("loadedmetadata", updateDuration);
-            player.off("progress", updateBuffered);
-            player.off("volumechange", updateMuted);
-            player.off("ended", handleEnded);
+            player.off('play', updatePlayState);
+            player.off('pause', updatePlayState);
+            player.off('timeupdate', updateTime);
+            player.off('timeupdate', updateBuffered);
+            player.off('loadedmetadata', updateDuration);
+            player.off('progress', updateBuffered);
+            player.off('volumechange', updateMuted);
+            player.off('ended', handleEnded);
         };
     }, [player, nextItem, item.Id, navigate, markItemAsCompleted]);
 
@@ -227,31 +219,27 @@ const PlayerControls = ({
 
     const handleSeekBackward = useCallback(() => {
         if (!player) return;
-        player.currentTime(
-            Math.max(0, (player.currentTime() || 0) - SEEK_SECONDS),
-        );
+        player.currentTime(Math.max(0, (player.currentTime() || 0) - SEEK_SECONDS));
     }, [player]);
 
     const handleSeekForward = useCallback(() => {
         if (!player) return;
-        player.currentTime(
-            Math.min(duration, (player.currentTime() || 0) + SEEK_SECONDS),
-        );
+        player.currentTime(Math.min(duration, (player.currentTime() || 0) + SEEK_SECONDS));
     }, [player, duration]);
 
     const handleAudioTrackChange = (index: number) => {
         onAudioTrackChange(index);
-        setLastAudioLanguage(item.Id || "", index);
+        setLastAudioLanguage(item.Id || '', index);
         closeTrackMenu();
     };
 
     const handleSubtitleTrackChange = (index: number | null) => {
         if (index === null) {
             onSubtitleTrackChange(null);
-            removeLastSubtitleLanguage(item.Id || "");
+            removeLastSubtitleLanguage(item.Id || '');
         } else {
             onSubtitleTrackChange(index);
-            setLastSubtitleLanguage(item.Id || "", index);
+            setLastSubtitleLanguage(item.Id || '', index);
         }
         closeTrackMenu();
     };
@@ -270,7 +258,7 @@ const PlayerControls = ({
         setFocus(PLAY_PAUSE_FOCUS_KEY);
     };
 
-    const introSegment = getMediaSegment("Intro");
+    const introSegment = getMediaSegment('Intro');
     const showSkipIntroButton =
         introSegment &&
         introSegment.StartTicks != null &&
@@ -278,7 +266,7 @@ const PlayerControls = ({
         currentTime > ticksToSeconds(introSegment.StartTicks) &&
         currentTime < ticksToSeconds(introSegment.EndTicks);
 
-    const outtroSegment = getMediaSegment("Outro");
+    const outtroSegment = getMediaSegment('Outro');
     const showSkipOutroButton =
         outtroSegment &&
         outtroSegment.StartTicks != null &&
@@ -286,40 +274,32 @@ const PlayerControls = ({
         currentTime > ticksToSeconds(outtroSegment.StartTicks) &&
         currentTime < ticksToSeconds(outtroSegment.EndTicks);
 
-    const clampedCurrentTime =
-        duration > 0 ? Math.min(currentTime, duration) : currentTime;
+    const clampedCurrentTime = duration > 0 ? Math.min(currentTime, duration) : currentTime;
     const progressPercentage = Math.min(
         100,
-        duration > 0 ? (clampedCurrentTime / duration) * 100 : 0,
+        duration > 0 ? (clampedCurrentTime / duration) * 100 : 0
     );
-    const bufferedPercentage = Math.min(
-        100,
-        duration > 0 ? (bufferedTime / duration) * 100 : 0,
-    );
+    const bufferedPercentage = Math.min(100, duration > 0 ? (bufferedTime / duration) * 100 : 0);
 
     const title =
-        item.Type === "Episode"
+        item.Type === 'Episode'
             ? `${item.SeriesName} - S${item.ParentIndexNumber}E${item.IndexNumber} - ${item.Name}`
             : item.Name;
 
-    const backButtonImageId = item.Type === "Episode" ? item.SeriesId : item.Id;
-    const backButtonImageTag =
-        item.Type === "Episode" ? undefined : item.ImageTags?.Logo;
+    const backButtonImageId = item.Type === 'Episode' ? item.SeriesId : item.Id;
+    const backButtonImageTag = item.Type === 'Episode' ? undefined : item.ImageTags?.Logo;
 
-    const isLive = item.Type === "TvChannel";
+    const isLive = item.Type === 'TvChannel';
 
-    const audioStreams =
-        item.MediaStreams?.filter((s) => s.Type === "Audio") || [];
-    const subtitleStreams =
-        item.MediaStreams?.filter((s) => s.Type === "Subtitle") || [];
+    const audioStreams = item.MediaStreams?.filter((s) => s.Type === 'Audio') || [];
+    const subtitleStreams = item.MediaStreams?.filter((s) => s.Type === 'Subtitle') || [];
 
     const timeRemaining = duration - currentTime;
     const showNextItemPrompt =
         nextItem &&
         duration > 0 &&
         !dismissedNextItemPrompt &&
-        (timeRemaining <= 30 ||
-            (duration > 0 && currentTime / duration >= 0.95));
+        (timeRemaining <= 30 || (duration > 0 && currentTime / duration >= 0.95));
 
     return (
         <>
@@ -327,14 +307,10 @@ const PlayerControls = ({
                 className="absolute top-0 left-0 w-full p-4 bg-linear-to-b from-black/80 to-transparent z-50 text-gray-200 text-lg flex items-center gap-2 transition-opacity duration-300"
                 style={{
                     opacity: showControls ? 1 : 0,
-                    pointerEvents: showControls ? "auto" : "none",
+                    pointerEvents: showControls ? 'auto' : 'none',
                 }}
             >
-                <FocusableButton
-                    variant="ghost"
-                    floating
-                    onClick={() => navigate(-1)}
-                >
+                <FocusableButton variant="ghost" floating onClick={() => navigate(-1)}>
                     <ArrowLeft />
                 </FocusableButton>
                 {backButtonLogoFailed ? (
@@ -342,11 +318,7 @@ const PlayerControls = ({
                 ) : (
                     <img
                         className="h-9 object-contain"
-                        src={getLogoUrl(
-                            backButtonImageId!,
-                            { maxHeight: 140 },
-                            backButtonImageTag,
-                        )}
+                        src={getLogoUrl(backButtonImageId!, { maxHeight: 140 }, backButtonImageTag)}
                         onError={() => setBackButtonLogoFailed(true)}
                     />
                 )}
@@ -358,7 +330,7 @@ const PlayerControls = ({
                         autoFocus
                         variant="default"
                         floating
-                        onClick={() => handleSkipSegment("Intro")}
+                        onClick={() => handleSkipSegment('Intro')}
                     >
                         <SkipForward />
                         Skip Intro
@@ -369,7 +341,7 @@ const PlayerControls = ({
                         autoFocus
                         variant="default"
                         floating
-                        onClick={() => handleSkipSegment("Outro")}
+                        onClick={() => handleSkipSegment('Outro')}
                     >
                         <SkipForward />
                         Skip Outro
@@ -385,12 +357,11 @@ const PlayerControls = ({
                                 height: 180,
                                 width: 320,
                             })}
-                            alt={nextItem.Name || "Next item poster"}
+                            alt={nextItem.Name || 'Next item poster'}
                             className="w-full h-auto rounded"
                         />
                         <p>
-                            S{nextItem.ParentIndexNumber}E{nextItem.IndexNumber}{" "}
-                            ⋅ {nextItem.Name}
+                            S{nextItem.ParentIndexNumber}E{nextItem.IndexNumber} ⋅ {nextItem.Name}
                         </p>
                         <p className="text-muted-foreground text-xs mb-2">
                             {ticksToReadableTime(nextItem.RunTimeTicks || 0)}
@@ -426,10 +397,10 @@ const PlayerControls = ({
 
             {openMenu && (
                 <TrackMenuPanel
-                    title={openMenu === "audio" ? "Audio Tracks" : "Subtitles"}
+                    title={openMenu === 'audio' ? 'Audio Tracks' : 'Subtitles'}
                     onClose={closeTrackMenu}
                 >
-                    {openMenu === "subtitle" && (
+                    {openMenu === 'subtitle' && (
                         <TrackOption
                             label="Off"
                             selected={subtitleTrackIndex === null}
@@ -437,32 +408,29 @@ const PlayerControls = ({
                             onClick={() => handleSubtitleTrackChange(null)}
                         />
                     )}
-                    {(openMenu === "audio"
-                        ? audioStreams
-                        : subtitleStreams
-                    ).map((stream, index) => (
-                        <TrackOption
-                            key={stream.Index ?? index}
-                            label={
-                                openMenu === "audio"
-                                    ? `${stream.Language || "Unknown Language"} - ${stream.Codec}`
-                                    : stream.DisplayTitle ||
-                                      stream.Language ||
-                                      "Unknown"
-                            }
-                            selected={
-                                openMenu === "audio"
-                                    ? audioTrackIndex === stream.Index
-                                    : subtitleTrackIndex === index
-                            }
-                            autoFocus={openMenu === "audio" && index === 0}
-                            onClick={() =>
-                                openMenu === "audio"
-                                    ? handleAudioTrackChange(stream.Index!)
-                                    : handleSubtitleTrackChange(index)
-                            }
-                        />
-                    ))}
+                    {(openMenu === 'audio' ? audioStreams : subtitleStreams).map(
+                        (stream, index) => (
+                            <TrackOption
+                                key={stream.Index ?? index}
+                                label={
+                                    openMenu === 'audio'
+                                        ? `${stream.Language || 'Unknown Language'} - ${stream.Codec}`
+                                        : stream.DisplayTitle || stream.Language || 'Unknown'
+                                }
+                                selected={
+                                    openMenu === 'audio'
+                                        ? audioTrackIndex === stream.Index
+                                        : subtitleTrackIndex === index
+                                }
+                                autoFocus={openMenu === 'audio' && index === 0}
+                                onClick={() =>
+                                    openMenu === 'audio'
+                                        ? handleAudioTrackChange(stream.Index!)
+                                        : handleSubtitleTrackChange(index)
+                                }
+                            />
+                        )
+                    )}
                 </TrackMenuPanel>
             )}
 
@@ -470,7 +438,7 @@ const PlayerControls = ({
                 className="absolute bottom-0 left-0 right-0 z-20 bg-linear-to-t from-black/80 to-transparent p-4 transition-opacity duration-300"
                 style={{
                     opacity: showControls ? 1 : 0,
-                    pointerEvents: showControls ? "auto" : "none",
+                    pointerEvents: showControls ? 'auto' : 'none',
                 }}
             >
                 {!isLive && (
@@ -495,9 +463,7 @@ const PlayerControls = ({
                                 size="icon-lg"
                                 floating
                                 title="Previous episode"
-                                onClick={() =>
-                                    navigate(`/player/${previousItem.Id}`)
-                                }
+                                onClick={() => navigate(`/player/${previousItem.Id}`)}
                             >
                                 <SkipBack size={24} />
                             </FocusableButton>
@@ -521,11 +487,7 @@ const PlayerControls = ({
                             floating
                             onClick={togglePlay}
                         >
-                            {isPlaying ? (
-                                <Pause size={24} />
-                            ) : (
-                                <Play size={24} />
-                            )}
+                            {isPlaying ? <Pause size={24} /> : <Play size={24} />}
                         </FocusableButton>
                         {!isLive && (
                             <FocusableButton
@@ -544,9 +506,7 @@ const PlayerControls = ({
                                 size="icon-lg"
                                 floating
                                 title="Next episode"
-                                onClick={() =>
-                                    navigate(`/player/${nextItem.Id}`)
-                                }
+                                onClick={() => navigate(`/player/${nextItem.Id}`)}
                             >
                                 <SkipForward size={24} />
                             </FocusableButton>
@@ -558,8 +518,7 @@ const PlayerControls = ({
                             </div>
                         ) : (
                             <div className="text-sm ml-2">
-                                {formatPlayTime(clampedCurrentTime)} /{" "}
-                                {formatPlayTime(duration)}
+                                {formatPlayTime(clampedCurrentTime)} / {formatPlayTime(duration)}
                             </div>
                         )}
                     </div>
@@ -570,7 +529,7 @@ const PlayerControls = ({
                                 variant="ghost"
                                 size="icon-lg"
                                 floating
-                                onClick={() => setOpenMenu("subtitle")}
+                                onClick={() => setOpenMenu('subtitle')}
                             >
                                 <Subtitles />
                             </FocusableButton>
@@ -580,7 +539,7 @@ const PlayerControls = ({
                                 variant="ghost"
                                 size="icon-lg"
                                 floating
-                                onClick={() => setOpenMenu("audio")}
+                                onClick={() => setOpenMenu('audio')}
                             >
                                 <AudioLines />
                             </FocusableButton>
@@ -609,18 +568,24 @@ function TrackMenuPanel({
     onClose: () => void;
     children: React.ReactNode;
 }) {
+    const { ref, focusKey } = useFocusable<object, HTMLDivElement>({
+        isFocusBoundary: true,
+        focusable: false,
+    });
+
     return (
         <div className="absolute inset-0 z-40 bg-black/60 flex items-center justify-end p-8">
-            <div className="w-96 max-h-full overflow-auto rounded-lg border border-border bg-card p-4 flex flex-col gap-2">
+            <div
+                ref={ref}
+                className="w-96 max-h-full overflow-auto rounded-lg border border-border bg-card p-4 flex flex-col gap-2"
+            >
                 <h3 className="text-lg font-semibold mb-1">{title}</h3>
-                {children}
-                <FocusableButton
-                    variant="outline"
-                    className="mt-2"
-                    onClick={onClose}
-                >
-                    Close
-                </FocusableButton>
+                <FocusContext.Provider value={focusKey}>
+                    {children}
+                    <FocusableButton variant="outline" className="mt-2" onClick={onClose}>
+                        Close
+                    </FocusableButton>
+                </FocusContext.Provider>
             </div>
         </div>
     );
@@ -637,11 +602,9 @@ function TrackOption({
     autoFocus?: boolean;
     onClick: () => void;
 }) {
-    const { ref, focused, focusSelf } = useFocusable<object, HTMLButtonElement>(
-        {
-            onEnterPress: () => ref.current?.click(),
-        },
-    );
+    const { ref, focused, focusSelf } = useFocusable<object, HTMLButtonElement>({
+        onEnterPress: () => ref.current?.click(),
+    });
 
     useEffect(() => {
         if (autoFocus) focusSelf();
@@ -653,15 +616,11 @@ function TrackOption({
             variant="ghost"
             onClick={onClick}
             className={cn(
-                "justify-start gap-2",
-                focused ? FOCUS_RING_COMPACT : selected && "bg-muted",
+                'justify-start gap-2',
+                focused ? FOCUS_RING_COMPACT : selected && 'bg-muted'
             )}
         >
-            {selected ? (
-                <Check className="shrink-0" />
-            ) : (
-                <span className="w-4 shrink-0" />
-            )}
+            {selected ? <Check className="shrink-0" /> : <span className="w-4 shrink-0" />}
             <span className="truncate">{label}</span>
         </Button>
     );
