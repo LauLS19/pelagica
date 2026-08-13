@@ -23,7 +23,7 @@ const LibraryCard = ({
         <FocusableCard
             to={`/library/${item.Id}`}
             autoFocus={autoFocus}
-            className={cn('w-56', className)}
+            className={cn('w-60', className)}
         >
             {(focused) => (
                 <>

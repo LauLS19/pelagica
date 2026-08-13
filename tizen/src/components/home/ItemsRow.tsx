@@ -14,7 +14,7 @@ interface ItemsRowProps {
     autoPlayTrailers?: boolean;
 }
 
-const ItemsRow = ({ title, items }: ItemsRowProps) => {
+const ItemsRow = ({ title, items, useThumbImage }: ItemsRowProps) => {
     const { t } = useTranslation('home');
     const { data: recentItems, isLoading } = useRowItems(items);
 
@@ -29,7 +29,12 @@ const ItemsRow = ({ title, items }: ItemsRowProps) => {
             <ScrollableHomeSection title={title || t('items')}>
                 {recentItems
                     ? recentItems.map((item) => (
-                          <ItemCard key={item.Id} item={item} autoFocus={false} />
+                          <ItemCard
+                              key={item.Id}
+                              item={item}
+                              autoFocus={false}
+                              useThumb={useThumbImage}
+                          />
                       ))
                     : Array.from({ length: 5 }).map((_, index) => (
                           <div key={index} className="w-40">

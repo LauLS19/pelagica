@@ -53,6 +53,7 @@ const Home = () => {
                                 key={index}
                                 title={section.title || t('items')}
                                 items={section.items}
+                                useThumbImage={section.useThumbImage}
                             />
                         );
                     default:
