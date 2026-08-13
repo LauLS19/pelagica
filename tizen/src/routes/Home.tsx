@@ -3,12 +3,26 @@ import LibrariesRow from '../components/home/LibrariesRow';
 import ContinueWatchingRow from '@/components/home/ContinueWatchingRow';
 import ResumeRow from '../components/home/ResumeRow';
 import NextUpRow from '../components/home/NextUpRow';
-import { useConfig } from '@pelagica/core';
+import { useConfig, useUserViews, type DetailField } from '@pelagica/core';
 import ItemsRow from '../components/home/ItemsRow';
+import RecentlyAddedRow from '../components/home/RecentlyAddedRow';
+import type { CollectionType } from '@jellyfin/sdk/lib/generated-client/models';
+
+function getDetailFieldsForCollectionType(type: CollectionType | undefined): DetailField[] {
+    switch (type) {
+        case 'music':
+            return ['Artist'];
+        case 'playlists':
+            return ['TrackCount'];
+        default:
+            return ['ReleaseYear'];
+    }
+}
 
 const Home = () => {
-    const { config } = useConfig();
     const { t } = useTranslation('home');
+    const { config } = useConfig();
+    const { data: userViews } = useUserViews();
 
     return (
         <div className="flex flex-col items-start gap-6">
@@ -47,6 +61,34 @@ const Home = () => {
                         );
                     case 'libraries':
                         return <LibrariesRow key={index} title={t('libraries')} />;
+                    case 'recentlyAdded': {
+                        const filteredViews =
+                            section.libraryIds && section.libraryIds.length > 0
+                                ? userViews?.Items?.filter(
+                                      (view) => view.Id && section.libraryIds!.includes(view.Id)
+                                  )
+                                : userViews?.Items;
+                        return (
+                            <div key={index} className="flex flex-col gap-4">
+                                {userViews && filteredViews ? (
+                                    <>
+                                        {filteredViews.map((view) => (
+                                            <RecentlyAddedRow
+                                                key={view.Id}
+                                                view={view}
+                                                section={section}
+                                                detailFields={getDetailFieldsForCollectionType(
+                                                    view.CollectionType
+                                                )}
+                                            />
+                                        ))}
+                                    </>
+                                ) : (
+                                    <p>Loading user views...</p>
+                                )}
+                            </div>
+                        );
+                    }
                     case 'items':
                         return (
                             <ItemsRow
