@@ -1,15 +1,11 @@
-import type { BaseItemDto } from "@jellyfin/sdk/lib/generated-client/models";
-import {
-    getBackdropUrl,
-    getPrimaryImageUrl,
-    getThumbUrl,
-} from "@pelagica/core";
-import { useState } from "react";
-import FocusableCard from "../FocusableCard";
-import { cn } from "@/lib/utils";
-import { FOCUS_RING_LARGE } from "@/lib/focus-styles";
-import { ImageOff } from "lucide-react";
-import ScrollableHomeSection from "./ScrollableHomeSection";
+import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
+import { getBackdropUrl, getPrimaryImageUrl, getThumbUrl } from '@pelagica/core';
+import { useState } from 'react';
+import FocusableCard from '../FocusableCard';
+import { cn } from '@/lib/utils';
+import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
+import { ImageOff } from 'lucide-react';
+import ScrollableHomeSection from './ScrollableHomeSection';
 
 interface BaseContinueRowProps {
     items: BaseItemDto[];
@@ -17,7 +13,7 @@ interface BaseContinueRowProps {
     error: unknown;
     title: string;
 }
-type ImageState = "thumb" | "backdrop" | "primary" | "failed";
+type ImageState = 'thumb' | 'backdrop' | 'primary' | 'failed';
 
 const ContinueEpisodeCard = ({
     item,
@@ -37,44 +33,36 @@ const ContinueEpisodeCard = ({
     const progress = runtime > 0 ? (watched / runtime) * 100 : 0;
 
     const imageSrc =
-        imageState === "thumb"
+        imageState === 'thumb'
             ? getThumbUrl(item.Id!, { width: 416 }, item.ImageTags?.Thumb)
-            : imageState === "backdrop"
-              ? getBackdropUrl(
-                    item.Id!,
-                    { width: 416 },
-                    item.BackdropImageTags?.[0],
-                )
-              : imageState === "primary"
-                ? getPrimaryImageUrl(
-                      item.Id!,
-                      { width: 416 },
-                      item.ImageTags?.Primary,
-                  )
-                : "";
+            : imageState === 'backdrop'
+              ? getBackdropUrl(item.Id!, { width: 416 }, item.BackdropImageTags?.[0])
+              : imageState === 'primary'
+                ? getPrimaryImageUrl(item.Id!, { width: 416 }, item.ImageTags?.Primary)
+                : '';
 
     return (
         <FocusableCard
             to={`/player/${item.Id}`}
             autoFocus={autoFocus}
-            className={cn("w-46", className)}
+            className={cn('w-46', className)}
         >
             {(focused) => (
                 <>
                     <div
                         className={cn(
-                            "relative aspect-video w-full overflow-hidden rounded-md border border-border bg-muted",
-                            focused && FOCUS_RING_LARGE,
+                            'relative aspect-video w-full overflow-hidden rounded-md border border-border bg-muted',
+                            focused && FOCUS_RING_LARGE
                         )}
                     >
-                        {imageState === "failed" || !item.Id ? (
+                        {imageState === 'failed' || !item.Id ? (
                             <div className="flex h-full w-full items-center justify-center">
                                 <ImageOff className="h-8 w-8 text-muted-foreground" />
                             </div>
                         ) : (
                             <img
                                 src={imageSrc}
-                                alt={item.Name || "Continue Watching item"}
+                                alt={item.Name || 'Continue Watching item'}
                                 className="h-full w-full object-cover"
                                 onError={() => onImageError(item)}
                             />
@@ -88,37 +76,28 @@ const ContinueEpisodeCard = ({
                             </div>
                         )}
                     </div>
-                    <p className="mt-2 truncate text-sm font-medium">
-                        {item.Name}
-                    </p>
+                    <p className="mt-2 truncate text-sm font-medium">{item.Name}</p>
                 </>
             )}
         </FocusableCard>
     );
 };
 
-const BaseContinueRow = ({
-    items,
-    isLoading,
-    error,
-    title,
-}: BaseContinueRowProps) => {
-    const [imageStates, setImageStates] = useState<Record<string, ImageState>>(
-        {},
-    );
+const BaseContinueRow = ({ items, isLoading, error, title }: BaseContinueRowProps) => {
+    const [imageStates, setImageStates] = useState<Record<string, ImageState>>({});
 
     const handleImageError = (item: BaseItemDto) => {
         const id = item.Id;
         if (!id) return;
 
-        const state = imageStates[id] ?? "thumb";
+        const state = imageStates[id] ?? 'thumb';
 
         switch (state) {
-            case "thumb":
+            case 'thumb':
                 if (item.BackdropImageTags?.length) {
                     setImageStates((prev) => ({
                         ...prev,
-                        [id]: "backdrop",
+                        [id]: 'backdrop',
                     }));
                     return;
                 }
@@ -126,17 +105,17 @@ const BaseContinueRow = ({
                 if (item.ImageTags?.Primary) {
                     setImageStates((prev) => ({
                         ...prev,
-                        [id]: "primary",
+                        [id]: 'primary',
                     }));
                     return;
                 }
                 break;
 
-            case "backdrop":
+            case 'backdrop':
                 if (item.ImageTags?.Primary) {
                     setImageStates((prev) => ({
                         ...prev,
-                        [id]: "primary",
+                        [id]: 'primary',
                     }));
                     return;
                 }
@@ -145,7 +124,7 @@ const BaseContinueRow = ({
 
         setImageStates((prev) => ({
             ...prev,
-            [id]: "failed",
+            [id]: 'failed',
         }));
     };
 
@@ -169,7 +148,7 @@ const BaseContinueRow = ({
                               <ContinueEpisodeCard
                                   key={item.Id}
                                   item={item}
-                                  imageState={imageStates[item.Id!] ?? "thumb"}
+                                  imageState={imageStates[item.Id!] ?? 'thumb'}
                                   onImageError={handleImageError}
                               />
                           ))}

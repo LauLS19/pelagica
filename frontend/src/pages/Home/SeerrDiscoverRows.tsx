@@ -3,11 +3,7 @@ import type React from 'react';
 import SectionScroller from '@/components/SectionScroller';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useSeerrLoginStatus } from '@pelagica/core';
-import {
-    useSeerrPopularMovies,
-    useSeerrPopularSeries,
-    useSeerrTrending,
-} from '@pelagica/core';
+import { useSeerrPopularMovies, useSeerrPopularSeries, useSeerrTrending } from '@pelagica/core';
 import type { SeerrSearchResultItem } from '@pelagica/core';
 import { SeerrRecommendationPoster } from '../Item/SeerrRecommendationsRow';
 import { ChevronRight } from 'lucide-react';

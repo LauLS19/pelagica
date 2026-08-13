@@ -41,6 +41,16 @@ tasks:
         cmds:
             - pnpm lint
 
+    format:
+        desc: Format code with Prettier
+        cmds:
+            - pnpm format
+
+    format:check:
+        desc: Check code formatting with Prettier
+        cmds:
+            - pnpm format:check
+
     preview:
         desc: Preview the production build with Vite
         cmds:

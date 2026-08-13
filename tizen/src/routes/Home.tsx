@@ -1,5 +1,5 @@
-import LibrariesRow from "../components/home/LibrariesRow";
-import ContinueWatchingRow from "@/components/home/ContinueWatchingRow";
+import LibrariesRow from '../components/home/LibrariesRow';
+import ContinueWatchingRow from '@/components/home/ContinueWatchingRow';
 
 const Home = () => {
     return (

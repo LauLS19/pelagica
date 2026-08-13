@@ -14,7 +14,7 @@ import {
 import FocusableButton from '@/components/FocusableButton';
 import FocusableField from '@/components/FocusableField';
 import { AlertTriangle } from 'lucide-react';
-import QRCode from "react-qr-code";
+import QRCode from 'react-qr-code';
 import { getQuickConnectUrl } from '@/utils/quickConnectUrl';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -204,9 +204,9 @@ const Login = () => {
             {step === 'quickconnect' && (
                 <div className="flex w-full max-w-sm flex-col items-center gap-3 text-center">
                     {quickConnectUrl && (
-                        <Card className='py-2'>
-                            <CardContent className='px-2'>
-                                <div className='flex items-center justify-center bg-white p-2 rounded-md'>
+                        <Card className="py-2">
+                            <CardContent className="px-2">
+                                <div className="flex items-center justify-center bg-white p-2 rounded-md">
                                     <QRCode value={quickConnectUrl} />
                                 </div>
                             </CardContent>
@@ -216,8 +216,9 @@ const Login = () => {
                         {quickConnectCode ?? '……'}
                     </p>
                     <p className="text-muted-foreground text-xs">
-                        Scan this QR code and authorize or go to <span className="font-medium text-foreground">{serverUrl}</span> on
-                        your phone or computer, sign in, and enter this code manually.
+                        Scan this QR code and authorize or go to{' '}
+                        <span className="font-medium text-foreground">{serverUrl}</span> on your
+                        phone or computer, sign in, and enter this code manually.
                     </p>
                     {quickConnectError && <ErrorMessage message={quickConnectError} />}
                     <FocusableButton

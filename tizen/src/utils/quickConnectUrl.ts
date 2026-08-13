@@ -1,4 +1,4 @@
-import { getServerUrl } from "@pelagica/core";
+import { getServerUrl } from '@pelagica/core';
 
 export function getQuickConnectUrl(code: string | null | undefined): string | null {
     if (!code) return null;

@@ -28,6 +28,7 @@ tasks:
         deps:
             - lint
             - format:check
+            - tizen:format:check
 
     version:
         desc: "Set the app version everywhere it's tracked (usage: task version VERSION=1.2.3)"

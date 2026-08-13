@@ -1,5 +1,5 @@
-import { getUserId, useContinueWatchingAndNextUp } from "@pelagica/core";
-import BaseContinueRow from "./BaseContinueRow";
+import { getUserId, useContinueWatchingAndNextUp } from '@pelagica/core';
+import BaseContinueRow from './BaseContinueRow';
 
 const ContinueWatchingRow = ({
     limit,

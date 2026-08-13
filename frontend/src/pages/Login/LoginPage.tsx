@@ -178,9 +178,8 @@ const LoginPage = () => {
             return;
         }
 
-        const servers = await getJellyfinInstance().discovery.getRecommendedServerCandidates(
-            serverAddress
-        );
+        const servers =
+            await getJellyfinInstance().discovery.getRecommendedServerCandidates(serverAddress);
         const best = getJellyfinInstance().discovery.findBestServer(servers);
 
         if (!best) {
