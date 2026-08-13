@@ -1,14 +1,23 @@
-import { getUserId, useContinueWatchingAndNextUp } from '@pelagica/core';
+import {
+    getUserId,
+    useContinueWatchingAndNextUp,
+    type ContinueWatchingDetailLine,
+    type ContinueWatchingTitleLine,
+} from '@pelagica/core';
 import BaseContinueRow from './BaseContinueRow';
 
 const ContinueWatchingRow = ({
     limit,
     accurateSorting = true,
     title,
+    titleLine,
+    detailLine,
 }: {
     limit?: number;
     accurateSorting?: boolean;
     title: string;
+    titleLine?: ContinueWatchingTitleLine;
+    detailLine?: ContinueWatchingDetailLine[];
 }) => {
     const {
         data: continueWatchingData,
@@ -22,6 +31,8 @@ const ContinueWatchingRow = ({
             isLoading={isLoading}
             error={error}
             title={title}
+            titleLine={titleLine}
+            detailLine={detailLine}
         />
     );
 };

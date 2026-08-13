@@ -1,11 +1,19 @@
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
-import { getBackdropUrl, getPrimaryImageUrl, getThumbUrl } from '@pelagica/core';
+import {
+    getBackdropUrl,
+    getDetailLineText,
+    getPrimaryImageUrl,
+    getThumbUrl,
+    getTitleLineText,
+    type ContinueWatchingDetailLine,
+    type ContinueWatchingTitleLine,
+} from '@pelagica/core';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import FocusableCard from '../FocusableCard';
 import { cn } from '@/lib/utils';
 import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
-import { ImageOff } from 'lucide-react';
+import { Dot, ImageOff } from 'lucide-react';
 import ScrollableHomeSection from './ScrollableHomeSection';
 
 interface BaseContinueRowProps {
@@ -13,6 +21,8 @@ interface BaseContinueRowProps {
     isLoading: boolean;
     error: unknown;
     title: string;
+    titleLine?: ContinueWatchingTitleLine;
+    detailLine?: ContinueWatchingDetailLine[];
 }
 type ImageState = 'thumb' | 'backdrop' | 'primary' | 'failed';
 
@@ -22,12 +32,16 @@ const ContinueEpisodeCard = ({
     onImageError,
     autoFocus,
     className,
+    titleLine,
+    detailLine,
 }: {
     item: BaseItemDto;
     imageState: ImageState;
     onImageError: (item: BaseItemDto) => void;
     autoFocus?: boolean;
     className?: string;
+    titleLine?: ContinueWatchingTitleLine;
+    detailLine?: ContinueWatchingDetailLine[];
 }) => {
     const { t } = useTranslation('home');
     const watched = item.UserData?.PlaybackPositionTicks ?? 0;
@@ -78,14 +92,53 @@ const ContinueEpisodeCard = ({
                             </div>
                         )}
                     </div>
-                    <p className="mt-2 truncate text-sm font-medium">{item.Name}</p>
+                    <p className="mt-2 text-sm font-medium line-clamp-1 text-ellipsis break-all">
+                        {getTitleLineText(item, titleLine, t)}
+                    </p>
+                    <div className="flex items-center space-x-0 text-xs text-muted-foreground overflow-hidden">
+                        {detailLine && detailLine.length > 0
+                            ? detailLine.map((line, idx) => {
+                                  const detailText = getDetailLineText(item, line, t);
+                                  if (!detailText) return null;
+
+                                  const isLast = idx === detailLine.length - 1;
+
+                                  return (
+                                      <span
+                                          key={`${item.Id}-${line}`}
+                                          className={`flex items-center ${
+                                              isLast ? 'min-w-0 flex-1' : 'whitespace-nowrap'
+                                          }`}
+                                      >
+                                          <span
+                                              className={`${
+                                                  isLast ? 'truncate' : 'whitespace-nowrap'
+                                              }`}
+                                          >
+                                              {detailText}
+                                          </span>
+                                          {!isLast && (
+                                              <Dot className="w-5 text-muted-foreground shrink-0" />
+                                          )}
+                                      </span>
+                                  );
+                              })
+                            : null}
+                    </div>
                 </>
             )}
         </FocusableCard>
     );
 };
 
-const BaseContinueRow = ({ items, isLoading, error, title }: BaseContinueRowProps) => {
+const BaseContinueRow = ({
+    items,
+    isLoading,
+    error,
+    title,
+    titleLine,
+    detailLine,
+}: BaseContinueRowProps) => {
     const { t } = useTranslation('home');
     const [imageStates, setImageStates] = useState<Record<string, ImageState>>({});
 
@@ -153,6 +206,8 @@ const BaseContinueRow = ({ items, isLoading, error, title }: BaseContinueRowProp
                                   item={item}
                                   imageState={imageStates[item.Id!] ?? 'thumb'}
                                   onImageError={handleImageError}
+                                  titleLine={titleLine}
+                                  detailLine={detailLine}
                               />
                           ))}
                 </ScrollableHomeSection>

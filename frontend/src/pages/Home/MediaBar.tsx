@@ -14,7 +14,7 @@ import WatchListButton from '@/components/WatchlistButton';
 import type { MediabarSize, SectionItemsConfig } from '@pelagica/core';
 import { useMediaBarItems } from '@pelagica/core';
 import { getBackdropUrl, getLogoUrl } from '@pelagica/core';
-import { getEndsAt, ticksToReadableTime } from '@/utils/timeConversion';
+import { getEndsAt, ticksToReadableTime } from '@pelagica/core';
 import { Play, Star } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

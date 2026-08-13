@@ -1,7 +1,22 @@
-import { getUserId, useResumeItems } from '@pelagica/core';
+import {
+    getUserId,
+    useResumeItems,
+    type ContinueWatchingDetailLine,
+    type ContinueWatchingTitleLine,
+} from '@pelagica/core';
 import BaseContinueRow from './BaseContinueRow';
 
-const ResumeRow = ({ limit, title }: { limit?: number; title: string }) => {
+const ResumeRow = ({
+    limit,
+    title,
+    titleLine,
+    detailLine,
+}: {
+    limit?: number;
+    title: string;
+    titleLine?: ContinueWatchingTitleLine;
+    detailLine?: ContinueWatchingDetailLine[];
+}) => {
     const { data: resumeData, isLoading, error } = useResumeItems(getUserId(), limit);
 
     return (
@@ -10,6 +25,8 @@ const ResumeRow = ({ limit, title }: { limit?: number; title: string }) => {
             isLoading={isLoading}
             error={error}
             title={title}
+            titleLine={titleLine}
+            detailLine={detailLine}
         />
     );
 };

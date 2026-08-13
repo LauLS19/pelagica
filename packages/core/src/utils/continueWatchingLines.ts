@@ -1,12 +1,13 @@
 import type { ContinueWatchingDetailLine, ContinueWatchingTitleLine } from '@pelagica/core';
-import { ticksToReadableTime } from '@/utils/timeConversion';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
-import type { TFunction } from 'i18next';
+import { ticksToReadableTime } from './timeConversion';
+
+type TranslateFn = (key: string, options?: Record<string, unknown>) => string;
 
 export function getTitleLineText(
     item: BaseItemDto,
     titleLine: ContinueWatchingTitleLine | undefined,
-    t: TFunction
+    t: TranslateFn
 ): string {
     const itemNameWithFallback = item.Name || item.SeriesName || t('no_title');
 
@@ -27,7 +28,7 @@ export function getTitleLineText(
 export function getDetailLineText(
     item: BaseItemDto,
     detailLine: ContinueWatchingDetailLine | undefined,
-    t: TFunction
+    t: TranslateFn
 ): string | null {
     const watched = item.UserData?.PlaybackPositionTicks ?? 0;
     const runtime = item.RunTimeTicks ?? 0;

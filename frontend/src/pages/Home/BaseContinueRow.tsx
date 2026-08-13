@@ -2,7 +2,10 @@ import type { ContinueWatchingDetailLine, ContinueWatchingTitleLine } from '@pel
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router';
-import { getDetailLineText, getTitleLineText } from './continueWatchingLines';
+import {
+    getDetailLineText,
+    getTitleLineText,
+} from '../../../../packages/core/src/utils/continueWatchingLines';
 import { buildPlayerUrl } from '@/utils/playerUrl';
 import { Dot, ImageOff, Play } from 'lucide-react';
 import { getPrimaryImageUrl, getThumbUrl, getBackdropUrl } from '@pelagica/core';

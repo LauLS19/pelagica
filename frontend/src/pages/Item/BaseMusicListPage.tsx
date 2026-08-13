@@ -3,7 +3,7 @@ import { getPrimaryImageUrl } from '@pelagica/core';
 import { getItemUrl } from '@/utils/itemUrl';
 import { usePageBackground } from '@/hooks/usePageBackground';
 import { Link } from 'react-router';
-import { ticksToReadableTime } from '@/utils/timeConversion';
+import { ticksToReadableTime } from '@pelagica/core';
 import { Button } from '@/components/ui/button';
 import { EllipsisVertical, ImageOff, Info, Play } from 'lucide-react';
 import FavoriteButton from '@/components/FavoriteButton';

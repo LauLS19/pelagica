@@ -33,7 +33,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { formatPlayTime, ticksToReadableTime, ticksToSeconds } from '@/utils/timeConversion';
+import { formatPlayTime, ticksToReadableTime, ticksToSeconds } from '@pelagica/core';
 import { buildPlayerUrl } from '@/utils/playerUrl';
 import { isDesktopApp } from '@/utils/desktopApp';
 import { useTranslation } from 'react-i18next';

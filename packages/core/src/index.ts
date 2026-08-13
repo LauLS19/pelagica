@@ -110,3 +110,5 @@ export * from './utils/localstorageCredentials';
 export * from './utils/videoCodecDetection';
 export * from './utils/collectionItemTypes';
 export * from './utils/directplayCollectionTypes';
+export * from './utils/continueWatchingLines';
+export * from './utils/timeConversion';

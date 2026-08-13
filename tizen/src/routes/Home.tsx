@@ -14,11 +14,36 @@ const Home = () => {
             {config.homeScreenSections?.map((section, index) => {
                 switch (section.type) {
                     case 'continueWatching':
-                        return <ContinueWatchingRow key={index} title={t('continue_watching')} />;
+                        return (
+                            <ContinueWatchingRow
+                                key={index}
+                                title={t('continue_watching')}
+                                accurateSorting={section.accurateSorting}
+                                titleLine={section.titleLine}
+                                detailLine={section.detailLine}
+                                limit={section.limit}
+                            />
+                        );
                     case 'resume':
-                        return <ResumeRow key={index} title={t('resume')} />;
+                        return (
+                            <ResumeRow
+                                key={index}
+                                title={t('resume')}
+                                titleLine={section.titleLine}
+                                detailLine={section.detailLine}
+                                limit={section.limit}
+                            />
+                        );
                     case 'nextUp':
-                        return <NextUpRow key={index} title={t('next_up')} />;
+                        return (
+                            <NextUpRow
+                                key={index}
+                                title={t('next_up')}
+                                titleLine={section.titleLine}
+                                detailLine={section.detailLine}
+                                limit={section.limit}
+                            />
+                        );
                     case 'libraries':
                         return <LibrariesRow key={index} title={t('libraries')} />;
                     default:
