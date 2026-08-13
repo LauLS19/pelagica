@@ -1,11 +1,13 @@
 import { useConfig } from '@pelagica/core';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { House, Library, Search, Settings } from 'lucide-react';
 import FocusableNavLink from './FocusableNavLink';
 
 const TopBar = () => {
+    const { t } = useTranslation(['sidebar', 'common', 'settings']);
     const { config } = useConfig();
     const [scrolled, setScrolled] = useState(false);
 
@@ -51,22 +53,22 @@ const TopBar = () => {
                     <nav className="hidden md:flex items-center gap-0.5">
                         <FocusableNavLink to="/">
                             <House className="h-4 w-4" />
-                            Home
+                            {t('sidebar:home')}
                         </FocusableNavLink>
 
                         <FocusableNavLink to="/library">
                             <Library className="h-4 w-4" />
-                            Library
+                            {t('sidebar:library')}
                         </FocusableNavLink>
 
                         <FocusableNavLink to="/search">
                             <Search className="h-4 w-4" />
-                            Search
+                            {t('common:search')}
                         </FocusableNavLink>
 
                         <FocusableNavLink to="/settings">
                             <Settings className="h-4 w-4" />
-                            Settings
+                            {t('settings:title')}
                         </FocusableNavLink>
                     </nav>
                 </div>

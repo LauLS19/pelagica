@@ -1,10 +1,12 @@
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { useConfig, useFavorite } from '@pelagica/core';
+import { useTranslation } from 'react-i18next';
 import FocusableButton from './FocusableButton';
 import { Heart } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 const FavoriteButton = ({ item }: { item: BaseItemDto }) => {
+    const { t } = useTranslation('item');
     const { config } = useConfig();
     const { isFavorite, toggleFavorite, isLoading: isFavoriteLoading } = useFavorite(item.Id);
 
@@ -18,7 +20,7 @@ const FavoriteButton = ({ item }: { item: BaseItemDto }) => {
             disabled={isFavoriteLoading}
         >
             <Heart className={cn(isFavorite && 'fill-current')} />
-            {isFavorite ? 'Favorited' : 'Favorite'}
+            {isFavorite ? t('unfavorite') : t('favorite')}
         </FocusableButton>
     );
 };

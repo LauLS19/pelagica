@@ -26,5 +26,12 @@
     "quick_connect_failed": "Quick Connect failed. Please try again.",
     "quick_connect_approved": "Quick Connect approved! Logging in...",
     "quick_connect_timeout": "Quick Connect timed out. Please try again.",
-    "demo_warning": "This is a demo instance for Pelagica. You can log in using the prefilled credentials, or go back to server selection to connect to your own server."
+    "demo_warning": "This is a demo instance for Pelagica. You can log in using the prefilled credentials, or go back to server selection to connect to your own server.",
+    "sign_in_with_quick_connect": "Sign in with Quick Connect",
+    "sign_in_with_password": "Sign in with username & password",
+    "use_different_server": "Use a different server",
+    "quick_connect_qr_instructions": "Scan this QR code and authorize or go to {{server}} on your phone or computer, sign in, and enter this code manually.",
+    "quick_connect_unavailable": "Quick Connect is not available on this server",
+    "quick_connect_auth_failed": "Quick Connect authentication failed",
+    "invalid_credentials": "Invalid username or password"
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import {
     getPrimaryImageUrl,
@@ -26,6 +27,7 @@ import ItemRow from '../components/ItemRow';
 const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?: boolean }) => {
     const [imageError, setImageError] = useState(false);
     const navigate = useNavigate();
+    const { t } = useTranslation('item');
     const { ref, focused, focusSelf } = useFocusable<object, HTMLButtonElement>({
         onEnterPress: () => ref.current?.click(),
     });
@@ -69,7 +71,7 @@ const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?:
                             { width: 400 },
                             episode.ImageTags?.Primary
                         )}
-                        alt={episode.Name || 'Episode'}
+                        alt={episode.Name || t('unknown_episode')}
                         className="h-full w-full object-cover"
                         onError={() => setImageError(true)}
                     />
@@ -125,6 +127,7 @@ const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?:
 
 const SeriesDetail = () => {
     const { itemId } = useParams<{ itemId: string }>();
+    const { t } = useTranslation(['item', 'common']);
     const { data: item, isLoading } = useItem(itemId, true, getUserId() ?? undefined);
     const { data: similarItems, isLoading: isSimilarItemsLoading } = useSimilarItems(itemId, 12);
 
@@ -153,7 +156,7 @@ const SeriesDetail = () => {
                 extraBadge={
                     item?.ChildCount && (
                         <Badge variant="outline">
-                            {item.ChildCount} {item.ChildCount === 1 ? 'Season' : 'Seasons'}
+                            {t('common:season_count', { count: item.ChildCount })}
                         </Badge>
                     )
                 }
@@ -170,7 +173,7 @@ const SeriesDetail = () => {
 
             {seasons && seasons.length > 0 && (
                 <div className="flex flex-col gap-3">
-                    <h2 className="text-lg font-semibold">Episodes</h2>
+                    <h2 className="text-lg font-semibold">{t('episodes')}</h2>
                     {seasons.length > 1 && (
                         <div className="flex flex-wrap gap-2">
                             {seasons.map((season) => (
@@ -179,7 +182,7 @@ const SeriesDetail = () => {
                                     variant={season.Id === selectedSeasonId ? 'default' : 'outline'}
                                     onClick={() => setSelectedSeasonId(season.Id ?? undefined)}
                                 >
-                                    {season.Name || `Season ${season.IndexNumber}`}
+                                    {season.Name || t('season_x', { number: season.IndexNumber })}
                                 </FocusableButton>
                             ))}
                         </div>
@@ -200,7 +203,7 @@ const SeriesDetail = () => {
             )}
 
             <ItemRow
-                title="More Like This"
+                title={t('more_like_this')}
                 items={similarItems ?? []}
                 isLoading={isLoading || isSimilarItemsLoading}
             />

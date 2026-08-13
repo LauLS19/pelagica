@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { COLLECTION_ITEM_TYPES, useLibraryItems, useUserViews } from '@pelagica/core';
 import type { CollectionType } from '@jellyfin/sdk/lib/generated-client/models';
 import ItemCard from '../components/ItemCard';
@@ -11,6 +12,7 @@ const ROWS_PER_PAGE = 5;
 
 const LibraryDetail = () => {
     const { libraryId } = useParams<{ libraryId: string }>();
+    const { t } = useTranslation('library');
     const { data: views } = useUserViews();
     const library = views?.Items?.find((view) => view.Id === libraryId);
     const gridRef = useRef<HTMLDivElement>(null);
@@ -42,7 +44,7 @@ const LibraryDetail = () => {
 
     return (
         <div className="flex flex-col gap-6">
-            <h1 className="text-2xl font-semibold">{library?.Name ?? 'Library'}</h1>
+            <h1 className="text-2xl font-semibold">{library?.Name ?? t('title')}</h1>
             <div
                 ref={gridRef}
                 className="grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] gap-4"
@@ -59,7 +61,7 @@ const LibraryDetail = () => {
                       ))}
             </div>
             {!isLoading && data?.items.length === 0 && (
-                <p className="text-muted-foreground">No items in this library yet.</p>
+                <p className="text-muted-foreground">{t('no_items_description')}</p>
             )}
             <ItemPagination
                 totalPages={totalPages}

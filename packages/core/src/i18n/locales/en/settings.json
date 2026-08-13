@@ -172,5 +172,8 @@
     "plugin_restart_confirm_description": "This will restart your Jellyfin server, interrupting any active streams for all users. Continue?",
     "plugin_restart_confirm_button": "Restart Server",
     "plugin_restart_started": "Restarting Jellyfin server...",
-    "plugin_restart_error": "Failed to restart the Jellyfin server."
+    "plugin_restart_error": "Failed to restart the Jellyfin server.",
+    "server_label": "Server",
+    "not_configured": "Not configured",
+    "signed_in_as": "Signed in as"
 }

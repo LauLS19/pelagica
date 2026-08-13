@@ -55,5 +55,12 @@
         "mid": "Mid",
         "highMid": "High mid",
         "treble": "Treble"
-    }
+    },
+    "unknownLanguage": "Unknown Language",
+    "unknown": "Unknown",
+    "audioTrackLabel": "{{language}} - {{codec}}",
+    "rewind10": "Rewind 10 seconds",
+    "forward10": "Forward 10 seconds",
+    "nextItemPoster": "Next item poster",
+    "errorLoadingItem": "Error loading item: {{message}}"
 }

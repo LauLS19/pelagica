@@ -5,6 +5,7 @@ import { setClientInfo } from '@pelagica/core';
 import App from './App.tsx';
 import pkg from '../package.json' with { type: 'json' };
 
+import '@pelagica/core/i18n';
 import './index.css';
 import './theme.css';
 

@@ -1,6 +1,7 @@
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { getBackdropUrl, getPrimaryImageUrl, getThumbUrl } from '@pelagica/core';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import FocusableCard from '../FocusableCard';
 import { cn } from '@/lib/utils';
 import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
@@ -28,6 +29,7 @@ const ContinueEpisodeCard = ({
     autoFocus?: boolean;
     className?: string;
 }) => {
+    const { t } = useTranslation('home');
     const watched = item.UserData?.PlaybackPositionTicks ?? 0;
     const runtime = item.RunTimeTicks ?? 0;
     const progress = runtime > 0 ? (watched / runtime) * 100 : 0;
@@ -62,7 +64,7 @@ const ContinueEpisodeCard = ({
                         ) : (
                             <img
                                 src={imageSrc}
-                                alt={item.Name || 'Continue Watching item'}
+                                alt={item.Name || t('continue_item_alt')}
                                 className="h-full w-full object-cover"
                                 onError={() => onImageError(item)}
                             />
@@ -84,6 +86,7 @@ const ContinueEpisodeCard = ({
 };
 
 const BaseContinueRow = ({ items, isLoading, error, title }: BaseContinueRowProps) => {
+    const { t } = useTranslation('home');
     const [imageStates, setImageStates] = useState<Record<string, ImageState>>({});
 
     const handleImageError = (item: BaseItemDto) => {
@@ -132,7 +135,7 @@ const BaseContinueRow = ({ items, isLoading, error, title }: BaseContinueRowProp
         <>
             {error && (
                 <div className="text-destructive">
-                    Error loading continue items: {String(error)}
+                    {t('error_loading_continue', { error: String(error) })}
                 </div>
             )}
             {((items && items.length > 0) || isLoading) && (

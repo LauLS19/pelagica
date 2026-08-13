@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getPrimaryImageUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
+import { useTranslation } from 'react-i18next';
 import { ImageOff } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
@@ -15,6 +16,7 @@ const LibraryCard = ({
     autoFocus?: boolean;
     className?: string;
 }) => {
+    const { t } = useTranslation('item');
     const [imageError, setImageError] = useState(false);
 
     return (
@@ -38,7 +40,7 @@ const LibraryCard = ({
                         ) : (
                             <img
                                 src={getPrimaryImageUrl(item.Id, { width: 448 })}
-                                alt={item.Name || 'Library'}
+                                alt={item.Name || t('unknown_library')}
                                 className="h-full w-full object-cover"
                                 onError={() => setImageError(true)}
                             />

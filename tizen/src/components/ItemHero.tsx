@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { getBackdropUrl, getLogoUrl, getPrimaryImageUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
+import { useTranslation } from 'react-i18next';
 import { ImageOff, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -17,6 +18,7 @@ const ItemHero = ({
     extraBadge?: ReactNode;
     mainButtonRow?: ReactNode;
 }) => {
+    const { t } = useTranslation('item');
     const [backdropError, setBackdropError] = useState(false);
     const [postersFailed, setPostersFailed] = useState(false);
     const [isPosterLoaded, setIsPosterLoaded] = useState(false);
@@ -36,7 +38,7 @@ const ItemHero = ({
     }
 
     if (!item) {
-        return <p className="text-muted-foreground">Item not found.</p>;
+        return <p className="text-muted-foreground">{t('item_not_found')}</p>;
     }
 
     return (

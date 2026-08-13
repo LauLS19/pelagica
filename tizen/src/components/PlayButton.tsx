@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { getUserId, useSeriesNextUp } from '@pelagica/core';
+import { useTranslation } from 'react-i18next';
 import { Play } from 'lucide-react';
 import FocusableButton from './FocusableButton';
 
 const PlayButton = ({ item }: { item: BaseItemDto }) => {
+    const { t } = useTranslation('item');
     const navigate = useNavigate();
     const isSeries = item.Type === 'Series';
 
@@ -21,15 +23,12 @@ const PlayButton = ({ item }: { item: BaseItemDto }) => {
 
     const label = isSeries
         ? nextUpEpisode
-            ? resume
-                ? `Resume S${nextUpEpisode.ParentIndexNumber} E${nextUpEpisode.IndexNumber}`
-                : `Play S${nextUpEpisode.ParentIndexNumber} E${nextUpEpisode.IndexNumber}`
-            : resume
-              ? `Resume`
-              : `Play`
-        : resume
-          ? 'Resume'
-          : 'Play';
+            ? t(resume ? 'continue_episode' : 'play_episode', {
+                  season: nextUpEpisode.ParentIndexNumber,
+                  episode: nextUpEpisode.IndexNumber,
+              })
+            : t(resume ? 'common:resume' : 'play')
+        : t(resume ? 'common:resume' : 'play');
 
     return (
         <FocusableButton

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
     Pagination,
     PaginationContent,
@@ -13,6 +14,7 @@ interface ItemPaginationProps {
 }
 
 const ItemPagination = ({ totalPages, currentPage, onPageChange }: ItemPaginationProps) => {
+    const { t } = useTranslation('common');
     if (totalPages <= 0) return null;
 
     return (
@@ -22,7 +24,7 @@ const ItemPagination = ({ totalPages, currentPage, onPageChange }: ItemPaginatio
                     <PaginationItem>
                         <FocusablePaginationLink
                             variant="previous"
-                            text={'Previous'}
+                            text={t('previous')}
                             onClick={() => onPageChange(Math.max(0, currentPage - 1))}
                             className={
                                 currentPage === 0
@@ -63,7 +65,7 @@ const ItemPagination = ({ totalPages, currentPage, onPageChange }: ItemPaginatio
                     <PaginationItem>
                         <FocusablePaginationLink
                             variant="next"
-                            text={'Next'}
+                            text={t('next')}
                             onClick={() => onPageChange(Math.min(totalPages - 1, currentPage + 1))}
                             className={
                                 currentPage >= totalPages - 1

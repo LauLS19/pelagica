@@ -1,8 +1,10 @@
 import { useUserViews } from '@pelagica/core';
+import { useTranslation } from 'react-i18next';
 import LibraryCard from '../components/LibraryCard';
 import { SUPPORTED_LIBRARY_COLLECTION_TYPES } from '../utils/supportedLibraryCollectionTypes';
 
 const Library = () => {
+    const { t } = useTranslation(['home', 'library']);
     const { data, isLoading } = useUserViews();
 
     const libraries = (data?.Items ?? []).filter(
@@ -13,7 +15,7 @@ const Library = () => {
 
     return (
         <div className="flex flex-col gap-6">
-            <h1 className="text-2xl font-semibold">Libraries</h1>
+            <h1 className="text-2xl font-semibold">{t('home:libraries')}</h1>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(14rem,1fr))] gap-4">
                 {isLoading
                     ? Array.from({ length: 6 }).map((_, i) => (
@@ -27,7 +29,7 @@ const Library = () => {
                       ))}
             </div>
             {!isLoading && libraries.length === 0 && (
-                <p className="text-muted-foreground">No libraries found.</p>
+                <p className="text-muted-foreground">{t('library:no_libraries_found')}</p>
             )}
         </div>
     );

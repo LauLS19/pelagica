@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
     useReportPlaybackProgress,
     usePlaybackStart,
@@ -31,6 +32,7 @@ export type VideoJsPlayer = ReturnType<typeof import('video.js').default>;
 
 const Player = () => {
     useTvBackKey();
+    const { t } = useTranslation(['player', 'item']);
 
     const { itemId } = useParams<{ itemId: string }>();
     const hasUserSelectedSubtitleRef = useRef(false);
@@ -325,18 +327,20 @@ const Player = () => {
     ) {
         return (
             <p>
-                Error loading item:{' '}
-                {error?.message ||
-                    mediaSegmentsError?.message ||
-                    adjacentItemsError?.message ||
-                    userConfigurationError?.message ||
-                    playbackInfoError?.message}
+                {t('player:errorLoadingItem', {
+                    message:
+                        error?.message ||
+                        mediaSegmentsError?.message ||
+                        adjacentItemsError?.message ||
+                        userConfigurationError?.message ||
+                        playbackInfoError?.message,
+                })}
             </p>
         );
     }
 
     if (!item || !streamResult) {
-        return <p>Item not found</p>;
+        return <p>{t('item:item_not_found')}</p>;
     }
 
     return (

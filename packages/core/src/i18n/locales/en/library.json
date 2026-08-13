@@ -12,5 +12,6 @@
     "no_studios_found_for_search": "No studios found for '{{search}}'.",
     "no_studios_found": "There are no studios in this library.",
     "clear_search": "Clear search",
-    "studios_search_placeholder": "Search studios..."
+    "studios_search_placeholder": "Search studios...",
+    "no_libraries_found": "No libraries found."
 }

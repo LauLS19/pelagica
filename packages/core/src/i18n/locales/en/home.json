@@ -25,5 +25,7 @@
     "section_not_found": "This section could not be found.",
     "seerr_trending": "Trending",
     "seerr_popular_movies": "Popular Movies",
-    "seerr_popular_series": "Popular Series"
+    "seerr_popular_series": "Popular Series",
+    "error_loading_continue": "Error loading continue items: {{error}}",
+    "continue_item_alt": "Continue Watching item"
 }

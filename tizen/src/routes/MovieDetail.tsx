@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { getUserId, useItem, useSimilarItems } from '@pelagica/core';
 import { Badge } from '@/components/ui/badge';
 import { formatRuntime } from '@/lib/formatRuntime';
@@ -10,6 +11,7 @@ import ItemRow from '../components/ItemRow';
 
 const MovieDetail = () => {
     const { itemId } = useParams<{ itemId: string }>();
+    const { t } = useTranslation('item');
     const { data: item, isLoading } = useItem(itemId, true, getUserId() ?? undefined);
     const { data: similarItems, isLoading: isSimilarItemsLoading } = useSimilarItems(itemId, 12);
 
@@ -35,7 +37,7 @@ const MovieDetail = () => {
             />
 
             <ItemRow
-                title="More Like This"
+                title={t('more_like_this')}
                 items={similarItems ?? []}
                 isLoading={isLoading || isSimilarItemsLoading}
             />

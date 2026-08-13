@@ -100,7 +100,7 @@ import {
 } from '@/utils/localTheme';
 import { useThemes } from '@pelagica/core';
 import { useQueryClient } from '@tanstack/react-query';
-import { SUPPORTED_LANGUAGES } from '../utils/supportedLanguages';
+import { SUPPORTED_LANGUAGES } from '@pelagica/core/i18n';
 import {
     isDesktopApp,
     isMacOS,

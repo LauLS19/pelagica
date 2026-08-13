@@ -145,5 +145,8 @@
     "trailer": "Trailer",
     "playTrailer": "Play Trailer",
     "localTrailer": "Local Trailer",
-    "remoteTrailer": "Remote Trailer"
+    "remoteTrailer": "Remote Trailer",
+    "unknown_item": "Item",
+    "unknown_library": "Library",
+    "unknown_episode": "Episode"
 }

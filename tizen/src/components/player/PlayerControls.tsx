@@ -15,6 +15,7 @@ import {
     Check,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
     FocusContext,
     pause,
@@ -88,6 +89,7 @@ const PlayerControls = ({
     previousItem,
     nextItem,
 }: PlayerControlsProps) => {
+    const { t } = useTranslation(['player', 'common']);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -333,7 +335,7 @@ const PlayerControls = ({
                         onClick={() => handleSkipSegment('Intro')}
                     >
                         <SkipForward />
-                        Skip Intro
+                        {t('player:skipIntro')}
                     </FocusableButton>
                 )}
                 {showSkipOutroButton && !showNextItemPrompt && (
@@ -344,20 +346,20 @@ const PlayerControls = ({
                         onClick={() => handleSkipSegment('Outro')}
                     >
                         <SkipForward />
-                        Skip Outro
+                        {t('player:skipOutro')}
                     </FocusableButton>
                 )}
                 {showNextItemPrompt && (
                     <div className="w-80 rounded-lg border border-border bg-card p-4 flex flex-col gap-2">
                         <h3 className="text-lg font-semibold">
-                            Next episode in {timeRemaining.toFixed(0)}s
+                            {t('player:upNext', { seconds: timeRemaining.toFixed(0) })}
                         </h3>
                         <img
                             src={getPrimaryImageUrl(nextItem.Id!, {
                                 height: 180,
                                 width: 320,
                             })}
-                            alt={nextItem.Name || 'Next item poster'}
+                            alt={nextItem.Name || t('player:nextItemPoster')}
                             className="w-full h-auto rounded"
                         />
                         <p>
@@ -378,7 +380,7 @@ const PlayerControls = ({
                                 }}
                             >
                                 <SkipForward />
-                                Play Now
+                                {t('player:startNow')}
                             </FocusableButton>
                             <FocusableButton
                                 variant="outline"
@@ -388,7 +390,7 @@ const PlayerControls = ({
                                     setFocus(PLAY_PAUSE_FOCUS_KEY);
                                 }}
                             >
-                                Dismiss
+                                {t('player:dismiss')}
                             </FocusableButton>
                         </div>
                     </div>
@@ -397,12 +399,12 @@ const PlayerControls = ({
 
             {openMenu && (
                 <TrackMenuPanel
-                    title={openMenu === 'audio' ? 'Audio Tracks' : 'Subtitles'}
+                    title={openMenu === 'audio' ? t('player:audioTracks') : t('common:subtitles')}
                     onClose={closeTrackMenu}
                 >
                     {openMenu === 'subtitle' && (
                         <TrackOption
-                            label="Off"
+                            label={t('player:off')}
                             selected={subtitleTrackIndex === null}
                             autoFocus
                             onClick={() => handleSubtitleTrackChange(null)}
@@ -414,8 +416,14 @@ const PlayerControls = ({
                                 key={stream.Index ?? index}
                                 label={
                                     openMenu === 'audio'
-                                        ? `${stream.Language || 'Unknown Language'} - ${stream.Codec}`
-                                        : stream.DisplayTitle || stream.Language || 'Unknown'
+                                        ? t('player:audioTrackLabel', {
+                                              language:
+                                                  stream.Language || t('player:unknownLanguage'),
+                                              codec: stream.Codec,
+                                          })
+                                        : stream.DisplayTitle ||
+                                          stream.Language ||
+                                          t('player:unknown')
                                 }
                                 selected={
                                     openMenu === 'audio'
@@ -462,7 +470,7 @@ const PlayerControls = ({
                                 variant="ghost"
                                 size="icon-lg"
                                 floating
-                                title="Previous episode"
+                                title={t('player:previousItem')}
                                 onClick={() => navigate(`/player/${previousItem.Id}`)}
                             >
                                 <SkipBack size={24} />
@@ -473,7 +481,7 @@ const PlayerControls = ({
                                 variant="ghost"
                                 size="icon-lg"
                                 floating
-                                title="Rewind 10 seconds"
+                                title={t('player:rewind10')}
                                 onClick={handleSeekBackward}
                             >
                                 <Rewind size={24} />
@@ -494,7 +502,7 @@ const PlayerControls = ({
                                 variant="ghost"
                                 size="icon-lg"
                                 floating
-                                title="Forward 10 seconds"
+                                title={t('player:forward10')}
                                 onClick={handleSeekForward}
                             >
                                 <FastForward size={24} />
@@ -505,7 +513,7 @@ const PlayerControls = ({
                                 variant="ghost"
                                 size="icon-lg"
                                 floating
-                                title="Next episode"
+                                title={t('player:nextItem')}
                                 onClick={() => navigate(`/player/${nextItem.Id}`)}
                             >
                                 <SkipForward size={24} />
@@ -514,7 +522,7 @@ const PlayerControls = ({
                         {isLive ? (
                             <div className="flex items-center gap-1.5 text-sm ml-2">
                                 <Dot className="text-red-500 -mx-1" size={32} />
-                                Live
+                                {t('player:live')}
                             </div>
                         ) : (
                             <div className="text-sm ml-2">
@@ -568,6 +576,7 @@ function TrackMenuPanel({
     onClose: () => void;
     children: React.ReactNode;
 }) {
+    const { t } = useTranslation('common');
     const { ref, focusKey } = useFocusable<object, HTMLDivElement>({
         isFocusBoundary: true,
         focusable: false,
@@ -583,7 +592,7 @@ function TrackMenuPanel({
                 <FocusContext.Provider value={focusKey}>
                     {children}
                     <FocusableButton variant="outline" className="mt-2" onClick={onClose}>
-                        Close
+                        {t('close')}
                     </FocusableButton>
                 </FocusContext.Provider>
             </div>

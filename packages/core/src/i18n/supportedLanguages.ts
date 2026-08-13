@@ -1,7 +1,7 @@
 import type { FlagComponent } from 'country-flag-icons/react/3x2';
 import { US, DE, SE, FR, PT, JP, VN, PL } from 'country-flag-icons/react/3x2';
 
-interface SupportedLanguage {
+export interface SupportedLanguage {
     code: string;
     Flag: FlagComponent;
     label: string;

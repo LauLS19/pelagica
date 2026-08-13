@@ -3,6 +3,8 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import type { Resource } from 'i18next';
 
+export * from './supportedLanguages';
+
 const localeModules = import.meta.glob<{ default: Record<string, unknown> }>('./locales/*/*.json', {
     eager: true,
 });

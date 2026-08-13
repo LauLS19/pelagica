@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
     getJellyfinInstance,
     getServerUrl,
@@ -28,6 +29,7 @@ const ErrorMessage = ({ message }: { message: string }) => (
 );
 
 const Login = () => {
+    const { t } = useTranslation(['login', 'common']);
     const navigate = useNavigate();
     const predefinedServerAddress = useServerAddress();
 
@@ -61,33 +63,37 @@ const Login = () => {
         setStep('method');
     }, [predefinedServerAddress]);
 
-    const onSubmitServer = useCallback(async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setCheckingServer(true);
-        setServerCheckError(null);
+    const onSubmitServer = useCallback(
+        async (e: FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            setCheckingServer(true);
+            setServerCheckError(null);
 
-        const input = String(new FormData(e.currentTarget).get('server') ?? '').trim();
-        if (!input) {
-            setServerCheckError('Please enter a server address');
-            setCheckingServer(false);
-            return;
-        }
-
-        try {
-            const servers =
-                await getJellyfinInstance().discovery.getRecommendedServerCandidates(input);
-            const best = getJellyfinInstance().discovery.findBestServer(servers);
-            if (!best) {
-                setServerCheckError('Could not find a server at that address');
+            const input = String(new FormData(e.currentTarget).get('server') ?? '').trim();
+            if (!input) {
+                setServerCheckError(t('login:please_enter_server_address'));
+                setCheckingServer(false);
                 return;
             }
-            saveServerUrl(best.address);
-            setServerUrl(best.address);
-            setStep('method');
-        } finally {
-            setCheckingServer(false);
-        }
-    }, []);
+
+            try {
+                const servers =
+                    await getJellyfinInstance().discovery.getRecommendedServerCandidates(input);
+                const best = getJellyfinInstance().discovery.findBestServer(servers);
+                if (!best) {
+                    setServerCheckError(t('login:could_not_find_server'));
+                    return;
+                }
+                saveServerUrl(best.address);
+                setServerUrl(best.address);
+                setStep('method');
+            } finally {
+                setCheckingServer(false);
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        },
+        [t]
+    );
 
     const initiateQuickConnect = useCallback(async () => {
         setQuickConnectError(null);
@@ -98,10 +104,10 @@ const Login = () => {
                 setQuickConnectSecret(result.Secret);
                 setIsPolling(true);
             } else {
-                setQuickConnectError('Quick Connect is not available on this server');
+                setQuickConnectError(t('login:quick_connect_unavailable'));
             }
         } catch {
-            setQuickConnectError('Quick Connect is not available on this server');
+            setQuickConnectError(t('login:quick_connect_unavailable'));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [serverUrl]);
@@ -126,9 +132,10 @@ const Login = () => {
             .mutateAsync({ server: serverUrl, secret: quickConnectSecret })
             .then(() => navigate('/', { replace: true }))
             .catch(() => {
-                setQuickConnectError('Quick Connect authentication failed');
+                setQuickConnectError(t('login:quick_connect_auth_failed'));
                 setQuickConnectApproved(false);
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         quickConnectStatus.data,
         quickConnectSecret,
@@ -146,10 +153,10 @@ const Login = () => {
                 await login.mutateAsync({ server: serverUrl, username, password });
                 navigate('/', { replace: true });
             } catch {
-                setLoginError('Invalid username or password');
+                setLoginError(t('login:invalid_credentials'));
             }
         },
-        [serverUrl, username, password, login, navigate]
+        [serverUrl, username, password, login, navigate, t]
     );
 
     const quickConnectUrl = getQuickConnectUrl(quickConnectCode);
@@ -164,7 +171,7 @@ const Login = () => {
             {step === 'server' && (
                 <form onSubmit={onSubmitServer} className="flex w-full max-w-sm flex-col gap-3">
                     <label className="text-sm text-muted-foreground" htmlFor="server">
-                        Server address
+                        {t('login:server_address')}
                     </label>
                     <FocusableField
                         id="server"
@@ -174,7 +181,7 @@ const Login = () => {
                     />
                     {serverCheckError && <ErrorMessage message={serverCheckError} />}
                     <FocusableButton type="submit" disabled={checkingServer}>
-                        {checkingServer ? 'Connecting…' : 'Connect'}
+                        {checkingServer ? t('login:connecting') : t('login:connect')}
                     </FocusableButton>
                 </form>
             )}
@@ -182,10 +189,10 @@ const Login = () => {
             {step === 'method' && (
                 <div className="flex w-full max-w-sm flex-col gap-3">
                     <FocusableButton autoFocus onClick={() => setStep('quickconnect')}>
-                        Sign in with Quick Connect
+                        {t('login:sign_in_with_quick_connect')}
                     </FocusableButton>
                     <FocusableButton variant="outline" onClick={() => setStep('password')}>
-                        Sign in with username &amp; password
+                        {t('login:sign_in_with_password')}
                     </FocusableButton>
                     {!predefinedServerAddress && (
                         <FocusableButton
@@ -195,7 +202,7 @@ const Login = () => {
                                 setServerCheckError(null);
                             }}
                         >
-                            Use a different server
+                            {t('login:use_different_server')}
                         </FocusableButton>
                     )}
                 </div>
@@ -216,9 +223,7 @@ const Login = () => {
                         {quickConnectCode ?? '……'}
                     </p>
                     <p className="text-muted-foreground text-xs">
-                        Scan this QR code and authorize or go to{' '}
-                        <span className="font-medium text-foreground">{serverUrl}</span> on your
-                        phone or computer, sign in, and enter this code manually.
+                        {t('login:quick_connect_qr_instructions', { server: serverUrl })}
                     </p>
                     {quickConnectError && <ErrorMessage message={quickConnectError} />}
                     <FocusableButton
@@ -232,7 +237,7 @@ const Login = () => {
                             setStep('method');
                         }}
                     >
-                        Back
+                        {t('common:back')}
                     </FocusableButton>
                 </div>
             )}
@@ -240,17 +245,17 @@ const Login = () => {
             {step === 'password' && (
                 <form onSubmit={onSubmitPassword} className="flex w-full max-w-sm flex-col gap-3">
                     <label className="text-sm text-muted-foreground" htmlFor="username">
-                        Username
+                        {t('login:username')}
                     </label>
                     <FocusableField
                         id="username"
-                        placeholder="Username"
+                        placeholder={t('login:username')}
                         autoFocus
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <label className="text-sm text-muted-foreground" htmlFor="password">
-                        Password
+                        {t('login:password')}
                     </label>
                     <FocusableField
                         id="password"
@@ -261,10 +266,10 @@ const Login = () => {
                     />
                     {loginError && <ErrorMessage message={loginError} />}
                     <FocusableButton type="submit" disabled={login.isPending}>
-                        {login.isPending ? 'Signing in…' : 'Sign in'}
+                        {login.isPending ? t('login:logging_in') : t('login:login')}
                     </FocusableButton>
                     <FocusableButton variant="ghost" onClick={() => setStep('method')}>
-                        Back
+                        {t('common:back')}
                     </FocusableButton>
                 </form>
             )}
