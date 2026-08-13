@@ -4,6 +4,7 @@ import ContinueWatchingRow from '@/components/home/ContinueWatchingRow';
 import ResumeRow from '../components/home/ResumeRow';
 import NextUpRow from '../components/home/NextUpRow';
 import { useConfig } from '@pelagica/core';
+import ItemsRow from '../components/home/ItemsRow';
 
 const Home = () => {
     const { config } = useConfig();
@@ -46,6 +47,14 @@ const Home = () => {
                         );
                     case 'libraries':
                         return <LibrariesRow key={index} title={t('libraries')} />;
+                    case 'items':
+                        return (
+                            <ItemsRow
+                                key={index}
+                                title={section.title || t('items')}
+                                items={section.items}
+                            />
+                        );
                     default:
                         return null;
                 }
