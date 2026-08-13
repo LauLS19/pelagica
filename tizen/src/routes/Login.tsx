@@ -14,6 +14,9 @@ import {
 import FocusableButton from '@/components/FocusableButton';
 import FocusableField from '@/components/FocusableField';
 import { AlertTriangle } from 'lucide-react';
+import QRCode from "react-qr-code";
+import { getQuickConnectUrl } from '@/utils/quickConnectUrl';
+import { Card, CardContent } from '@/components/ui/card';
 
 type Step = 'server' | 'method' | 'quickconnect' | 'password';
 
@@ -149,8 +152,10 @@ const Login = () => {
         [serverUrl, username, password, login, navigate]
     );
 
+    const quickConnectUrl = getQuickConnectUrl(quickConnectCode);
+
     return (
-        <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6">
+        <div className="flex min-h-svh flex-col items-center justify-center gap-3 p-6">
             <div className="flex flex-col items-center gap-2">
                 <img src="logo.svg" alt="Pelagica logo" className="h-8 w-8" />
                 <h1 className="text-2xl font-semibold">Pelagica</h1>
@@ -198,17 +203,26 @@ const Login = () => {
 
             {step === 'quickconnect' && (
                 <div className="flex w-full max-w-sm flex-col items-center gap-3 text-center">
-                    <p className="text-muted-foreground">
-                        Go to <span className="font-medium text-foreground">{serverUrl}</span> on
-                        your phone or computer, sign in, and enter this code:
-                    </p>
+                    {quickConnectUrl && (
+                        <Card className='py-2'>
+                            <CardContent className='px-2'>
+                                <div className='flex items-center justify-center bg-white p-2 rounded-md'>
+                                    <QRCode value={quickConnectUrl} />
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
                     <p className="text-4xl font-semibold tracking-[0.3em]">
                         {quickConnectCode ?? '……'}
+                    </p>
+                    <p className="text-muted-foreground text-xs">
+                        Scan this QR code and authorize or go to <span className="font-medium text-foreground">{serverUrl}</span> on
+                        your phone or computer, sign in, and enter this code manually.
                     </p>
                     {quickConnectError && <ErrorMessage message={quickConnectError} />}
                     <FocusableButton
                         autoFocus
-                        variant="ghost"
+                        variant="secondary"
                         onClick={() => {
                             setIsPolling(false);
                             setQuickConnectCode(null);
