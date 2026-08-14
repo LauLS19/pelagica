@@ -10,6 +10,10 @@ declare global {
             application: {
                 getCurrentApplication: () => { exit: () => void };
             };
+            tvinputdevice?: {
+                registerKey: (keyName: string) => void;
+                unregisterKey: (keyName: string) => void;
+            };
         };
     }
 }

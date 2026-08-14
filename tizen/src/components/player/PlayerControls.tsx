@@ -64,6 +64,19 @@ function isNavigationKey(event: KeyboardEvent) {
     return NAV_KEY_CODES.has(event.keyCode) || NAV_KEY_NAMES.has(event.key);
 }
 
+type MediaKeyAction = 'toggle' | 'play' | 'pause';
+
+const MEDIA_KEY_ACTIONS: Record<string, MediaKeyAction> = {
+    MediaPlayPause: 'toggle',
+    MediaPlay: 'play',
+    MediaPause: 'pause',
+};
+const MEDIA_KEY_CODES: Record<number, MediaKeyAction> = {
+    10252: 'toggle', // MediaPlayPause
+    415: 'play', // MediaPlay
+    19: 'pause', // MediaPause
+};
+
 type TrackMenu = 'audio' | 'subtitle' | null;
 
 export interface PlayerControlsHandle {
@@ -228,6 +241,44 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
             }
             resetHideTimeout();
         }, [player, resetHideTimeout]);
+
+        const setPlaying = useCallback(
+            (playing: boolean) => {
+                if (!player) return;
+                if (playing) {
+                    player.play();
+                } else {
+                    player.pause();
+                }
+                resetHideTimeout();
+            },
+            [player, resetHideTimeout]
+        );
+
+        useEffect(() => {
+            try {
+                window.tizen?.tvinputdevice?.registerKey('MediaPlayPause');
+                window.tizen?.tvinputdevice?.registerKey('MediaPlay');
+                window.tizen?.tvinputdevice?.registerKey('MediaPause');
+            } catch {
+                // Not running on a Tizen device (e.g. browser dev)
+            }
+        }, []);
+
+        useEffect(() => {
+            function handleMediaKeyDown(event: KeyboardEvent) {
+                const action = MEDIA_KEY_ACTIONS[event.key] ?? MEDIA_KEY_CODES[event.keyCode];
+                if (!action) return;
+                if (action === 'toggle') {
+                    togglePlay();
+                } else {
+                    setPlaying(action === 'play');
+                }
+            }
+
+            window.addEventListener('keydown', handleMediaKeyDown);
+            return () => window.removeEventListener('keydown', handleMediaKeyDown);
+        }, [togglePlay, setPlaying]);
 
         const toggleMute = useCallback(() => {
             if (!player) return;
