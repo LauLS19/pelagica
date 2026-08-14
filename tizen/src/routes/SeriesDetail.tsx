@@ -23,6 +23,7 @@ import PlayButton from '../components/PlayButton';
 import WatchlistButton from '../components/WatchlistButton';
 import FavoriteButton from '../components/FavoriteButton';
 import ItemRow from '../components/ItemRow';
+import { Skeleton } from '../components/ui/skeleton';
 
 const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?: boolean }) => {
     const [imageError, setImageError] = useState(false);
@@ -125,13 +126,29 @@ const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?:
     );
 };
 
+const EpisodeCardSkeleton = () => (
+    <div className="w-64 shrink-0">
+        <Skeleton className="aspect-video w-full rounded-md" />
+        <Skeleton className="mt-2 h-4 w-3/4" />
+        <div className="mt-1 flex flex-col gap-1">
+            <Skeleton className="h-3 w-full" />
+            <Skeleton className="h-3 w-2/3" />
+        </div>
+        <div className="flex flex-wrap gap-2 mt-2">
+            <Skeleton className="h-5 w-14 rounded-full" />
+            <Skeleton className="h-5 w-12 rounded-full" />
+            <Skeleton className="h-5 w-24 rounded-full" />
+        </div>
+    </div>
+);
+
 const SeriesDetail = () => {
     const { itemId } = useParams<{ itemId: string }>();
     const { t } = useTranslation(['item', 'common']);
     const { data: item, isLoading } = useItem(itemId, true, getUserId() ?? undefined);
     const { data: similarItems, isLoading: isSimilarItemsLoading } = useSimilarItems(itemId, 12);
 
-    const { data: seasons } = useSeasons(itemId);
+    const { data: seasons, isLoading: isSeasonsLoading } = useSeasons(itemId);
     const [selectedSeasonId, setSelectedSeasonId] = useState<string | undefined>(undefined);
     const { data: episodes, isLoading: isEpisodesLoading } = useEpisodes(
         itemId ?? null,
@@ -171,29 +188,39 @@ const SeriesDetail = () => {
                 }
             />
 
-            {seasons && seasons.length > 0 && (
+            {(isSeasonsLoading || (seasons && seasons.length > 0)) && (
                 <div className="flex flex-col gap-3">
                     <h2 className="text-lg font-semibold">{t('episodes')}</h2>
-                    {seasons.length > 1 && (
+
+                    {isSeasonsLoading ? (
                         <div className="flex flex-wrap gap-2">
-                            {seasons.map((season) => (
-                                <FocusableButton
-                                    key={season.Id}
-                                    variant={season.Id === selectedSeasonId ? 'default' : 'outline'}
-                                    onClick={() => setSelectedSeasonId(season.Id ?? undefined)}
-                                >
-                                    {season.Name || t('season_x', { number: season.IndexNumber })}
-                                </FocusableButton>
-                            ))}
+                            <Skeleton className="h-9 w-20 rounded-md" />
+                            <Skeleton className="h-9 w-24 rounded-md" />
+                            <Skeleton className="h-9 w-20 rounded-md" />
                         </div>
+                    ) : (
+                        seasons!.length > 1 && (
+                            <div className="flex flex-wrap gap-2">
+                                {seasons!.map((season) => (
+                                    <FocusableButton
+                                        key={season.Id}
+                                        variant={
+                                            season.Id === selectedSeasonId ? 'default' : 'outline'
+                                        }
+                                        onClick={() => setSelectedSeasonId(season.Id ?? undefined)}
+                                    >
+                                        {season.Name ||
+                                            t('season_x', { number: season.IndexNumber })}
+                                    </FocusableButton>
+                                ))}
+                            </div>
+                        )
                     )}
+
                     <div className="scrollbar-hide flex gap-4 overflow-x-auto p-3">
-                        {isEpisodesLoading
+                        {isSeasonsLoading || isEpisodesLoading
                             ? Array.from({ length: 4 }).map((_, i) => (
-                                  <div key={i} className="w-64 shrink-0 space-y-2">
-                                      <div className="aspect-video w-full animate-pulse rounded-md bg-muted" />
-                                      <div className="h-4 w-2/3 animate-pulse rounded bg-muted" />
-                                  </div>
+                                  <EpisodeCardSkeleton key={i} />
                               ))
                             : episodes?.map((episode) => (
                                   <EpisodeCard key={episode.Id} episode={episode} />
