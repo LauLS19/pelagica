@@ -11,6 +11,7 @@ export default defineConfig({
         alias: {
             '@': path.resolve(import.meta.dirname, './src'),
         },
+        dedupe: ['i18next', 'react-i18next'],
     },
     build: {
         outDir: 'www',
