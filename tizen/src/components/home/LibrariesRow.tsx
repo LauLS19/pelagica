@@ -2,6 +2,7 @@ import { useUserViews } from '@pelagica/core';
 import LibraryCard from '../LibraryCard';
 import { SUPPORTED_LIBRARY_COLLECTION_TYPES } from '../../utils/supportedLibraryCollectionTypes';
 import ScrollableHomeSection from './ScrollableHomeSection';
+import { Skeleton } from '../ui/skeleton';
 
 const LibrariesRow = ({ title }: { title: string }) => {
     const { data, isLoading } = useUserViews();
@@ -18,10 +19,10 @@ const LibrariesRow = ({ title }: { title: string }) => {
         <ScrollableHomeSection title={title}>
             {isLoading
                 ? Array.from({ length: 4 }).map((_, i) => (
-                      <div
-                          key={i}
-                          className="aspect-video w-56 shrink-0 animate-pulse rounded-md bg-muted"
-                      />
+                      <div key={i} className="flex flex-col">
+                          <Skeleton className="aspect-video w-60" />
+                          <Skeleton className="mt-2 h-4 w-32" />
+                      </div>
                   ))
                 : libraries.map((library) => <LibraryCard key={library.Id} item={library} />)}
         </ScrollableHomeSection>
