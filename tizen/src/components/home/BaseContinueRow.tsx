@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils';
 import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
 import { Dot, ImageOff } from 'lucide-react';
 import ScrollableHomeSection from './ScrollableHomeSection';
+import { Skeleton } from '../ui/skeleton';
 
 interface BaseContinueRowProps {
     items: BaseItemDto[];
@@ -195,10 +196,11 @@ const BaseContinueRow = ({
                 <ScrollableHomeSection title={title}>
                     {isLoading
                         ? Array.from({ length: 4 }).map((_, i) => (
-                              <div
-                                  key={i}
-                                  className="aspect-video w-46 shrink-0 animate-pulse rounded-md bg-muted"
-                              />
+                              <div key={i} className="flex flex-col">
+                                  <Skeleton className="aspect-video w-46" />
+                                  <Skeleton className="mt-2 h-4 w-32" />
+                                  <Skeleton className="mt-2 h-3 w-24" />
+                              </div>
                           ))
                         : items.map((item) => (
                               <ContinueEpisodeCard
