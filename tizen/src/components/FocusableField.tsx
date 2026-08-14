@@ -10,6 +10,7 @@ const FocusableField = ({
 }: InputHTMLAttributes<HTMLInputElement> & { autoFocus?: boolean }) => {
     const { ref, focused, focusSelf } = useFocusable<object, HTMLInputElement>({
         onEnterPress: () => ref.current?.focus(),
+        onBlur: () => ref.current?.blur(),
     });
 
     useEffect(() => {
