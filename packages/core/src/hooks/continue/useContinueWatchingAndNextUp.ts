@@ -26,7 +26,6 @@ export function useContinueWatchingAndNextUp(
     return useQuery({
         queryKey: ['continueWatchingAndNextUp', userId, limit, accurateSorting],
         queryFn: async (): Promise<ContinueWatchingAndNextUpResult> => {
-            await new Promise((resolve) => setTimeout(resolve, 1000)); // Artificial delay for testing
             const api = getApi();
             const itemsApi = getItemsApi(api);
             const tvShowsApi = getTvShowsApi(api);
