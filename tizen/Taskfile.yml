@@ -122,23 +122,29 @@ tasks:
             vars: [TARGET]
         deps: [package]
         cmds:
-            - PATH="{{.TIZEN_BIN}}:$PATH" tizen install -n {{.BUILD_DIR}}/*.wgt -t {{.TARGET}}
+            - |
+                export PATH="{{.TIZEN_BIN}}:$PATH"
+                TARGET_ID="$(sdb devices | awk -v t="{{.TARGET}}" '$1==t {print $3}')"
+                tizen install -n {{.BUILD_DIR}}/*.wgt -t "${TARGET_ID:-{{.TARGET}}}"
 
     tv:run:
         desc: 'Launch the installed app on a target device (task tizen:tv:run TARGET=<serial-or-ip:port>)'
         requires:
             vars: [TARGET]
         cmds:
-            - PATH="{{.TIZEN_BIN}}:$PATH" tizen run -p {{.APP_ID}} -t {{.TARGET}}
+            - |
+                export PATH="{{.TIZEN_BIN}}:$PATH"
+                TARGET_ID="$(sdb devices | awk -v t="{{.TARGET}}" '$1==t {print $3}')"
+                tizen run -p {{.APP_ID}} -t "${TARGET_ID:-{{.TARGET}}}"
 
     tv:deploy:
         desc: 'Build, package, install, and run on a real TV in one shot (task tizen:tv:deploy TV_IP=...)'
         requires:
             vars: [TV_IP]
         cmds:
-            - task: tizen:connect
+            - task: tv:connect
               vars: { TV_IP: '{{.TV_IP}}' }
-            - task: tizen:install
+            - task: tv:install
               vars: { TARGET: '{{.TV_IP}}:26101' }
-            - task: tizen:run
+            - task: tv:run
               vars: { TARGET: '{{.TV_IP}}:26101' }
