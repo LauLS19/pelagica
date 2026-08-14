@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
  * exiting the app only when already at the root route (there's no browser
  * chrome on a TV to fall back on).
  */
-export function useTvBackKey() {
+export function useTvBackKey(onIntercept?: () => boolean) {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -14,6 +14,7 @@ export function useTvBackKey() {
         function handleHwKey(event: Event) {
             const keyName = (event as TizenHwKeyEvent).keyName;
             if (keyName !== 'back') return;
+            if (onIntercept?.()) return;
 
             if (location.pathname === '/') {
                 window.tizen?.application.getCurrentApplication().exit();
@@ -24,5 +25,5 @@ export function useTvBackKey() {
 
         window.addEventListener('tizenhwkey', handleHwKey);
         return () => window.removeEventListener('tizenhwkey', handleHwKey);
-    }, [location.pathname, navigate]);
+    }, [location.pathname, navigate, onIntercept]);
 }

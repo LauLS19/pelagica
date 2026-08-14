@@ -19,7 +19,7 @@ import {
     clearCodecCache,
 } from '@pelagica/core';
 import VideoPlayer, { type SubtitleTrack } from '@/components/player/VideoPlayer';
-import PlayerControls from '@/components/player/PlayerControls';
+import PlayerControls, { type PlayerControlsHandle } from '@/components/player/PlayerControls';
 import PlayerLoading from '@/components/player/PlayerLoading';
 import { useTvBackKey } from '@/lib/use-tv-back-key';
 import { getLastAudioLanguage, getLastSubtitleLanguage } from '@/lib/localstorageLastlanguage';
@@ -31,7 +31,12 @@ const FONT_ATTACHMENT_EXTENSION_PATTERN = /\.(ttf|otf|woff2?)$/i;
 export type VideoJsPlayer = ReturnType<typeof import('video.js').default>;
 
 const Player = () => {
-    useTvBackKey();
+    const controlsRef = useRef<PlayerControlsHandle>(null);
+    const handleBackKeyIntercept = useCallback(
+        () => controlsRef.current?.handleBackKey() ?? false,
+        []
+    );
+    useTvBackKey(handleBackKeyIntercept);
     const { t } = useTranslation(['player', 'item']);
 
     const { itemId } = useParams<{ itemId: string }>();
@@ -359,6 +364,7 @@ const Player = () => {
                 subtitleTrackIndex={subtitleTrackIndex}
             />
             <PlayerControls
+                ref={controlsRef}
                 item={item}
                 player={player}
                 audioTrackIndex={audioTrackIndex}
