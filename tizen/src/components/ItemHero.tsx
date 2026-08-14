@@ -26,12 +26,34 @@ const ItemHero = ({
 
     if (isLoading) {
         return (
-            <div className="-mx-6 -mt-20 flex flex-col gap-6 rounded-b-xl bg-muted p-6 pt-20 sm:flex-row">
-                <div className="aspect-2/3 w-48 shrink-0 animate-pulse rounded-md bg-background/40" />
-                <div className="flex-1 space-y-3">
-                    <div className="h-8 w-2/3 animate-pulse rounded bg-background/40" />
-                    <div className="h-4 w-1/3 animate-pulse rounded bg-background/40" />
-                    <div className="h-20 w-full animate-pulse rounded bg-background/40" />
+            <div className="relative -mx-6 -mt-20 overflow-hidden rounded-b-xl">
+                <div className="relative flex flex-col gap-6 p-6 pt-29 sm:flex-row">
+                    <div className="w-62 shrink-0 mx-auto lg:mx-0">
+                        <Skeleton className="aspect-2/3 w-full rounded-xl shadow-2xl shadow-black/85 border border-white/10" />
+                    </div>
+
+                    <div className="flex flex-1 flex-col gap-3">
+                        <Skeleton className="h-16 w-[85%] mb-2" />
+
+                        <div className="flex flex-wrap gap-2">
+                            <Skeleton className="h-5 w-12 rounded-full" />
+                            <Skeleton className="h-5 w-16 rounded-full" />
+                            <Skeleton className="h-5 w-14 rounded-full" />
+                        </div>
+
+                        <Skeleton className="h-4 w-1/3" />
+
+                        <div className="flex flex-col gap-2 max-w-3xl">
+                            <Skeleton className="h-4 w-full" />
+                            <Skeleton className="h-4 w-full" />
+                            <Skeleton className="h-4 w-2/3" />
+                        </div>
+
+                        <div className="mt-2 flex gap-3">
+                            <Skeleton className="h-10 w-32 rounded-md" />
+                            <Skeleton className="h-10 w-40 rounded-md" />
+                        </div>
+                    </div>
                 </div>
             </div>
         );
