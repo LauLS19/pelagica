@@ -9,10 +9,12 @@ import { Button } from '@/components/ui/button';
 
 const FocusableNavLink = ({
     to,
+    active,
     className,
     children,
 }: {
     to: string;
+    active: boolean;
     className?: string;
     children: ReactNode;
 }) => {
@@ -34,7 +36,12 @@ const FocusableNavLink = ({
             nativeButton={false}
             variant="ghost"
             size="sm"
-            className={cn('scroll-mt-20', focused && FOCUS_RING_COMPACT, className)}
+            className={cn(
+                'scroll-mt-20',
+                focused && FOCUS_RING_COMPACT,
+                active && 'bg-accent text-accent-foreground',
+                className
+            )}
         >
             {children}
         </Button>

@@ -6,7 +6,9 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { House, Library, Search, Settings } from 'lucide-react';
 import FocusableNavLink from './FocusableNavLink';
 
-const TopBar = () => {
+export type TopBarItem = 'home' | 'library' | 'search' | 'settings';
+
+const TopBar = ({ activeItem }: { activeItem?: TopBarItem }) => {
     const { t } = useTranslation(['sidebar', 'common', 'settings']);
     const { config } = useConfig();
     const [scrolled, setScrolled] = useState(false);
@@ -51,22 +53,22 @@ const TopBar = () => {
 
                     {/* Desktop nav */}
                     <nav className="hidden md:flex items-center gap-0.5">
-                        <FocusableNavLink to="/">
+                        <FocusableNavLink to="/" active={activeItem === 'home'}>
                             <House className="h-4 w-4" />
                             {t('sidebar:home')}
                         </FocusableNavLink>
 
-                        <FocusableNavLink to="/library">
+                        <FocusableNavLink to="/library" active={activeItem === 'library'}>
                             <Library className="h-4 w-4" />
                             {t('sidebar:library')}
                         </FocusableNavLink>
 
-                        <FocusableNavLink to="/search">
+                        <FocusableNavLink to="/search" active={activeItem === 'search'}>
                             <Search className="h-4 w-4" />
                             {t('common:search')}
                         </FocusableNavLink>
 
-                        <FocusableNavLink to="/settings">
+                        <FocusableNavLink to="/settings" active={activeItem === 'settings'}>
                             <Settings className="h-4 w-4" />
                             {t('settings:title')}
                         </FocusableNavLink>
