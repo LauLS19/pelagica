@@ -16,6 +16,7 @@ const SeriesDetailPage = lazy(() => import('./routes/SeriesDetail'));
 const BoxSetDetailPage = lazy(() => import('./routes/BoxSetDetail'));
 const PlayerPage = lazy(() => import('./routes/Player'));
 const SettingsPage = lazy(() => import('./routes/Settings'));
+const SearchPage = lazy(() => import('./routes/Search'));
 
 function App() {
     return (
@@ -47,6 +48,7 @@ function App() {
                         <Route path="movie/:itemId" element={<MovieDetailPage />} />
                         <Route path="series/:itemId" element={<SeriesDetailPage />} />
                         <Route path="boxset/:itemId" element={<BoxSetDetailPage />} />
+                        <Route path="search" element={<SearchPage />} />
                     </Route>
                 </Routes>
             </HashRouter>

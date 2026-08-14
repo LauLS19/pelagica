@@ -22,7 +22,7 @@ const FocusableField = ({
         <input
             ref={ref}
             className={cn(
-                'h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm outline-none',
+                'h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm outline-none scroll-m-3',
                 focused && 'ring-4 ring-ring ring-offset-4 ring-offset-background'
             )}
             {...props}
