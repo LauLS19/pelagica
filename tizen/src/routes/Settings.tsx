@@ -49,23 +49,27 @@ const Settings = () => {
             <h1 className="text-2xl font-semibold">Pelagica</h1>
 
             <SettingsSection title={t('settings:account_section_title')}>
-                <p className="text-muted-foreground">
-                    {t('settings:server_label')}: {serverUrl || t('settings:not_configured')}
-                </p>
-                <p className="text-muted-foreground">
-                    {t('settings:signed_in_as')}:{' '}
-                    {isLoading ? t('common:loading') : (user?.Name ?? t('sidebar:unknown_user'))}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                    <FocusableButton
-                        onClick={() => {
-                            clearCredentials();
-                            navigate('/login', { replace: true });
-                        }}
-                    >
-                        <LogOut />
-                        {t('sidebar:logout')}
-                    </FocusableButton>
+                <div className="flex flex-col gap-2">
+                    <p className="text-muted-foreground">
+                        {t('settings:server_label')}: {serverUrl || t('settings:not_configured')}
+                    </p>
+                    <p className="text-muted-foreground">
+                        {t('settings:signed_in_as')}:{' '}
+                        {isLoading
+                            ? t('common:loading')
+                            : (user?.Name ?? t('sidebar:unknown_user'))}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                        <FocusableButton
+                            onClick={() => {
+                                clearCredentials();
+                                navigate('/login', { replace: true });
+                            }}
+                        >
+                            <LogOut />
+                            {t('sidebar:logout')}
+                        </FocusableButton>
+                    </div>
                 </div>
             </SettingsSection>
 
