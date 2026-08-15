@@ -15,6 +15,8 @@ export function getItemLink(
             return `/series/${id}`;
         case 'BoxSet':
             return `/boxset/${id}`;
+        case 'Genre':
+            return `/genre/${id}`;
         default:
             return '/';
     }

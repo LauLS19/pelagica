@@ -22,7 +22,7 @@ const GenreCard = ({ genreWithItem, autoFocus }: GenresCardProps) => {
 
     return (
         <FocusableCard
-            to={getItemLink('Genre', genreWithItem.item?.Id)}
+            to={getItemLink('Genre', genreWithItem.id)}
             className="w-60"
             autoFocus={autoFocus}
         >
