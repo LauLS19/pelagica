@@ -18,7 +18,7 @@ const RecentlyAddedRow = ({ view, section, detailFields }: RecentlyAddedRowProps
     }
 
     return (
-        <div key={view.Id} data-library-id={view.Id}>
+        <>
             {view.Id && view.Name && (
                 <ItemsRow
                     title={t('recently_added', {
@@ -34,7 +34,7 @@ const RecentlyAddedRow = ({ view, section, detailFields }: RecentlyAddedRowProps
                     detailFields={detailFields}
                 />
             )}
-        </div>
+        </>
     );
 };
 

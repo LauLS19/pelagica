@@ -71,7 +71,7 @@ const Home = () => {
                                   )
                                 : userViews?.Items;
                         return (
-                            <div key={index} className="flex flex-col gap-4">
+                            <>
                                 {userViews && filteredViews ? (
                                     <>
                                         {filteredViews.map((view) => (
@@ -88,7 +88,7 @@ const Home = () => {
                                 ) : (
                                     <p>Loading user views...</p>
                                 )}
-                            </div>
+                            </>
                         );
                     }
                     case 'items':
