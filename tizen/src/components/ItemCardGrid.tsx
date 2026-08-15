@@ -10,6 +10,8 @@ interface ItemCardGridProps {
 }
 
 const ItemCardGrid = ({ ref, items, isLoading, autoFocusFirst, className }: ItemCardGridProps) => {
+    if ((!items || items.length === 0) && !isLoading) return null;
+
     return (
         <div
             ref={ref}
