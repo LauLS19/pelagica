@@ -7,7 +7,7 @@ import {
     EmptyTitle,
 } from '@/components/ui/empty';
 import { getUserId, useGenresWithItems, useSearchItems } from '@pelagica/core';
-import { CircleQuestionMark, TriangleAlert } from 'lucide-react';
+import { CircleQuestionMark, SearchIcon, TriangleAlert } from 'lucide-react';
 import { startTransition, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import GenreCard from '../components/GenreCard';
@@ -48,6 +48,7 @@ const Search = () => {
                 placeholder={t('input_placeholder')}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                icon={<SearchIcon />}
             />
             <ItemCardGrid items={results} isLoading={isLoading} />
             {error && (
