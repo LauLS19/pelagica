@@ -238,15 +238,25 @@ const Player = () => {
         lastPositionRef.current = startTicks;
     }, [startTicks]);
 
-    const handlePlaybackError = useCallback((mediaError: MediaError | null) => {
-        if (!mediaError || mediaError.code !== MediaError.MEDIA_ERR_DECODE) return;
-
+    const attemptTranscodeFallback = useCallback(() => {
         if (hasAttemptedTranscodeFallbackRef.current) return;
 
         hasAttemptedTranscodeFallbackRef.current = true;
         clearCodecCache();
         setForceTranscode(true);
     }, []);
+
+    const handlePlaybackError = useCallback(
+        (mediaError: MediaError | null) => {
+            if (!mediaError || mediaError.code !== MediaError.MEDIA_ERR_DECODE) return;
+            attemptTranscodeFallback();
+        },
+        [attemptTranscodeFallback]
+    );
+
+    const handlePlaybackStalled = useCallback(() => {
+        attemptTranscodeFallback();
+    }, [attemptTranscodeFallback]);
 
     const handleAudioTrackChange = (index: number) => {
         isAudioSwitchRef.current = true;
@@ -357,6 +367,7 @@ const Player = () => {
                 poster={posterUrl}
                 onReady={setPlayer}
                 onPlaybackError={handlePlaybackError}
+                onPlaybackStalled={handlePlaybackStalled}
                 startTicks={item.UserData?.PlaybackPositionTicks || 0}
                 subtitles={subtitleTracks}
                 subtitleFonts={subtitleFonts}

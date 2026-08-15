@@ -5,6 +5,8 @@ import JASSUB from 'jassub';
 
 type VideoJsPlayer = ReturnType<typeof videojs>;
 
+const STALL_TIMEOUT_MS = 20_000;
+
 export interface SubtitleTrack {
     src: string;
     srclang: string;
@@ -22,6 +24,7 @@ interface VideoPlayerProps {
     subtitleFonts?: string[];
     onReady?: (player: VideoJsPlayer) => void;
     onPlaybackError?: (error: MediaError | null) => void;
+    onPlaybackStalled?: () => void;
     isAudioSwitchRef: React.MutableRefObject<boolean>;
     subtitleTrackIndex: number | null;
 }
@@ -35,6 +38,7 @@ const VideoPlayer = ({
     subtitleFonts,
     onReady,
     onPlaybackError,
+    onPlaybackStalled,
     isAudioSwitchRef,
     subtitleTrackIndex,
 }: VideoPlayerProps) => {
@@ -44,10 +48,16 @@ const VideoPlayer = ({
     const hasSeekedRef = useRef(false);
     const assRendererRef = useRef<JASSUB | null>(null);
     const onPlaybackErrorRef = useRef(onPlaybackError);
+    const onPlaybackStalledRef = useRef(onPlaybackStalled);
+    const stallTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
         onPlaybackErrorRef.current = onPlaybackError;
     }, [onPlaybackError]);
+
+    useEffect(() => {
+        onPlaybackStalledRef.current = onPlaybackStalled;
+    }, [onPlaybackStalled]);
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -134,7 +144,27 @@ const VideoPlayer = ({
             player.currentTime(seekTo);
         }
 
+        const clearStallTimeout = () => {
+            if (stallTimeoutRef.current) {
+                clearTimeout(stallTimeoutRef.current);
+                stallTimeoutRef.current = null;
+            }
+        };
+
+        clearStallTimeout();
+        stallTimeoutRef.current = setTimeout(() => {
+            stallTimeoutRef.current = null;
+            onPlaybackStalledRef.current?.();
+        }, STALL_TIMEOUT_MS);
+
+        player.one(['playing', 'timeupdate'], clearStallTimeout);
+
         player.play()?.catch(console.error);
+
+        return () => {
+            player.off(['playing', 'timeupdate'], clearStallTimeout);
+            clearStallTimeout();
+        };
     }, [src, srcType, isAudioSwitchRef]);
 
     useEffect(() => {
