@@ -7,6 +7,7 @@ import { useConfig, useUserViews, type DetailField } from '@pelagica/core';
 import ItemsRow from '../components/home/ItemsRow';
 import RecentlyAddedRow from '../components/home/RecentlyAddedRow';
 import type { CollectionType } from '@jellyfin/sdk/lib/generated-client/models';
+import GenresRow from '../components/home/GenresRow';
 
 function getDetailFieldsForCollectionType(type: CollectionType | undefined): DetailField[] {
     switch (type) {
@@ -97,6 +98,14 @@ const Home = () => {
                                 items={section.items}
                                 useThumbImage={section.useThumbImage}
                                 detailFields={section.detailFields}
+                            />
+                        );
+                    case 'genres':
+                        return (
+                            <GenresRow
+                                key={index}
+                                title={section.title || t('genres')}
+                                limit={section.limit}
                             />
                         );
                     default:
