@@ -7,13 +7,16 @@ import {
     EmptyMedia,
     EmptyTitle,
 } from '@/components/ui/empty';
-import { getUserId, useSearchItems } from '@pelagica/core';
+import { getUserId, useGenresWithItems, useSearchItems } from '@pelagica/core';
 import { CircleQuestionMark, TriangleAlert } from 'lucide-react';
 import { startTransition, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import GenreCard from '../components/GenreCard';
+import { Skeleton } from '../components/ui/skeleton';
 
 const Search = () => {
     const { t } = useTranslation('search');
+    const { data: genres } = useGenresWithItems();
     const [query, setQuery] = useState('');
     const [debouncedQuery, setDebouncedQuery] = useState('');
     const {
@@ -51,10 +54,12 @@ const Search = () => {
                     ? Array.from({ length: 6 }).map((_, i) => (
                           <div
                               key={i}
-                              className="aspect-video w-full animate-pulse rounded-md bg-muted"
+                              className="aspect-2/3 w-full animate-pulse rounded-md bg-muted"
                           />
                       ))
-                    : results?.map((item) => <ItemCard key={item.Id} item={item} />)}
+                    : results?.map((item) => (
+                          <ItemCard key={item.Id} item={item} className="w-full" />
+                      ))}
             </div>
             {error && (
                 <Empty>
@@ -77,6 +82,28 @@ const Search = () => {
                         <EmptyDescription>{t('no_results_description')}</EmptyDescription>
                     </EmptyHeader>
                 </Empty>
+            )}
+            {!query && !isLoading && !error && (
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] gap-4">
+                    {genres
+                        ? genres
+                              .sort((a, b) => (b.item?.totalItems || 0) - (a.item?.totalItems || 0))
+                              .map((genre) => (
+                                  <GenreCard
+                                      key={genre.id}
+                                      genreWithItem={genre}
+                                      className="w-full"
+                                  />
+                              ))
+                        : Array.from({ length: 12 }).map((_, i) => (
+                              <div
+                                  key={i}
+                                  className="relative min-w-60 sm:min-w-75 aspect-video rounded-md"
+                              >
+                                  <Skeleton className="w-full h-full rounded-md" />
+                              </div>
+                          ))}
+                </div>
             )}
         </div>
     );

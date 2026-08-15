@@ -10,9 +10,10 @@ import { ImageOff } from 'lucide-react';
 interface GenresCardProps {
     genreWithItem: GenreWithItem;
     autoFocus?: boolean;
+    className?: string;
 }
 
-const GenreCard = ({ genreWithItem, autoFocus }: GenresCardProps) => {
+const GenreCard = ({ genreWithItem, autoFocus, className }: GenresCardProps) => {
     const { t } = useTranslation('item');
     const [posterError, setPosterError] = useState(false);
     const posterUrl = getPrimaryImageUrl(genreWithItem.item?.Id || '', {
@@ -23,7 +24,7 @@ const GenreCard = ({ genreWithItem, autoFocus }: GenresCardProps) => {
     return (
         <FocusableCard
             to={getItemLink('Genre', genreWithItem.id)}
-            className="w-60"
+            className={cn(className ? className : 'w-60')}
             autoFocus={autoFocus}
         >
             {(focused) => (
