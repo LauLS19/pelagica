@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     useReportPlaybackProgress,
@@ -32,10 +32,17 @@ export type VideoJsPlayer = ReturnType<typeof import('video.js').default>;
 
 const Player = () => {
     const controlsRef = useRef<PlayerControlsHandle>(null);
-    const handleBackKeyIntercept = useCallback(
-        () => controlsRef.current?.handleBackKey() ?? false,
-        []
-    );
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const backUrl = searchParams.get('backUrl');
+    const handleBackKeyIntercept = useCallback(() => {
+        if (controlsRef.current?.handleBackKey()) return true;
+        if (backUrl) {
+            navigate(backUrl);
+            return true;
+        }
+        return false;
+    }, [backUrl, navigate]);
     useTvBackKey(handleBackKeyIntercept);
     const { t } = useTranslation(['player', 'item']);
 

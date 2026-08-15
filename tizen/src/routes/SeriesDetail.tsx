@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import {
@@ -25,10 +25,12 @@ import FavoriteButton from '../components/FavoriteButton';
 import ItemRow from '../components/ItemRow';
 import { Skeleton } from '../components/ui/skeleton';
 import TrailerButton from '../components/TrailerButton';
+import { buildPlayerUrl } from '@/lib/playerUrl';
 
 const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?: boolean }) => {
     const [imageError, setImageError] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
     const { t } = useTranslation('item');
     const { ref, focused, focusSelf } = useFocusable<object, HTMLButtonElement>({
         onEnterPress: () => ref.current?.click(),
@@ -52,7 +54,11 @@ const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?:
     return (
         <button
             ref={ref}
-            onClick={() => episode && episode.Id && navigate(`/player/${episode.Id}`)}
+            onClick={() =>
+                episode &&
+                episode.Id &&
+                navigate(buildPlayerUrl(episode.Id, location.pathname + location.search))
+            }
             type="button"
             className="w-64 shrink-0 scroll-m-6 text-left outline-none"
         >

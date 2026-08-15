@@ -14,7 +14,7 @@ import {
     Dot,
     Check,
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     FocusContext,
@@ -39,6 +39,7 @@ import {
     setLastAudioLanguage,
     setLastSubtitleLanguage,
 } from '@/lib/localstorageLastlanguage';
+import { buildPlayerUrl } from '@/lib/playerUrl';
 
 const SEEK_SECONDS = 10;
 const HIDE_CONTROLS_TIMEOUT_MS = 5000;
@@ -122,6 +123,8 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
         const [dismissedNextItemPrompt, setDismissedNextItemPrompt] = useState(false);
         const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
         const navigate = useNavigate();
+        const [searchParams] = useSearchParams();
+        const backUrl = searchParams.get('backUrl');
         const { reportProgress } = useReportPlaybackProgress();
         const [backButtonLogoFailed, setBackButtonLogoFailed] = useState(false);
 
@@ -208,7 +211,7 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
             const handleEnded = () => {
                 if (!nextItem) return;
                 markItemAsCompleted(item.Id);
-                navigate(`/player/${nextItem.Id}`);
+                navigate(buildPlayerUrl(nextItem.Id!, backUrl));
             };
 
             player.on('play', updatePlayState);
@@ -230,7 +233,7 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
                 player.off('volumechange', updateMuted);
                 player.off('ended', handleEnded);
             };
-        }, [player, nextItem, item.Id, navigate, markItemAsCompleted]);
+        }, [player, nextItem, item.Id, navigate, markItemAsCompleted, backUrl]);
 
         const togglePlay = useCallback(() => {
             if (!player) return;
@@ -381,7 +384,11 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
                         pointerEvents: showControls ? 'auto' : 'none',
                     }}
                 >
-                    <FocusableButton variant="ghost" floating onClick={() => navigate(-1)}>
+                    <FocusableButton
+                        variant="ghost"
+                        floating
+                        onClick={() => (backUrl ? navigate(backUrl) : navigate(-1))}
+                    >
                         <ArrowLeft />
                     </FocusableButton>
                     {backButtonLogoFailed ? (
@@ -450,7 +457,7 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
                                         if (!player) return;
                                         player.pause();
                                         markItemAsCompleted(item.Id);
-                                        navigate(`/player/${nextItem.Id}`);
+                                        navigate(buildPlayerUrl(nextItem.Id!, backUrl));
                                     }}
                                 >
                                     <SkipForward />
@@ -548,7 +555,9 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
                                     size="icon-lg"
                                     floating
                                     title={t('player:previousItem')}
-                                    onClick={() => navigate(`/player/${previousItem.Id}`)}
+                                    onClick={() =>
+                                        navigate(buildPlayerUrl(previousItem.Id!, backUrl))
+                                    }
                                 >
                                     <SkipBack size={24} />
                                 </FocusableButton>
@@ -591,7 +600,7 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
                                     size="icon-lg"
                                     floating
                                     title={t('player:nextItem')}
-                                    onClick={() => navigate(`/player/${nextItem.Id}`)}
+                                    onClick={() => navigate(buildPlayerUrl(nextItem.Id!, backUrl))}
                                 >
                                     <SkipForward size={24} />
                                 </FocusableButton>

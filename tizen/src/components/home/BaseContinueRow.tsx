@@ -10,12 +10,14 @@ import {
 } from '@pelagica/core';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import FocusableCard from '../FocusableCard';
 import { cn } from '@/lib/utils';
 import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
 import { Dot, ImageOff } from 'lucide-react';
 import ScrollableHomeSection from './ScrollableHomeSection';
 import { Skeleton } from '../ui/skeleton';
+import { buildPlayerUrl } from '@/lib/playerUrl';
 
 interface BaseContinueRowProps {
     items: BaseItemDto[];
@@ -45,6 +47,7 @@ const ContinueEpisodeCard = ({
     detailLine?: ContinueWatchingDetailLine[];
 }) => {
     const { t } = useTranslation('home');
+    const location = useLocation();
     const watched = item.UserData?.PlaybackPositionTicks ?? 0;
     const runtime = item.RunTimeTicks ?? 0;
     const progress = runtime > 0 ? (watched / runtime) * 100 : 0;
@@ -60,7 +63,7 @@ const ContinueEpisodeCard = ({
 
     return (
         <FocusableCard
-            to={`/player/${item.Id}`}
+            to={buildPlayerUrl(item.Id!, location.pathname + location.search)}
             autoFocus={autoFocus}
             className={cn('w-46', className)}
         >

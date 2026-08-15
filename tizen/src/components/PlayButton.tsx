@@ -1,13 +1,15 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { getUserId, useSeriesNextUp } from '@pelagica/core';
 import { useTranslation } from 'react-i18next';
 import { Play } from 'lucide-react';
 import FocusableButton from './FocusableButton';
+import { buildPlayerUrl } from '@/lib/playerUrl';
 
 const PlayButton = ({ item }: { item: BaseItemDto }) => {
     const { t } = useTranslation('item');
     const navigate = useNavigate();
+    const location = useLocation();
     const isSeries = item.Type === 'Series';
 
     const { data: nextUpEpisode } = useSeriesNextUp(
@@ -35,7 +37,10 @@ const PlayButton = ({ item }: { item: BaseItemDto }) => {
             autoFocus
             size="lg"
             disabled={!playItemId}
-            onClick={() => playItemId && navigate(`/player/${playItemId}`)}
+            onClick={() =>
+                playItemId &&
+                navigate(buildPlayerUrl(playItemId, location.pathname + location.search))
+            }
         >
             <Play /> {label}
         </FocusableButton>
