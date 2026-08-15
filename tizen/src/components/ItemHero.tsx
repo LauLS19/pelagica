@@ -6,6 +6,21 @@ import { useTranslation } from 'react-i18next';
 import { ImageOff, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { FocusContext, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+
+const MainButtonRow = ({ children }: { children: ReactNode }) => {
+    const { ref, focusKey } = useFocusable<object, HTMLDivElement>({
+        saveLastFocusedChild: true,
+    });
+
+    return (
+        <FocusContext.Provider value={focusKey}>
+            <div className="mt-2 flex gap-3" ref={ref}>
+                {children}
+            </div>
+        </FocusContext.Provider>
+    );
+};
 
 const ItemHero = ({
     item,
@@ -145,7 +160,7 @@ const ItemHero = ({
                         </p>
                     )}
 
-                    {mainButtonRow && <div className="mt-2 flex gap-3">{mainButtonRow}</div>}
+                    {mainButtonRow && <MainButtonRow>{mainButtonRow}</MainButtonRow>}
                 </div>
             </div>
         </div>

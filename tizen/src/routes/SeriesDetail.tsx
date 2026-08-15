@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { FocusContext, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import {
     getPrimaryImageUrl,
     getUserId,
@@ -149,6 +149,72 @@ const EpisodeCardSkeleton = () => (
     </div>
 );
 
+const EpisodeRow = ({ episodes, isLoading }: { episodes: BaseItemDto[]; isLoading: boolean }) => {
+    const { ref, focusKey } = useFocusable<object, HTMLDivElement>({
+        focusable: !isLoading && episodes.length > 0,
+        saveLastFocusedChild: true,
+    });
+
+    return (
+        <FocusContext.Provider value={focusKey}>
+            <div className="scrollbar-hide flex gap-4 overflow-x-auto p-3" ref={ref}>
+                {isLoading
+                    ? Array.from({ length: 4 }).map((_, i) => <EpisodeCardSkeleton key={i} />)
+                    : episodes?.map((episode) => (
+                          <EpisodeCard key={episode.Id} episode={episode} />
+                      ))}
+            </div>
+        </FocusContext.Provider>
+    );
+};
+
+const SeasonsRow = ({
+    seasons,
+    isLoading,
+    selectedSeasonId,
+    onSelectSeason,
+}: {
+    seasons: BaseItemDto[];
+    isLoading: boolean;
+    selectedSeasonId?: string;
+    onSelectSeason: (seasonId: string | undefined) => void;
+}) => {
+    const { t } = useTranslation('item');
+    const { ref, focusKey } = useFocusable<object, HTMLDivElement>({
+        focusable: !isLoading && seasons.length > 1,
+        saveLastFocusedChild: true,
+    });
+
+    return (
+        <FocusContext.Provider value={focusKey}>
+            <div className="flex flex-wrap gap-2" ref={ref}>
+                {isLoading ? (
+                    <>
+                        <Skeleton className="h-9 w-20 rounded-md" />
+                        <Skeleton className="h-9 w-24 rounded-md" />
+                        <Skeleton className="h-9 w-20 rounded-md" />
+                    </>
+                ) : (
+                    seasons!.length > 1 && (
+                        <div className="flex flex-wrap gap-2">
+                            {seasons!.map((season) => (
+                                <FocusableButton
+                                    key={season.Id}
+                                    variant={season.Id === selectedSeasonId ? 'default' : 'outline'}
+                                    onClick={() => onSelectSeason(season.Id ?? undefined)}
+                                    className="scroll-m-3 scroll-mb-80"
+                                >
+                                    {season.Name || t('season_x', { number: season.IndexNumber })}
+                                </FocusableButton>
+                            ))}
+                        </div>
+                    )
+                )}
+            </div>
+        </FocusContext.Provider>
+    );
+};
+
 const SeriesDetail = () => {
     const { itemId } = useParams<{ itemId: string }>();
     const { t } = useTranslation(['item', 'common']);
@@ -200,40 +266,17 @@ const SeriesDetail = () => {
                 <div className="flex flex-col gap-3">
                     <h2 className="text-lg font-semibold">{t('episodes')}</h2>
 
-                    {isSeasonsLoading ? (
-                        <div className="flex flex-wrap gap-2">
-                            <Skeleton className="h-9 w-20 rounded-md" />
-                            <Skeleton className="h-9 w-24 rounded-md" />
-                            <Skeleton className="h-9 w-20 rounded-md" />
-                        </div>
-                    ) : (
-                        seasons!.length > 1 && (
-                            <div className="flex flex-wrap gap-2">
-                                {seasons!.map((season) => (
-                                    <FocusableButton
-                                        key={season.Id}
-                                        variant={
-                                            season.Id === selectedSeasonId ? 'default' : 'outline'
-                                        }
-                                        onClick={() => setSelectedSeasonId(season.Id ?? undefined)}
-                                    >
-                                        {season.Name ||
-                                            t('season_x', { number: season.IndexNumber })}
-                                    </FocusableButton>
-                                ))}
-                            </div>
-                        )
-                    )}
+                    <SeasonsRow
+                        onSelectSeason={setSelectedSeasonId}
+                        seasons={seasons ?? []}
+                        isLoading={isSeasonsLoading}
+                        selectedSeasonId={selectedSeasonId}
+                    />
 
-                    <div className="scrollbar-hide flex gap-4 overflow-x-auto p-3">
-                        {isSeasonsLoading || isEpisodesLoading
-                            ? Array.from({ length: 4 }).map((_, i) => (
-                                  <EpisodeCardSkeleton key={i} />
-                              ))
-                            : episodes?.map((episode) => (
-                                  <EpisodeCard key={episode.Id} episode={episode} />
-                              ))}
-                    </div>
+                    <EpisodeRow
+                        episodes={episodes ?? []}
+                        isLoading={isEpisodesLoading || isSeasonsLoading}
+                    />
                 </div>
             )}
 
