@@ -7,6 +7,15 @@ type VideoJsPlayer = ReturnType<typeof videojs>;
 
 const STALL_TIMEOUT_MS = 20_000;
 
+function isJassubSupported() {
+    return (
+        typeof WebAssembly !== 'undefined' &&
+        typeof Worker !== 'undefined' &&
+        typeof HTMLCanvasElement !== 'undefined' &&
+        'transferControlToOffscreen' in HTMLCanvasElement.prototype
+    );
+}
+
 export interface SubtitleTrack {
     src: string;
     srclang: string;
@@ -231,11 +240,26 @@ const VideoPlayer = ({
         if (!assRendererRef.current) {
             if (!activeTrack || activeTrack.format !== 'ass') return;
 
-            assRendererRef.current = new JASSUB({
-                video: videoEl,
-                subUrl: activeTrack.src,
-                fonts: subtitleFonts,
-            });
+            if (!isJassubSupported()) {
+                console.error(
+                    'ASS subtitles unsupported on this device (missing WebAssembly, module Worker, or OffscreenCanvas support)'
+                );
+                return;
+            }
+
+            try {
+                const renderer = new JASSUB({
+                    video: videoEl,
+                    subUrl: activeTrack.src,
+                    fonts: subtitleFonts,
+                });
+                assRendererRef.current = renderer;
+                renderer.ready.catch((error) =>
+                    console.error('Error initializing ASS subtitle renderer:', error)
+                );
+            } catch (error) {
+                console.error('Failed to create ASS subtitle renderer:', error);
+            }
             return;
         }
 
