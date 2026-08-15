@@ -107,7 +107,7 @@ const ItemsRow = ({ title, items, detailFields, useThumbImage }: ItemsRowProps) 
 
     return (
         ((recentItems && recentItems.length > 0) || isLoading) && (
-            <ScrollableHomeSection title={title || t('items')}>
+            <ScrollableHomeSection title={title || t('items')} focusable={!!recentItems}>
                 {recentItems
                     ? recentItems.map((item) => (
                           <ItemCard

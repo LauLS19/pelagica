@@ -16,7 +16,7 @@ const GenresRow = ({ title, limit }: GenresRowProps) => {
     }
 
     return (
-        <ScrollableHomeSection title={title || 'Genres'}>
+        <ScrollableHomeSection title={title || 'Genres'} focusable={!!genres}>
             {genres
                 ? genres
                       .sort((a, b) => (b.item?.totalItems || 0) - (a.item?.totalItems || 0))

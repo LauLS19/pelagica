@@ -16,7 +16,7 @@ const LibrariesRow = ({ title }: { title: string }) => {
     if (!isLoading && libraries.length === 0) return null;
 
     return (
-        <ScrollableHomeSection title={title}>
+        <ScrollableHomeSection title={title} focusable={!isLoading}>
             {isLoading
                 ? Array.from({ length: 4 }).map((_, i) => (
                       <div key={i} className="flex flex-col">
