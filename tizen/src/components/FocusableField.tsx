@@ -8,9 +8,15 @@ const FocusableField = ({
     autoFocus,
     icon,
     className,
+    focusKey,
     ...props
-}: InputHTMLAttributes<HTMLInputElement> & { autoFocus?: boolean; icon?: ReactNode }) => {
+}: InputHTMLAttributes<HTMLInputElement> & {
+    autoFocus?: boolean;
+    icon?: ReactNode;
+    focusKey?: string;
+}) => {
     const { ref, focused, focusSelf } = useFocusable<object, HTMLInputElement>({
+        focusKey,
         onEnterPress: () => ref.current?.focus(),
         onBlur: () => ref.current?.blur(),
     });
