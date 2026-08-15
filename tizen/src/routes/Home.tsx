@@ -8,6 +8,7 @@ import ItemsRow from '../components/home/ItemsRow';
 import RecentlyAddedRow from '../components/home/RecentlyAddedRow';
 import type { CollectionType } from '@jellyfin/sdk/lib/generated-client/models';
 import GenresRow from '../components/home/GenresRow';
+import RecommendedItemsRow from '../components/home/RecommendedItemsRow';
 
 function getDetailFieldsForCollectionType(type: CollectionType | undefined): DetailField[] {
     switch (type) {
@@ -106,6 +107,16 @@ const Home = () => {
                                 key={index}
                                 title={section.title || t('genres')}
                                 limit={section.limit}
+                            />
+                        );
+                    case 'streamystatsRecommended':
+                        return (
+                            <RecommendedItemsRow
+                                key={index}
+                                title={section.title || t('recommended_items')}
+                                type={section.recommendationType}
+                                limit={section.limit}
+                                showSimilarity={section.showSimilarity}
                             />
                         );
                     default:
