@@ -185,6 +185,8 @@ const SeasonsRow = ({
         saveLastFocusedChild: true,
     });
 
+    if (!isLoading && seasons.length <= 1) return null;
+
     return (
         <FocusContext.Provider value={focusKey}>
             <div className="flex flex-wrap gap-2" ref={ref}>
