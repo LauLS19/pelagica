@@ -8,7 +8,6 @@ import { lazy } from 'react';
 
 const LoginPage = lazy(() => import('./routes/Login'));
 const HomePage = lazy(() => import('./routes/Home'));
-const AboutPage = lazy(() => import('./routes/About'));
 const LibraryPage = lazy(() => import('./routes/Library'));
 const LibraryDetailPage = lazy(() => import('./routes/LibraryDetail'));
 const MovieDetailPage = lazy(() => import('./routes/MovieDetail'));
@@ -41,7 +40,6 @@ function App() {
                         }
                     >
                         <Route index element={<HomePage />} />
-                        <Route path="about" element={<AboutPage />} />
                         <Route path="settings" element={<SettingsPage />} />
                         <Route path="library" element={<LibraryPage />} />
                         <Route path="library/:libraryId" element={<LibraryDetailPage />} />

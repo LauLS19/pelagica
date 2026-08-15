@@ -175,5 +175,9 @@
     "plugin_restart_error": "Failed to restart the Jellyfin server.",
     "server_label": "Server",
     "not_configured": "Not configured",
-    "signed_in_as": "Signed in as"
+    "signed_in_as": "Signed in as",
+    "account_section_title": "Account",
+    "language_section_title": "Language",
+    "about_section_title": "About",
+    "version_label": "Pelagica Version"
 }

@@ -49,7 +49,5 @@
     "category_links": "Links",
     "quick_connect": "Quick Connect",
     "back": "Back",
-    "close": "Close",
-    "about": "About",
-    "about_description": "React + TypeScript + Tailwind + shadcn/ui, packaged as a Tizen web app."
+    "close": "Close"
 }
