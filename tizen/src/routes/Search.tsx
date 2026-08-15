@@ -1,5 +1,4 @@
 import FocusableField from '@/components/FocusableField';
-import ItemCard from '@/components/ItemCard';
 import {
     Empty,
     EmptyDescription,
@@ -13,6 +12,7 @@ import { startTransition, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import GenreCard from '../components/GenreCard';
 import { Skeleton } from '../components/ui/skeleton';
+import ItemCardGrid from '../components/ItemCardGrid';
 
 const Search = () => {
     const { t } = useTranslation('search');
@@ -49,18 +49,7 @@ const Search = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
             />
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] gap-4">
-                {isLoading
-                    ? Array.from({ length: 6 }).map((_, i) => (
-                          <div
-                              key={i}
-                              className="aspect-2/3 w-full animate-pulse rounded-md bg-muted"
-                          />
-                      ))
-                    : results?.map((item) => (
-                          <ItemCard key={item.Id} item={item} className="w-full" />
-                      ))}
-            </div>
+            <ItemCardGrid items={results} isLoading={isLoading} />
             {error && (
                 <Empty>
                     <EmptyHeader>

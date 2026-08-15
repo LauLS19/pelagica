@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { COLLECTION_ITEM_TYPES, useLibraryItems, useUserViews } from '@pelagica/core';
 import type { CollectionType } from '@jellyfin/sdk/lib/generated-client/models';
-import ItemCard from '../components/ItemCard';
 import ItemPagination from '../components/ItemPagination';
+import ItemCardGrid from '../components/ItemCardGrid';
 
 const MIN_CARD_WIDTH = 160;
 const GRID_GAP = 16;
@@ -45,21 +45,7 @@ const LibraryDetail = () => {
     return (
         <div className="flex flex-col gap-6">
             <h1 className="text-2xl font-semibold">{library?.Name ?? t('title')}</h1>
-            <div
-                ref={gridRef}
-                className="grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] gap-4"
-            >
-                {isLoading
-                    ? Array.from({ length: 12 }).map((_, i) => (
-                          <div
-                              key={i}
-                              className="aspect-2/3 w-full animate-pulse rounded-md bg-muted"
-                          />
-                      ))
-                    : data?.items.map((item, i) => (
-                          <ItemCard key={item.Id} item={item} autoFocus={i === 0} />
-                      ))}
-            </div>
+            <ItemCardGrid ref={gridRef} items={data?.items} isLoading={isLoading} autoFocusFirst />
             {!isLoading && data?.items.length === 0 && (
                 <p className="text-muted-foreground">{t('no_items_description')}</p>
             )}
