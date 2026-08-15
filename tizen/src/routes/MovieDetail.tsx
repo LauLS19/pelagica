@@ -8,6 +8,7 @@ import PlayButton from '../components/PlayButton';
 import WatchlistButton from '../components/WatchlistButton';
 import FavoriteButton from '../components/FavoriteButton';
 import ItemRow from '../components/ItemRow';
+import TrailerButton from '../components/TrailerButton';
 
 const MovieDetail = () => {
     const { itemId } = useParams<{ itemId: string }>();
@@ -29,6 +30,7 @@ const MovieDetail = () => {
                     item && (
                         <>
                             <PlayButton item={item} />
+                            <TrailerButton item={item} />
                             <WatchlistButton item={item} />
                             <FavoriteButton item={item} />
                         </>

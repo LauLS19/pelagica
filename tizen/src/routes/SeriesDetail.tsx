@@ -24,6 +24,7 @@ import WatchlistButton from '../components/WatchlistButton';
 import FavoriteButton from '../components/FavoriteButton';
 import ItemRow from '../components/ItemRow';
 import { Skeleton } from '../components/ui/skeleton';
+import TrailerButton from '../components/TrailerButton';
 
 const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?: boolean }) => {
     const [imageError, setImageError] = useState(false);
@@ -181,6 +182,7 @@ const SeriesDetail = () => {
                     item && (
                         <>
                             <PlayButton item={item} />
+                            <TrailerButton item={item} />
                             <WatchlistButton item={item} />
                             <FavoriteButton item={item} />
                         </>
