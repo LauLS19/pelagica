@@ -94,16 +94,22 @@ chmod a-w "$GLOBAL_PROFILES_PATH"
 #
 # Build and sign
 #
-PACKAGE_OUTPUT_PATH="$PROJECT_DIR/output.wgt"
+PACKAGE_OUTPUT_DIR="$PROJECT_DIR/output-wgt"
 ERROR_LOG="$GITHUB_WORKSPACE/tizen-studio-data/cli/logs/cli.log"
 
 tizen build-web -- "$PROJECT_DIR" \
-    && tizen package -t wgt -s sourcetoad-tizen-public -o "$PACKAGE_OUTPUT_PATH" -- "$PROJECT_DIR/.buildResult"
+    && tizen package -t wgt -s sourcetoad-tizen-public -o "$PACKAGE_OUTPUT_DIR" -- "$PROJECT_DIR/.buildResult"
 
 # shellcheck disable=SC2181
 if [ $? -eq 0 ]; then
-    SUCCESS=true
-    echo "package-artifact=$PACKAGE_OUTPUT_PATH" >> "$GITHUB_OUTPUT"
+    PACKAGE_OUTPUT_PATH="$(find "$PACKAGE_OUTPUT_DIR" -maxdepth 1 -name '*.wgt' -print -quit)"
+    if [ -n "$PACKAGE_OUTPUT_PATH" ]; then
+        SUCCESS=true
+        echo "package-artifact=$PACKAGE_OUTPUT_PATH" >> "$GITHUB_OUTPUT"
+    else
+        SUCCESS=false
+        echo "tizen package reported success but no .wgt file was found in $PACKAGE_OUTPUT_DIR" >&2
+    fi
 else
     SUCCESS=false
     cat "$ERROR_LOG"
