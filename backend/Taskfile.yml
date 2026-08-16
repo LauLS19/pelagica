@@ -16,7 +16,6 @@ tasks:
             SERVERS_DIR: '{{.ROOT_DIR}}/config/servers'
             ENABLE_AUTH: 'true'
             LOG_LEVEL: 'debug'
-            SERVER_ADDRESS: 'https://jellyfin.jan.run'
             STUDIOS_DB_DIR: '{{.ROOT_DIR}}/cache/studios-db'
         cmds:
             - go run main.go
