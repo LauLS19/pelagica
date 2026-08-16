@@ -39,10 +39,13 @@ tasks:
             - task: set-frontend-version
               vars:
                   VERSION: '{{.VERSION}}'
+            - task: tizen:set-tizen-version
+              vars:
+                  VERSION: '{{.VERSION}}'
             - cmd: 'perl -i -pe "s/APP_VERSION: ''.*''/APP_VERSION: ''{{.VERSION}}''/" backend/Taskfile.yml'
             - cmd: 'perl -i -pe "s/^    version: ''.*''/    version: ''{{.VERSION}}''/" desktop/build/config.yml'
             - perl desktop/build/set-versions.pl {{.VERSION}}
-            - 'echo "Version set to {{.VERSION}} in frontend/package.json, backend/Taskfile.yml, and desktop/build/config.yml"'
+            - 'echo "Version set to {{.VERSION}} in frontend/package.json, tizen/package.json, tizen/public/config.xml, backend/Taskfile.yml, and desktop/build/config.yml"'
 
     docker:
         desc: Build and run the local Docker image

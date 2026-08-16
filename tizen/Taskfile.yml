@@ -26,6 +26,12 @@ tasks:
         cmds:
             - pnpm install
 
+    set-tizen-version:
+        internal: true
+        cmds:
+            - pnpm pkg set version={{.VERSION}}
+            - perl -i -0777 -pe 's/(<widget[^>]*?\bversion=")[^"]*(")/${1}{{.VERSION}}$2/s' public/config.xml
+
     dev:
         desc: Start the Vite dev server (fast iteration in a plain browser)
         cmds:
