@@ -33,22 +33,22 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { formatPlayTime, ticksToReadableTime, ticksToSeconds } from '@/utils/timeConversion';
+import { formatPlayTime, ticksToReadableTime, ticksToSeconds } from '@pelagica/core';
 import { buildPlayerUrl } from '@/utils/playerUrl';
 import { isDesktopApp } from '@/utils/desktopApp';
 import { useTranslation } from 'react-i18next';
 import { usePlayerKeyboardControls } from '@/hooks/usePlayerKeyboardControls';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getLogoUrl, getPrimaryImageUrl, getTrickplayImageUrl } from '@/utils/jellyfinUrls';
-import { useReportPlaybackProgress } from '@/hooks/api/usePlaybackProgress';
+import { getLogoUrl, getPrimaryImageUrl, getTrickplayImageUrl } from '@pelagica/core';
+import { useReportPlaybackProgress } from '@pelagica/core';
 import { getRuntimePlaybackStats, type RuntimePlaybackStats } from '@/utils/playbackStats';
-import { useSession } from '@/hooks/api/useSession';
+import { useSession } from '@pelagica/core';
 import {
     removeLastSubtitleLanguage,
     setLastAudioLanguage,
     setLastSubtitleLanguage,
 } from '@/utils/localstorageLastlanguage';
-import { useConfig } from '../../hooks/api/useConfig';
+import { useConfig } from '@pelagica/core';
 
 function getPrimaryTrickplayInfo(trickplay?: BaseItemDto['Trickplay']) {
     if (!trickplay) return null;

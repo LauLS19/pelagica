@@ -21,7 +21,7 @@ import {
     useExternalIdInfos,
     useMovieRemoteSearchResults,
     useSeriesRemoteSearchResults,
-} from '@/hooks/api/identify';
+} from '@pelagica/core';
 
 type IdentifyStep = 'search' | 'results' | 'confirm';
 

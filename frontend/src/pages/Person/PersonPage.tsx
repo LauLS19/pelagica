@@ -1,11 +1,11 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { usePageBackground } from '@/hooks/usePageBackground';
-import { getPrimaryImageUrl } from '@/utils/jellyfinUrls';
+import { getPrimaryImageUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { memo, useEffect, useState } from 'react';
 import Page from '../Page';
-import { usePerson } from '@/hooks/api/usePerson';
-import { getUserId } from '@/utils/localstorageCredentials';
+import { usePerson } from '@pelagica/core';
+import { getUserId } from '@pelagica/core';
 import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import FilmographyRow from './FilmographyRow';
@@ -13,7 +13,7 @@ import SeerrPersonCreditsRow from './SeerrPersonCreditsRow';
 import type { TFunction } from 'i18next';
 import { Button } from '@/components/ui/button';
 import { ImageOff } from 'lucide-react';
-import { useConfig } from '@/hooks/api/useConfig';
+import { useConfig } from '@pelagica/core';
 
 const PersonPageSkeleton = memo(() => {
     return (

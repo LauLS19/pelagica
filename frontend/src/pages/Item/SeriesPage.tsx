@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
-import { useSeasons } from '@/hooks/api/useSeasons';
-import { getPrimaryImageUrl, getLogoUrl } from '@/utils/jellyfinUrls';
+import { useSeasons } from '@pelagica/core';
+import { getPrimaryImageUrl, getLogoUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
 import { ImageOff, Play } from 'lucide-react';
 import { useState } from 'react';
@@ -13,25 +13,25 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { useEpisodes } from '@/hooks/api/useEpisodes';
+import { useEpisodes } from '@pelagica/core';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from '@/components/ui/skeleton';
 import PeopleRow from './PeopleRow';
 import BaseMediaPage from './BaseMediaPage';
 import MoreLikeThisRow from './MoreLikeThisRow';
 import SeerRecommendationsRow from './SeerrRecommendationsRow';
-import { type AppConfig } from '@/hooks/api/useConfig';
+import { type AppConfig } from '@pelagica/core';
 import DetailBadges from './DetailBadges';
 import EpisodesDisplay from './EpisodesDisplay';
 import SeasonsDisplay from './SeasonsDisplay';
 import FavoriteButton from '../../components/FavoriteButton';
 import WatchListButton from '../../components/WatchlistButton';
 import PlayStateButton from '../../components/PlayStateButton';
-import { getUserId } from '@/utils/localstorageCredentials';
+import { getUserId } from '@pelagica/core';
 import ItemAdminButton from '@/components/ItemAdminButton';
 import SeerrItemButton from '@/components/SeerrItemButton';
 import { TrailerButton } from '../../components/TrailerButton';
-import { useUpcomingEpisodes } from '../../hooks/api/useUpcomingEpisodes';
+import { useUpcomingEpisodes } from '@pelagica/core';
 import UpcomingEpisodeComponent from './UpcomingEpisodeComponent';
 import ItemMetadataBadges from './ItemMetadataBadges';
 import Overview from './Overview';

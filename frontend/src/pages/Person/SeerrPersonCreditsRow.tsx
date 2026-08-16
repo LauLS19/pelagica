@@ -1,8 +1,8 @@
 import SectionScroller from '@/components/SectionScroller';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useSeerrPersonCombinedCredits } from '@/hooks/api/useSeerrPersonCombinedCredits';
-import { useSeerrLoginStatus } from '@/hooks/api/useSeerrLoginStatus';
-import type { SeerrPersonCastCredit, SeerrPersonCrewCredit } from '@/api/seerr/types';
+import { useSeerrPersonCombinedCredits } from '@pelagica/core';
+import { useSeerrLoginStatus } from '@pelagica/core';
+import type { SeerrPersonCastCredit, SeerrPersonCrewCredit } from '@pelagica/core';
 import { memo, useMemo } from 'react';
 import type React from 'react';
 import { SeerrRecommendationPoster } from '../Item/SeerrRecommendationsRow';
