@@ -1,1 +1,0 @@
-import{n as e}from"./rolldown-runtime-hePW80VL.js";import{t}from"./createLucideIcon-DyPl-lIq.js";var n=e({__iconNode:()=>r,default:()=>i}),r=[[`path`,{d:`M18 6 6 18`,key:`1bl5f8`}],[`path`,{d:`m6 6 12 12`,key:`d8bk6v`}]],i=t(`x`,r);export{n,i as t};

@@ -1,0 +1,1 @@
+import{a as e,t}from"./createLucideIcon-GMw4Kfwj.js";var n=e({__iconNode:()=>r,default:()=>i}),r=[[`path`,{d:`m6 9 6 6 6-6`,key:`qrunsl`}]],i=t(`chevron-down`,r);export{n,i as t};

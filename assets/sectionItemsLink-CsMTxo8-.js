@@ -1,0 +1,1 @@
+function e(e,t){let n=new URLSearchParams;return e&&n.set(`title`,e),t&&n.set(`config`,btoa(encodeURIComponent(JSON.stringify(t)))),`/items/section?${n.toString()}`}function t(e){let t=e.get(`title`)??void 0,n=e.get(`config`);if(!n)return{title:t};try{return{title:t,config:JSON.parse(decodeURIComponent(atob(n)))}}catch{return{title:t}}}export{t as n,e as t};
