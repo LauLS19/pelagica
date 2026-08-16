@@ -48,7 +48,7 @@ jobs:
 
             - name: Build and sign .wgt package
               id: tizen-build
-              uses: sourcetoad/tizen-build-action@v1.1.2
+              uses: ./.github/actions/tizen-build
               with:
                   project-dir: ${{ github.workspace }}/tizen/www
                   author-key: ${{ secrets.TIZEN_CERT_P12_BASE64 }}
