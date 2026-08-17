@@ -88,11 +88,13 @@ For production use, you should self-host Pelagica using Docker or another method
 
 Thank you to [Streamyfin](https://streamyfin.app/) for providing a demo Jellyfin server for testing!
 
-## Web Installation
+## Installation options
+
+### Web Installation
 
 Pelagica web is distributed as a Docker image. See the [Installation](https://pelagica.app/docs/installation) and [Configuration](https://pelagica.app/docs/configuration) docs for setup instructions, and [Themes](https://pelagica.app/docs/themes) for applying custom themes.
 
-## Desktop App
+### Desktop App
 
 Pelagica is also available as a native desktop app for macOS, Windows, and Linux, built with [Wails v3](https://v3.wails.io). Download the latest build for your platform from the [Releases](https://github.com/PelagicaApp/pelagica/releases/latest) page.
 
@@ -101,6 +103,10 @@ Pelagica is also available as a native desktop app for macOS, Windows, and Linux
 - **Linux:** Available as a `.deb` package or an `.AppImage`.
 
 See the [desktop README](./desktop/README.md) for build and packaging instructions if you'd rather build it yourself.
+
+### Samsung Tizen
+
+Pelagica is available as a Tizen app for Samsung Smart TVs. See the [Tizen Documentation](https://pelagica.app/docs/tizen) for installation instructions.
 
 ## Discord
 
