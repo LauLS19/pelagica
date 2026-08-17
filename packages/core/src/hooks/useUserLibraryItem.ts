@@ -3,9 +3,15 @@ import { getUserLibraryApi } from '@jellyfin/sdk/lib/utils/api/user-library-api'
 import { getApi } from '../api/getApi';
 import { getRetryConfig } from '../utils/authErrorHandler';
 
+interface UserLibraryItemQueryOptions {
+    staleTime?: number;
+    gcTime?: number;
+}
+
 export function useUserLibraryItem(
     itemId: string | null | undefined,
-    userId?: string | undefined
+    userId?: string | undefined,
+    options?: UserLibraryItemQueryOptions
 ) {
     return useQuery({
         queryKey: ['userLibraryItem', itemId, userId],
@@ -26,6 +32,7 @@ export function useUserLibraryItem(
         },
         enabled: !!itemId,
         ...getRetryConfig(),
-        staleTime: 30_000,
+        staleTime: options?.staleTime ?? 30_000,
+        gcTime: options?.gcTime,
     });
 }
