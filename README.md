@@ -12,7 +12,7 @@
   <a href="https://translate.pelagica.app/"><img src="https://translate.pelagica.app/api/badge.svg" alt="Translations"></a>
 </p>
 
-<p align="center">Pelagica is a web and desktop client for <a href="https://jellyfin.org">Jellyfin</a> built using React. It aims to provide a fast, modern, and customizable user experience for browsing and watching your media library. It's available both as a self-hosted web app and as a native desktop app for macOS, Windows, and Linux.</p>
+<p align="center">Pelagica is a web, desktop, and TV client for <a href="https://jellyfin.org">Jellyfin</a> built using React. It aims to provide a fast, modern, and customizable user experience for browsing and watching your media library. It's available as a self-hosted web app, a native desktop app for macOS, Windows, and Linux, and a TV app for Samsung Tizen.</p>
 
 <!-- p align="center">A fast, modern web frontend for Jellyfin</p> -->
 
