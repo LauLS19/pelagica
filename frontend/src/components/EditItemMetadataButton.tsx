@@ -4,7 +4,6 @@ import type {
     MetadataField,
 } from '@jellyfin/sdk/lib/generated-client/models';
 import { getApi, useEditItemMetadata, useUserLibraryItem } from '@pelagica/core';
-import { getUserLibraryApi } from '@jellyfin/sdk/lib/utils/api/user-library-api';
 import { getItemUpdateApi } from '@jellyfin/sdk/lib/utils/api/item-update-api';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState, startTransition } from 'react';
