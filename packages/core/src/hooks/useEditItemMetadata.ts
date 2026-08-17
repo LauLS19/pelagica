@@ -26,6 +26,7 @@ export function useEditItemMetadata(onSuccess?: () => void) {
             return itemId;
         },
         onSuccess: (itemId) => {
+            queryClient.invalidateQueries({ queryKey: ['userLibraryItem', itemId] });
             queryClient.invalidateQueries({ queryKey: ['item', itemId] });
             queryClient.invalidateQueries({ queryKey: ['playerItem', itemId] });
             queryClient.invalidateQueries({ queryKey: ['items'] });

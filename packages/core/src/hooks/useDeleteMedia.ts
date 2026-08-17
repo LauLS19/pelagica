@@ -14,6 +14,7 @@ export function useDeleteMedia(onSuccess?: () => void) {
             return itemId;
         },
         onSuccess: (deletedItemId) => {
+            queryClient.invalidateQueries({ queryKey: ['userLibraryItem', deletedItemId] });
             queryClient.invalidateQueries({ queryKey: ['item', deletedItemId] });
             queryClient.invalidateQueries({ queryKey: ['items'] });
             queryClient.invalidateQueries({ queryKey: ['libraryItems'] });
