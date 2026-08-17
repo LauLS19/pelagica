@@ -8,7 +8,6 @@ import (
 	"log/slog"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 	"time"
 
@@ -20,12 +19,23 @@ import (
 const seerSessionCookieName = "seer_session"
 
 func getSeerURL(c fiber.Ctx) (string, error) {
-	serverKey, err := serverKeyFromRequest(c)
-	if err != nil {
+	if _, err := serverKeyFromRequest(c); err != nil {
 		return "", err
 	}
 
-	data, err := os.ReadFile(configFilePath(serverKey))
+	jellyfinURL := strings.TrimRight(c.Query("jellyfin_url"), "/")
+
+	resp, err := http.Get(jellyfinURL + "/Pelagica/Config")
+	if err != nil {
+		return "", errors.New("failed to read config")
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return "", errors.New("failed to read config")
+	}
+
+	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", errors.New("failed to read config")
 	}
