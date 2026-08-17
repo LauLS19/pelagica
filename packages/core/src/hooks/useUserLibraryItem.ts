@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getUserLibraryApi } from '@jellyfin/sdk/lib/utils/api/user-library-api';
 import { getApi } from '../api/getApi';
 import { getRetryConfig } from '../utils/authErrorHandler';
+import { getUserId } from '../utils/localstorageCredentials';
 
 interface UserLibraryItemQueryOptions {
     staleTime?: number;
@@ -13,8 +14,10 @@ export function useUserLibraryItem(
     userId?: string | undefined,
     options?: UserLibraryItemQueryOptions
 ) {
+    const resolvedUserId = userId ?? getUserId() ?? undefined;
+
     return useQuery({
-        queryKey: ['userLibraryItem', itemId, userId],
+        queryKey: ['userLibraryItem', itemId, resolvedUserId],
         queryFn: async () => {
             if (!itemId) {
                 throw new Error('Item ID is required');
@@ -25,7 +28,7 @@ export function useUserLibraryItem(
 
             const response = await userLibraryApi.getItem({
                 itemId,
-                userId,
+                userId: resolvedUserId,
             });
 
             return response.data;
