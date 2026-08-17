@@ -1,30 +1,20 @@
 import { getApi } from '../api/getApi';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserLibraryApi } from '@jellyfin/sdk/lib/utils/api/user-library-api';
-import { getRetryConfig } from '../utils/authErrorHandler';
+import { useUserLibraryItem } from './useUserLibraryItem';
 
 export function useFavorite(itemId: string | null | undefined) {
     const queryClient = useQueryClient();
 
-    const { data: isFavorite = false, isLoading: isFavoriteLoading } = useQuery({
-        queryKey: ['favorite', itemId],
-        queryFn: async (): Promise<boolean> => {
-            if (!itemId) return false;
-            const api = getApi();
-            const userLibraryApi = getUserLibraryApi(api);
-            const response = await userLibraryApi.getItem({ itemId });
-            return response.data.UserData?.IsFavorite ?? false;
-        },
-        enabled: !!itemId,
-        ...getRetryConfig(),
-    });
+    const { data: item, isLoading: isFavoriteLoading } = useUserLibraryItem(itemId);
+
+    const isFavorite = item?.UserData?.IsFavorite ?? false;
 
     const { mutate: toggleFavorite, isPending: isToggling } = useMutation({
         mutationFn: async (favorite: boolean) => {
             if (!itemId) throw new Error('Item ID is required');
             const api = getApi();
             const userLibraryApi = getUserLibraryApi(api);
-
             if (favorite) {
                 await userLibraryApi.markFavoriteItem({ itemId });
             } else {
@@ -32,8 +22,10 @@ export function useFavorite(itemId: string | null | undefined) {
             }
             return favorite;
         },
-        onSuccess: (newFavoriteState) => {
-            queryClient.setQueryData(['favorite', itemId], newFavoriteState);
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['userLibraryItem', itemId],
+            });
             queryClient.invalidateQueries({ queryKey: ['item', itemId] });
             queryClient.invalidateQueries({ queryKey: ['favoriteAlbums'] });
             queryClient.invalidateQueries({ queryKey: ['favoriteArtists'] });
