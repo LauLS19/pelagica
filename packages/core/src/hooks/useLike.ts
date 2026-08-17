@@ -1,23 +1,14 @@
 import { getApi } from '../api/getApi';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserLibraryApi } from '@jellyfin/sdk/lib/utils/api/user-library-api';
-import { getRetryConfig } from '../utils/authErrorHandler';
+import { useUserLibraryItem } from './useUserLibraryItem';
 
 export function useLike(itemId: string | null | undefined) {
     const queryClient = useQueryClient();
 
-    const { data: isLiked = false, isLoading: isLikedLoading } = useQuery({
-        queryKey: ['like', itemId],
-        queryFn: async (): Promise<boolean> => {
-            if (!itemId) return false;
-            const api = getApi();
-            const userLibraryApi = getUserLibraryApi(api);
-            const response = await userLibraryApi.getItem({ itemId });
-            return response.data.UserData?.Likes ?? false;
-        },
-        enabled: !!itemId,
-        ...getRetryConfig(),
-    });
+    const { data: item, isLoading: isLikedLoading } = useUserLibraryItem(itemId);
+
+    const isLiked = item?.UserData?.Likes ?? false;
 
     const { mutate: toggleLike, isPending: isUpdating } = useMutation({
         mutationFn: async (like: boolean) => {
@@ -27,8 +18,10 @@ export function useLike(itemId: string | null | undefined) {
             await userLibraryApi.updateUserItemRating({ itemId, likes: like });
             return like;
         },
-        onSuccess: (newLikeState) => {
-            queryClient.setQueryData(['like', itemId], newLikeState);
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['userLibraryItem', itemId],
+            });
             queryClient.invalidateQueries({ queryKey: ['item', itemId] });
         },
     });
