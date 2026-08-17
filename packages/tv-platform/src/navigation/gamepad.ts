@@ -1,3 +1,5 @@
+import { dispatchTvBackKey } from './backKeyEvent';
+
 type Direction = 'up' | 'down' | 'left' | 'right';
 type NavigationKey = Direction | 'enter';
 
@@ -25,12 +27,6 @@ function dispatchKey(type: 'keydown' | 'keyup', key: string) {
     window.dispatchEvent(new KeyboardEvent(type, { key, bubbles: true, cancelable: true }));
 }
 
-function dispatchBackKey() {
-    const event = new Event('tizenhwkey') as TizenHwKeyEvent;
-    event.keyName = 'back';
-    window.dispatchEvent(event);
-}
-
 function resolveDirection(pad: Gamepad): Direction | null {
     if (pad.buttons[BUTTON_DPAD_UP]?.pressed) return 'up';
     if (pad.buttons[BUTTON_DPAD_DOWN]?.pressed) return 'down';
@@ -48,6 +44,9 @@ function resolveDirection(pad: Gamepad): Direction | null {
     return null;
 }
 
+// Translates raw gamepad input into synthetic keyboard events (for spatial navigation) and the
+// canonical back-key event (for the Confirm/Back button), so it works unmodified on any platform
+// that exposes the standard W3C Gamepad API.
 export function initGamepadNavigation() {
     if (typeof navigator.getGamepads !== 'function') return;
 
@@ -92,7 +91,7 @@ export function initGamepadNavigation() {
             const backPressed = pad.buttons[BUTTON_BACK]?.pressed ?? false;
             if (backPressed && !backPressedByPad.has(pad.index)) {
                 backPressedByPad.add(pad.index);
-                dispatchBackKey();
+                dispatchTvBackKey();
             } else if (!backPressed && backPressedByPad.has(pad.index)) {
                 backPressedByPad.delete(pad.index);
             }

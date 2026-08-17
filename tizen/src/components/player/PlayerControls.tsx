@@ -34,6 +34,7 @@ import { cn } from '@/lib/utils';
 import { FOCUS_RING_COMPACT } from '@/lib/focus-styles';
 import { formatPlayTime, ticksToReadableTime, ticksToSeconds } from '@/lib/timeConversion';
 import { getLogoUrl, getPrimaryImageUrl, useReportPlaybackProgress } from '@pelagica/core';
+import { tizenNavigationAdapter, type TvPlayer } from '@pelagica/tv-platform';
 import {
     removeLastSubtitleLanguage,
     setLastAudioLanguage,
@@ -87,7 +88,7 @@ export interface PlayerControlsHandle {
 
 interface PlayerControlsProps {
     item: BaseItemDto;
-    player: ReturnType<typeof import('video.js').default> | null;
+    player: TvPlayer | null;
     audioTrackIndex: number | null;
     onAudioTrackChange: (index: number) => void;
     subtitleTrackIndex: number | null;
@@ -195,17 +196,15 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
         );
 
         useEffect(() => {
-            if (!player || player.isDisposed?.()) return;
+            if (!player || player.isDisposed()) return;
 
-            const updatePlayState = () => setIsPlaying(!player.paused());
-            const updateTime = () => setCurrentTime(player.currentTime() || 0);
-            const updateDuration = () => setDuration(player.duration() || 0);
-            const updateMuted = () => setIsMuted(player.muted() || false);
+            const updatePlayState = () => setIsPlaying(!player.isPaused());
+            const updateTime = () => setCurrentTime(player.getCurrentTime());
+            const updateDuration = () => setDuration(player.getDuration());
+            const updateMuted = () => setIsMuted(player.isMuted());
             const updateBuffered = () => {
-                const buffered = player.buffered();
-                if (buffered && buffered.length > 0) {
-                    setBufferedTime(buffered.end(buffered.length - 1));
-                }
+                const bufferedEnd = player.getBufferedEnd();
+                if (bufferedEnd > 0) setBufferedTime(bufferedEnd);
             };
 
             const handleEnded = () => {
@@ -237,7 +236,7 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
 
         const togglePlay = useCallback(() => {
             if (!player) return;
-            if (player.paused()) {
+            if (player.isPaused()) {
                 player.play();
             } else {
                 player.pause();
@@ -259,13 +258,7 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
         );
 
         useEffect(() => {
-            try {
-                window.tizen?.tvinputdevice?.registerKey('MediaPlayPause');
-                window.tizen?.tvinputdevice?.registerKey('MediaPlay');
-                window.tizen?.tvinputdevice?.registerKey('MediaPause');
-            } catch {
-                // Not running on a Tizen device (e.g. browser dev)
-            }
+            tizenNavigationAdapter.registerMediaKeys();
         }, []);
 
         useEffect(() => {
@@ -285,17 +278,17 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
 
         const toggleMute = useCallback(() => {
             if (!player) return;
-            player.muted(!isMuted);
+            player.setMuted(!isMuted);
         }, [player, isMuted]);
 
         const handleSeekBackward = useCallback(() => {
             if (!player) return;
-            player.currentTime(Math.max(0, (player.currentTime() || 0) - SEEK_SECONDS));
+            player.seekTo(Math.max(0, player.getCurrentTime() - SEEK_SECONDS));
         }, [player]);
 
         const handleSeekForward = useCallback(() => {
             if (!player) return;
-            player.currentTime(Math.min(duration, (player.currentTime() || 0) + SEEK_SECONDS));
+            player.seekTo(Math.min(duration, player.getCurrentTime() + SEEK_SECONDS));
         }, [player, duration]);
 
         const handleAudioTrackChange = (index: number) => {
@@ -324,7 +317,7 @@ const PlayerControls = forwardRef<PlayerControlsHandle, PlayerControlsProps>(
             if (!player) return;
             const segment = getMediaSegment(type);
             if (segment?.EndTicks) {
-                player.currentTime(ticksToSeconds(segment.EndTicks));
+                player.seekTo(ticksToSeconds(segment.EndTicks));
             }
             setFocus(PLAY_PAUSE_FOCUS_KEY);
         };

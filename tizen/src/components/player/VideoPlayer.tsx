@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import JASSUB from 'jassub';
+import { createVideoJsPlayerAdapter, type SubtitleTrack, type TvPlayer } from '@pelagica/tv-platform';
 
 type VideoJsPlayer = ReturnType<typeof videojs>;
 
@@ -16,14 +17,6 @@ function isJassubSupported() {
     );
 }
 
-export interface SubtitleTrack {
-    src: string;
-    srclang: string;
-    label: string;
-    default?: boolean;
-    format?: 'vtt' | 'ass';
-}
-
 interface VideoPlayerProps {
     src: string;
     srcType?: string;
@@ -31,7 +24,7 @@ interface VideoPlayerProps {
     startTicks: number;
     subtitles?: SubtitleTrack[];
     subtitleFonts?: string[];
-    onReady?: (player: VideoJsPlayer) => void;
+    onReady?: (player: TvPlayer) => void;
     onPlaybackError?: (error: MediaError | null) => void;
     onPlaybackStalled?: () => void;
     isAudioSwitchRef: React.MutableRefObject<boolean>;
@@ -104,7 +97,7 @@ const VideoPlayer = ({
         });
 
         player.ready(() => {
-            onReady?.(player);
+            onReady?.(createVideoJsPlayerAdapter(player));
         });
 
         return () => {

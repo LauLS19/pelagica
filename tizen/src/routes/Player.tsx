@@ -18,7 +18,8 @@ import {
     getUserId,
     clearCodecCache,
 } from '@pelagica/core';
-import VideoPlayer, { type SubtitleTrack } from '@/components/player/VideoPlayer';
+import { type SubtitleTrack, type TvPlayer } from '@pelagica/tv-platform';
+import VideoPlayer from '@/components/player/VideoPlayer';
 import PlayerControls, { type PlayerControlsHandle } from '@/components/player/PlayerControls';
 import PlayerLoading from '@/components/player/PlayerLoading';
 import { useTvBackKey } from '@/lib/use-tv-back-key';
@@ -27,8 +28,6 @@ import { getLastAudioLanguage, getLastSubtitleLanguage } from '@/lib/localstorag
 const PLAYBACK_PROGRESS_REPORT_MIN_PLAYTIME_SECONDS = 5;
 const PLAYBACK_PROGRESS_REPORT_INTERVAL_MS = 5000;
 const FONT_ATTACHMENT_EXTENSION_PATTERN = /\.(ttf|otf|woff2?)$/i;
-
-export type VideoJsPlayer = ReturnType<typeof import('video.js').default>;
 
 const Player = () => {
     const controlsRef = useRef<PlayerControlsHandle>(null);
@@ -50,7 +49,7 @@ const Player = () => {
     const hasUserSelectedSubtitleRef = useRef(false);
     const hasUserSelectedAudioRef = useRef(false);
     const hasAttemptedTranscodeFallbackRef = useRef(false);
-    const [player, setPlayer] = useState<VideoJsPlayer | null>(null);
+    const [player, setPlayer] = useState<TvPlayer | null>(null);
     const [forceTranscode, setForceTranscode] = useState(false);
     const {
         data: userConfiguration,
@@ -194,15 +193,15 @@ const Player = () => {
         startPlayback({ itemId, positionTicks: startTicks, playSessionId });
 
         const reportPlayerProgress = () => {
-            if (!player || player.isDisposed?.()) return;
+            if (!player || player.isDisposed()) return;
 
             try {
-                const currentTime = player.currentTime() || 0;
+                const currentTime = player.getCurrentTime();
                 if (currentTime <= PLAYBACK_PROGRESS_REPORT_MIN_PLAYTIME_SECONDS) return;
                 const positionTicks = Math.floor(currentTime * 10000000);
-                const isPaused = player.paused();
-                const volumeLevel = (player.volume() ?? 1) * 100;
-                const isMuted = player.muted();
+                const isPaused = player.isPaused();
+                const volumeLevel = player.getVolume() * 100;
+                const isMuted = player.isMuted();
 
                 lastPositionRef.current = positionTicks;
 
@@ -278,18 +277,7 @@ const Player = () => {
 
     useEffect(() => {
         if (!player) return;
-
-        const tracks = player.textTracks();
-        for (let i = 0; i < tracks.tracks_.length; i++) {
-            const track = tracks.tracks_[i];
-            if (subtitleTrackIndex === null) {
-                track.mode = 'disabled';
-            } else if (i === subtitleTrackIndex) {
-                track.mode = 'showing';
-            } else {
-                track.mode = 'disabled';
-            }
-        }
+        player.setSubtitleTrack(subtitleTrackIndex);
     }, [player, subtitleTrackIndex]);
 
     const subtitleTracks = useMemo(() => {

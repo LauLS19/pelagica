@@ -223,6 +223,22 @@ importers:
         specifier: ~5.9.3
         version: 5.9.3
 
+  packages/tv-platform:
+    dependencies:
+      '@pelagica/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.18
+      typescript:
+        specifier: ~5.9.3
+        version: 5.9.3
+      video.js:
+        specifier: ^8.23.7
+        version: 8.24.0
+
   tizen:
     dependencies:
       '@base-ui/react':
@@ -240,6 +256,9 @@ importers:
       '@pelagica/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@pelagica/tv-platform':
+        specifier: workspace:*
+        version: link:../packages/tv-platform
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.2.1(@types/node@24.13.3)(jiti@2.7.0))
@@ -1772,6 +1791,7 @@ packages:
   '@xmldom/xmldom@0.8.13':
     resolution: {integrity: sha512-KRYzxepc14G/CEpEGc3Yn+JKaAeT63smlDr+vjB8jRfgTBBI9wRj/nkQEO+ucV8p8I9bfKLWp37uHgFrbntPvw==}
     engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
 
   abslink@1.2.2:
     resolution: {integrity: sha512-HCOItvzORPjMzddCmEpbH8+W1VM3yjH+CR7DLtxlxFKX/jz5twJbm7KLfblO7eKLnXINLah8Hk2ZAJqxXeSkOg==}
