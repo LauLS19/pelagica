@@ -4,6 +4,7 @@ import { getMediaInfoApi } from '@jellyfin/sdk/lib/utils/api/media-info-api';
 import type { MediaSourceInfo } from '@jellyfin/sdk/lib/generated-client/models';
 import { getRetryConfig } from '../utils/authErrorHandler';
 import { detectSupportedCodecs } from '../utils/videoCodecDetection';
+import { isTizen } from '../api/jellyfinClient';
 
 export type PlayMethod = 'DirectPlay' | 'DirectStream' | 'Transcode';
 
@@ -48,6 +49,15 @@ function buildDeviceProfile(options?: { liveTvContainer?: boolean; excludeHevc?:
             AudioCodec: 'aac,mp3,opus,flac',
         },
     ];
+
+    if (isTizen()) {
+        directPlayProfiles.push({
+            Container: 'mkv',
+            Type: 'Video' as const,
+            VideoCodec: videoCodecs.join(','),
+            AudioCodec: 'aac,mp3,opus,flac,ac3,eac3',
+        });
+    }
 
     const transcodingProfiles = [
         {

@@ -12,7 +12,7 @@ import './theme.css';
 
 init();
 initGamepadNavigation();
-setClientInfo({ name: 'Pelagica Tizen', version: pkg.version });
+setClientInfo({ name: 'Pelagica Tizen', version: pkg.version, platform: 'tizen' });
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
