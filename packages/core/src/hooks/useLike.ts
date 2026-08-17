@@ -19,9 +19,7 @@ export function useLike(itemId: string | null | undefined) {
             return like;
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['userLibraryItem', itemId],
-            });
+            queryClient.invalidateQueries({ queryKey: ['userLibraryItem', itemId] });
             queryClient.invalidateQueries({ queryKey: ['item', itemId] });
         },
     });
