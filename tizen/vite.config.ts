@@ -9,9 +9,17 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     resolve: {
         alias: {
-            '@': path.resolve(import.meta.dirname, './src'),
+            '@': path.resolve(import.meta.dirname, '../packages/tv-frontend/src'),
         },
-        dedupe: ['i18next', 'react-i18next'],
+        dedupe: [
+            'i18next',
+            'react-i18next',
+            'react',
+            'react-dom',
+            'react-router-dom',
+            '@tanstack/react-query',
+            '@noriginmedia/norigin-spatial-navigation',
+        ],
     },
     build: {
         outDir: 'www',

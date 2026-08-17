@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+/* Tailwind's automatic content scan is rooted at the consuming app's Vite root (e.g. tizen/), which doesn't cover this package so we need to scan it explicitly. */
+@source './**/*.{ts,tsx}';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/geist';

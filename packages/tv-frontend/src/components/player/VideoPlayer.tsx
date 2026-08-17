@@ -2,7 +2,11 @@ import { useEffect, useRef } from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import JASSUB from 'jassub';
-import { createVideoJsPlayerAdapter, type SubtitleTrack, type TvPlayer } from '@pelagica/tv-platform';
+import {
+    createVideoJsPlayerAdapter,
+    type SubtitleTrack,
+    type TvPlayer,
+} from '@pelagica/tv-platform';
 
 type VideoJsPlayer = ReturnType<typeof videojs>;
 

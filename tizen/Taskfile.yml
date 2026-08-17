@@ -68,7 +68,8 @@ tasks:
             - rm -rf {{.BUILD_DIR}}
 
     ui:add:
-        desc: 'Add a shadcn/ui component, e.g. task ui:add -- button'
+        desc: 'Add a shadcn/ui component to @pelagica/tv-frontend, e.g. task ui:add -- button'
+        dir: ../packages/tv-frontend
         cmds:
             - pnpm dlx shadcn@latest add {{.CLI_ARGS}}
 

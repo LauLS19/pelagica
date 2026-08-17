@@ -3,4 +3,3 @@ www
 dist
 dist-ssr
 pnpm-lock.yaml
-src/components/ui/**
