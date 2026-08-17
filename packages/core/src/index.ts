@@ -99,6 +99,7 @@ export * from './hooks/useSimilarItems';
 export * from './hooks/useStudioItems';
 export * from './hooks/useStudiosApi';
 export * from './hooks/useUpcomingEpisodes';
+export * from './hooks/useUserLibraryItem';
 export * from './hooks/useUserViews';
 export * from './types/items';
 export * from './types/locales';

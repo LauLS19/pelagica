@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { onBackKey, tizenNavigationAdapter } from '@pelagica/tv-platform';
 
 /**
  * Wires the TV remote's Return/Back key to browser-style back navigation,
@@ -11,19 +12,14 @@ export function useTvBackKey(onIntercept?: () => boolean) {
     const location = useLocation();
 
     useEffect(() => {
-        function handleHwKey(event: Event) {
-            const keyName = (event as TizenHwKeyEvent).keyName;
-            if (keyName !== 'back') return;
+        return onBackKey(() => {
             if (onIntercept?.()) return;
 
             if (location.pathname === '/') {
-                window.tizen?.application.getCurrentApplication().exit();
+                tizenNavigationAdapter.exitApp();
             } else {
                 navigate(-1);
             }
-        }
-
-        window.addEventListener('tizenhwkey', handleHwKey);
-        return () => window.removeEventListener('tizenhwkey', handleHwKey);
+        });
     }, [location.pathname, navigate, onIntercept]);
 }

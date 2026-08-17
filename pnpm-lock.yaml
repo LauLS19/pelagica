@@ -223,7 +223,7 @@ importers:
         specifier: ~5.9.3
         version: 5.9.3
 
-  tizen:
+  packages/tv-frontend:
     dependencies:
       '@base-ui/react':
         specifier: ^1.7.0
@@ -239,16 +239,13 @@ importers:
         version: 3.3.0(react@19.2.8)
       '@pelagica/core':
         specifier: workspace:*
-        version: link:../packages/core
-      '@tailwindcss/vite':
-        specifier: ^4.3.3
-        version: 4.3.3(vite@8.2.1(@types/node@24.13.3)(jiti@2.7.0))
+        version: link:../core
+      '@pelagica/tv-platform':
+        specifier: workspace:*
+        version: link:../tv-platform
       '@tanstack/react-query':
-        specifier: ^5.101.4
+        specifier: ^5.101.0
         version: 5.101.4(react@19.2.8)
-      axios:
-        specifier: ^1.18.0
-        version: 1.19.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -257,7 +254,7 @@ importers:
         version: 2.1.1
       i18next:
         specifier: ^26.3.1
-        version: 26.3.6(typescript@6.0.3)
+        version: 26.3.6(typescript@5.9.3)
       jassub:
         specifier: ^2.5.7
         version: 2.5.14
@@ -265,14 +262,11 @@ importers:
         specifier: ^1.31.0
         version: 1.31.0(react@19.2.8)
       react:
-        specifier: ^19.2.8
+        specifier: ^19.2.7
         version: 19.2.8
-      react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
       react-i18next:
         specifier: ^17.0.8
-        version: 17.0.11(i18next@26.3.6(typescript@6.0.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@6.0.3)
+        version: 17.0.11(i18next@26.3.6(typescript@5.9.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3)
       react-qr-code:
         specifier: ^2.2.0
         version: 2.2.0(react@19.2.8)
@@ -281,7 +275,7 @@ importers:
         version: 7.18.2(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       shadcn:
         specifier: ^4.17.0
-        version: 4.17.0(typescript@6.0.3)
+        version: 4.17.0(typescript@5.9.3)
       tailwind-merge:
         specifier: ^3.6.0
         version: 3.6.0
@@ -294,6 +288,65 @@ importers:
       video.js:
         specifier: ^8.23.7
         version: 8.24.0
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.18
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.4(@types/react@19.2.18)
+      oxlint:
+        specifier: ^1.75.0
+        version: 1.78.0
+      prettier:
+        specifier: 3.8.4
+        version: 3.8.4
+      typescript:
+        specifier: ~5.9.3
+        version: 5.9.3
+
+  packages/tv-platform:
+    dependencies:
+      '@pelagica/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.18
+      typescript:
+        specifier: ~5.9.3
+        version: 5.9.3
+      video.js:
+        specifier: ^8.23.7
+        version: 8.24.0
+
+  tizen:
+    dependencies:
+      '@noriginmedia/norigin-spatial-navigation':
+        specifier: ^3.3.0
+        version: 3.3.0(react@19.2.8)
+      '@pelagica/core':
+        specifier: workspace:*
+        version: link:../packages/core
+      '@pelagica/tv-frontend':
+        specifier: workspace:*
+        version: link:../packages/tv-frontend
+      '@pelagica/tv-platform':
+        specifier: workspace:*
+        version: link:../packages/tv-platform
+      '@tailwindcss/vite':
+        specifier: ^4.3.3
+        version: 4.3.3(vite@8.2.1(@types/node@24.13.3)(jiti@2.7.0))
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+      tailwindcss:
+        specifier: ^4.3.3
+        version: 4.3.3
     devDependencies:
       '@types/node':
         specifier: ^24.13.3
@@ -1772,6 +1825,7 @@ packages:
   '@xmldom/xmldom@0.8.13':
     resolution: {integrity: sha512-KRYzxepc14G/CEpEGc3Yn+JKaAeT63smlDr+vjB8jRfgTBBI9wRj/nkQEO+ucV8p8I9bfKLWp37uHgFrbntPvw==}
     engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
 
   abslink@1.2.2:
     resolution: {integrity: sha512-HCOItvzORPjMzddCmEpbH8+W1VM3yjH+CR7DLtxlxFKX/jz5twJbm7KLfblO7eKLnXINLah8Hk2ZAJqxXeSkOg==}
@@ -5343,14 +5397,14 @@ snapshots:
       object-assign: 4.1.1
       vary: 1.1.2
 
-  cosmiconfig@9.0.2(typescript@6.0.3):
+  cosmiconfig@9.0.2(typescript@5.9.3):
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.1
       js-yaml: 4.3.1
       parse-json: 5.2.0
     optionalDependencies:
-      typescript: 6.0.3
+      typescript: 5.9.3
 
   country-flag-icons@1.6.20: {}
 
@@ -5823,10 +5877,6 @@ snapshots:
   i18next@26.3.6(typescript@5.9.3):
     optionalDependencies:
       typescript: 5.9.3
-
-  i18next@26.3.6(typescript@6.0.3):
-    optionalDependencies:
-      typescript: 6.0.3
 
   iconv-lite@0.7.3:
     dependencies:
@@ -6466,17 +6516,6 @@ snapshots:
       react-dom: 19.2.8(react@19.2.8)
       typescript: 5.9.3
 
-  react-i18next@17.0.11(i18next@26.3.6(typescript@6.0.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@6.0.3):
-    dependencies:
-      '@babel/runtime': 7.29.7
-      html-parse-stringify: 4.0.1
-      i18next: 26.3.6(typescript@6.0.3)
-      react: 19.2.8
-      use-sync-external-store: 1.6.0(react@19.2.8)
-    optionalDependencies:
-      react-dom: 19.2.8(react@19.2.8)
-      typescript: 6.0.3
-
   react-is@16.13.1: {}
 
   react-qr-code@2.2.0(react@19.2.8):
@@ -6631,7 +6670,7 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shadcn@4.17.0(typescript@6.0.3):
+  shadcn@4.17.0(typescript@5.9.3):
     dependencies:
       '@babel/core': 7.29.7
       '@babel/parser': 7.29.8
@@ -6642,7 +6681,7 @@ snapshots:
       '@types/validate-npm-package-name': 4.0.2
       browserslist: 4.28.8
       commander: 14.0.3
-      cosmiconfig: 9.0.2(typescript@6.0.3)
+      cosmiconfig: 9.0.2(typescript@5.9.3)
       dedent: 1.7.2
       deepmerge: 4.3.1
       diff: 8.0.4

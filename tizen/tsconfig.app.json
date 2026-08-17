@@ -17,9 +17,9 @@
         "noEmit": true,
         "jsx": "react-jsx",
 
-        /* Path aliases */
+        /* Path aliases (resolve into @pelagica/tv-frontend, which owns the '@/' imports) */
         "paths": {
-            "@/*": ["./src/*"]
+            "@/*": ["../packages/tv-frontend/src/*"]
         },
 
         /* Linting */
