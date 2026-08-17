@@ -22,8 +22,7 @@
 
 - [Features](#features)
 - [Web Demo](#web-demo)
-- [Web Installation](#web-installation)
-- [Desktop App](#desktop-app)
+- [Installation options](#installation-options)
 - [Discord](#discord)
 - [Localization](#localization)
 - [Development Setup](#development-setup)
