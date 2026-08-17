@@ -26,7 +26,7 @@ export function useMarkItemPlayed() {
         },
         onSuccess: (_, { itemId, userId }) => {
             queryClient.invalidateQueries({
-                queryKey: ['itemPlayState', userId, itemId],
+                queryKey: ['userLibraryItem', itemId, userId],
             });
             queryClient.invalidateQueries({
                 queryKey: ['item', itemId],
