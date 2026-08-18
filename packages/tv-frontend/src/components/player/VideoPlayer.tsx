@@ -2,11 +2,8 @@ import { useEffect, useRef } from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import JASSUB from 'jassub';
-import {
-    createVideoJsPlayerAdapter,
-    type SubtitleTrack,
-    type TvPlayer,
-} from '@pelagica/tv-platform';
+import { createVideoJsPlayerAdapter } from '@pelagica/tv-platform';
+import type { VideoPlayerProps } from './types';
 
 type VideoJsPlayer = ReturnType<typeof videojs>;
 
@@ -19,20 +16,6 @@ function isJassubSupported() {
         typeof HTMLCanvasElement !== 'undefined' &&
         'transferControlToOffscreen' in HTMLCanvasElement.prototype
     );
-}
-
-interface VideoPlayerProps {
-    src: string;
-    srcType?: string;
-    poster?: string;
-    startTicks: number;
-    subtitles?: SubtitleTrack[];
-    subtitleFonts?: string[];
-    onReady?: (player: TvPlayer) => void;
-    onPlaybackError?: (error: MediaError | null) => void;
-    onPlaybackStalled?: () => void;
-    isAudioSwitchRef: React.MutableRefObject<boolean>;
-    subtitleTrackIndex: number | null;
 }
 
 const VideoPlayer = ({
