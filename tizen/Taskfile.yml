@@ -1,7 +1,7 @@
 version: '3'
 
 vars:
-    PROFILE: pelagica
+    PROFILE: pelagica-author
     APP_ID: Pel4g1c4Ap.pelagica
     BUILD_DIR: www
     CERT_DIR: '{{.HOME}}/tizen-studio-data/certs'

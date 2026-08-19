@@ -17,9 +17,10 @@ import {
     getAttachmentUrl,
     getUserId,
     clearCodecCache,
+    getPlatform,
 } from '@pelagica/core';
 import { type SubtitleTrack, type TvPlayer } from '@pelagica/tv-platform';
-import VideoPlayer from '@/components/player/VideoPlayer';
+import PlatformVideoPlayer from '@/components/player/PlatformVideoPlayer';
 import PlayerControls, { type PlayerControlsHandle } from '@/components/player/PlayerControls';
 import PlayerLoading from '@/components/player/PlayerLoading';
 import { useTvBackKey } from '@/lib/use-tv-back-key';
@@ -304,6 +305,10 @@ const Player = () => {
         });
     }, [item]);
 
+    const audioStreams = useMemo(() => {
+        return item?.MediaStreams?.filter((s) => s.Type === 'Audio') ?? [];
+    }, [item]);
+
     const subtitleFonts = useMemo(() => {
         const attachments = playbackInfo?.mediaSource.MediaAttachments;
         if (!attachments || attachments.length === 0) return [];
@@ -354,8 +359,12 @@ const Player = () => {
     }
 
     return (
-        <div className="relative w-full h-svh bg-black flex overflow-hidden">
-            <VideoPlayer
+        <div
+            className={`relative w-full h-svh flex overflow-hidden ${
+                getPlatform() === 'tizen' ? 'bg-transparent' : 'bg-black'
+            }`}
+        >
+            <PlatformVideoPlayer
                 key={itemId}
                 src={streamResult.url}
                 srcType={streamResult.mimeType}
@@ -368,6 +377,8 @@ const Player = () => {
                 subtitleFonts={subtitleFonts}
                 isAudioSwitchRef={isAudioSwitchRef}
                 subtitleTrackIndex={subtitleTrackIndex}
+                audioTrackIndex={audioTrackIndex}
+                audioStreams={audioStreams}
             />
             <PlayerControls
                 ref={controlsRef}

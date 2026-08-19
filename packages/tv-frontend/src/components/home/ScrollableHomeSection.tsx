@@ -19,7 +19,7 @@ const ScrollableHomeSection = ({
                 <RowIdentityContext.Provider value={title}>
                     <div
                         ref={ref}
-                        className="scrollbar-hide min-w-0 flex gap-4 overflow-x-auto p-3"
+                        className="scrollbar-hide min-w-0 flex gap-4 overflow-x-auto -mx-6 px-6 py-3"
                     >
                         {children}
                     </div>

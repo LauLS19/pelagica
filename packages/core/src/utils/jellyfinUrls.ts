@@ -431,7 +431,11 @@ export function getDownloadurl(itemId: string) {
     }
 }
 
-export function getStudioImageUrl(studioName: string, monoColor: string, monoColor2: string) {
+export function getBackendStudioImageUrl(
+    studioName: string,
+    monoColor: string,
+    monoColor2: string
+) {
     const params = new URLSearchParams({ mono: 'true', color: monoColor, color2: monoColor2 });
     return `/api/studios/${encodeURIComponent(studioName)}/logo?${params.toString()}`;
 }

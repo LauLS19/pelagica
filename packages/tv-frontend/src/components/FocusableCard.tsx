@@ -36,7 +36,11 @@ const FocusableCard = ({
     useScrollIntoViewOnFocus(ref, focused);
 
     return (
-        <Link ref={ref} to={to} className={cn('block shrink-0 scroll-m-3 outline-none', className)}>
+        <Link
+            ref={ref}
+            to={to}
+            className={cn('block shrink-0 scroll-mx-6 scroll-my-3 outline-none', className)}
+        >
             {children(focused)}
         </Link>
     );
