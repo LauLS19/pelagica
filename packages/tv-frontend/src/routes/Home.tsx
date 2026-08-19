@@ -10,6 +10,7 @@ import type { CollectionType } from '@jellyfin/sdk/lib/generated-client/models';
 import GenresRow from '../components/home/GenresRow';
 import RecommendedItemsRow from '../components/home/RecommendedItemsRow';
 import StudiosRow from '../components/home/StudiosRow';
+import MediaBarRow from '../components/home/MediaBarRow';
 
 function getDetailFieldsForCollectionType(type: CollectionType | undefined): DetailField[] {
     switch (type) {
@@ -31,6 +32,18 @@ const Home = () => {
         <div className="flex flex-col items-start gap-6">
             {config.homeScreenSections?.map((section, index) => {
                 switch (section.type) {
+                    case 'mediaBar':
+                        return (
+                            <MediaBarRow
+                                key={index}
+                                title={section.title}
+                                size={section.size}
+                                itemsConfig={section.items}
+                                showFavoriteButton={section.showFavoriteButton}
+                                showWatchlistButton={section.showWatchlistButton}
+                                bleedTop={index === 0}
+                            />
+                        );
                     case 'continueWatching':
                         return (
                             <ContinueWatchingRow
