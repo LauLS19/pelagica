@@ -118,7 +118,7 @@ const MediaBarRow = ({
                             )}
                             alt=""
                             decoding="async"
-                            className="h-full w-full object-cover"
+                            className="h-full w-full object-cover animate-in fade-in duration-700"
                             onError={() => setBackdropError(true)}
                         />
                     )}
@@ -144,66 +144,72 @@ const MediaBarRow = ({
                         </div>
                     ) : (
                         <div className="flex max-w-2xl flex-col gap-3">
-                            {!logoError && activeItem.Id ? (
-                                <img
-                                    key={`logo-${activeItem.Id}`}
-                                    src={getLogoUrl(
-                                        activeItem.Id,
-                                        { maxHeight: 200 },
-                                        activeItem.ImageTags?.Logo
-                                    )}
-                                    alt={activeItem.Name || ''}
-                                    decoding="async"
-                                    className="h-16 max-w-full object-contain object-left"
-                                    onError={() => setLogoError(true)}
-                                />
-                            ) : (
-                                <h2 className="text-3xl font-semibold tracking-tight text-balance">
-                                    {activeItem.Name}
-                                </h2>
-                            )}
-
-                            <div className="flex flex-wrap gap-2">
-                                {activeItem.PremiereDate && (
-                                    <Badge variant="outline">
-                                        {new Date(activeItem.PremiereDate).getFullYear()}
-                                    </Badge>
-                                )}
-                                {activeItem.CommunityRating && (
-                                    <Badge variant="outline">
-                                        <Star /> {activeItem.CommunityRating.toFixed(1)}
-                                    </Badge>
-                                )}
-                                {activeItem.Type === 'Series' && activeItem.ChildCount ? (
-                                    <Badge variant="outline">
-                                        {activeItem.ChildCount === 1
-                                            ? t('season_count', {
-                                                  count: activeItem.ChildCount,
-                                              })
-                                            : t('season_count_plural', {
-                                                  count: activeItem.ChildCount,
-                                              })}
-                                    </Badge>
+                            <div
+                                key={activeItem.Id}
+                                className="flex flex-col gap-3 animate-in fade-in duration-500"
+                            >
+                                {!logoError && activeItem.Id ? (
+                                    <img
+                                        src={getLogoUrl(
+                                            activeItem.Id,
+                                            { maxHeight: 200 },
+                                            activeItem.ImageTags?.Logo
+                                        )}
+                                        alt={activeItem.Name || ''}
+                                        decoding="async"
+                                        className="h-16 max-w-full object-contain object-left"
+                                        onError={() => setLogoError(true)}
+                                    />
                                 ) : (
-                                    activeItem.RunTimeTicks && (
+                                    <h2 className="text-3xl font-semibold tracking-tight text-balance">
+                                        {activeItem.Name}
+                                    </h2>
+                                )}
+
+                                <div className="flex flex-wrap gap-2">
+                                    {activeItem.PremiereDate && (
                                         <Badge variant="outline">
-                                            {formatRuntime(activeItem.RunTimeTicks)}
+                                            {new Date(activeItem.PremiereDate).getFullYear()}
                                         </Badge>
-                                    )
+                                    )}
+                                    {activeItem.CommunityRating && (
+                                        <Badge variant="outline">
+                                            <Star /> {activeItem.CommunityRating.toFixed(1)}
+                                        </Badge>
+                                    )}
+                                    {activeItem.Type === 'Series' && activeItem.ChildCount ? (
+                                        <Badge variant="outline">
+                                            {activeItem.ChildCount === 1
+                                                ? t('season_count', {
+                                                      count: activeItem.ChildCount,
+                                                  })
+                                                : t('season_count_plural', {
+                                                      count: activeItem.ChildCount,
+                                                  })}
+                                        </Badge>
+                                    ) : (
+                                        activeItem.RunTimeTicks && (
+                                            <Badge variant="outline">
+                                                {formatRuntime(activeItem.RunTimeTicks)}
+                                            </Badge>
+                                        )
+                                    )}
+                                </div>
+
+                                {activeItem.GenreItems && activeItem.GenreItems.length > 0 && (
+                                    <p className="text-sm text-muted-foreground line-clamp-1">
+                                        {activeItem.GenreItems.map((genre) => genre.Name).join(
+                                            ', '
+                                        )}
+                                    </p>
+                                )}
+
+                                {activeItem.Overview && (
+                                    <p className="text-sm text-foreground/90 line-clamp-2">
+                                        {activeItem.Overview}
+                                    </p>
                                 )}
                             </div>
-
-                            {activeItem.GenreItems && activeItem.GenreItems.length > 0 && (
-                                <p className="text-sm text-muted-foreground line-clamp-1">
-                                    {activeItem.GenreItems.map((genre) => genre.Name).join(', ')}
-                                </p>
-                            )}
-
-                            {activeItem.Overview && (
-                                <p className="text-sm text-foreground/90 line-clamp-2">
-                                    {activeItem.Overview}
-                                </p>
-                            )}
 
                             <MediaBarButtonRow onFocusChange={handleButtonRowFocusChange}>
                                 <FocusableButton
