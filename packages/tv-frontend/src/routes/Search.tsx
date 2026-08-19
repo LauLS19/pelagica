@@ -102,7 +102,7 @@ const Search = () => {
                             : Array.from({ length: 12 }).map((_, i) => (
                                   <div
                                       key={i}
-                                      className="relative min-w-60 sm:min-w-75 aspect-video rounded-md"
+                                      className="relative block w-full aspect-video rounded-md"
                                   >
                                       <Skeleton className="w-full h-full rounded-md" />
                                   </div>
