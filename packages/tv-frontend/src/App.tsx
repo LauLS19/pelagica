@@ -14,6 +14,7 @@ const MovieDetailPage = lazy(() => import('./routes/MovieDetail'));
 const SeriesDetailPage = lazy(() => import('./routes/SeriesDetail'));
 const BoxSetDetailPage = lazy(() => import('./routes/BoxSetDetail'));
 const GenreDetailPage = lazy(() => import('./routes/GenreDetail'));
+const StudioDetailPage = lazy(() => import('./routes/StudioDetail'));
 const PlayerPage = lazy(() => import('./routes/Player'));
 const SettingsPage = lazy(() => import('./routes/Settings'));
 const SearchPage = lazy(() => import('./routes/Search'));
@@ -48,6 +49,7 @@ function App() {
                         <Route path="series/:itemId" element={<SeriesDetailPage />} />
                         <Route path="boxset/:itemId" element={<BoxSetDetailPage />} />
                         <Route path="genre/:genreId" element={<GenreDetailPage />} />
+                        <Route path="studio/:itemId" element={<StudioDetailPage />} />
                         <Route path="search" element={<SearchPage />} />
                     </Route>
                 </Routes>

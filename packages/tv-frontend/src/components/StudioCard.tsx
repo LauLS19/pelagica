@@ -4,6 +4,7 @@ import { cn } from '../lib/utils';
 import { FOCUS_RING_LARGE } from '../lib/focus-styles';
 import { useState } from 'react';
 import { useStudioLogo } from '../hooks/useStudioLogo';
+import { getItemLink } from '../lib/getItemLink';
 
 const DARK_THEME_LOGO_COLORS = ['ffffff', 'bababa'] as const;
 
@@ -30,7 +31,7 @@ const StudioCard = ({ studio, className, autoFocus }: StudioCardProps) => {
 
     return (
         <FocusableCard
-            to={`/studios/${studio.id}`}
+            to={getItemLink('Studio', studio.id)}
             className={cn(className ? className : 'w-60')}
             autoFocus={autoFocus}
         >
