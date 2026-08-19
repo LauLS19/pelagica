@@ -102,8 +102,8 @@ const MediaBarRow = ({
             <div
                 ref={containerRef}
                 className={cn(
-                    'relative w-full overflow-hidden bg-muted',
-                    bleedTop ? '-mx-6 -mt-20 w-screen' : 'rounded-xl',
+                    'relative overflow-hidden bg-muted',
+                    bleedTop ? '-mx-6 -mt-20' : 'w-full rounded-xl',
                     HEIGHT_CLASSES[size]
                 )}
             >
