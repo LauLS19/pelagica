@@ -9,6 +9,7 @@ import RecentlyAddedRow from '../components/home/RecentlyAddedRow';
 import type { CollectionType } from '@jellyfin/sdk/lib/generated-client/models';
 import GenresRow from '../components/home/GenresRow';
 import RecommendedItemsRow from '../components/home/RecommendedItemsRow';
+import StudiosRow from '../components/home/StudiosRow';
 
 function getDetailFieldsForCollectionType(type: CollectionType | undefined): DetailField[] {
     switch (type) {
@@ -117,6 +118,14 @@ const Home = () => {
                                 type={section.recommendationType}
                                 limit={section.limit}
                                 showSimilarity={section.showSimilarity}
+                            />
+                        );
+                    case 'studios':
+                        return (
+                            <StudiosRow
+                                key={index}
+                                title={section.title || t('studios')}
+                                limit={section.limit}
                             />
                         );
                     default:
