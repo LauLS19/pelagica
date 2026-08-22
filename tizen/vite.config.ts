@@ -23,5 +23,12 @@ export default defineConfig({
     },
     build: {
         outDir: 'www',
+        rolldownOptions: {
+            output: {
+                codeSplitting: {
+                    groups: [{ name: 'videojs', test: /\/video\.js\// }],
+                },
+            },
+        },
     },
 });
