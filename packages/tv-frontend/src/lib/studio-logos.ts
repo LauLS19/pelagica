@@ -129,3 +129,16 @@ export async function getLogoPath(studioName: string): Promise<string | undefine
     const logos = await getLogos();
     return logos.get(studioName)?.logo_path;
 }
+
+export async function clearLogosCache(): Promise<void> {
+    memoryCache = undefined;
+    memoryCacheTs = undefined;
+
+    const db = await openDB();
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    tx.objectStore(STORE_NAME).clear();
+    return new Promise((resolve, reject) => {
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+    });
+}

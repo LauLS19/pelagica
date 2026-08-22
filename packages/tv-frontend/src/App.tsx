@@ -5,6 +5,7 @@ import { RootLayout } from '@/routes/RootLayout';
 import { RequireAuth } from '@/routes/RequireAuth';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { lazy } from 'react';
+import { Toaster } from './components/ui/toast';
 
 const LoginPage = lazy(() => import('./routes/Login'));
 const HomePage = lazy(() => import('./routes/Home'));
@@ -22,6 +23,7 @@ const SearchPage = lazy(() => import('./routes/Search'));
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
+            <Toaster />
             <HashRouter>
                 <ScrollToTop />
                 <Routes>
