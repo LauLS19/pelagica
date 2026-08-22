@@ -170,7 +170,7 @@ export const HomeSectionsTab = ({
                     </DndContext>
                 )}
             </div>
-            <Button
+            <button
                 onClick={() => {
                     updateSections([
                         ...sections,
@@ -178,12 +178,11 @@ export const HomeSectionsTab = ({
                     ]);
                     setSectionIds([...sectionIds, generateSectionId()]);
                 }}
-                className="mt-4"
-                variant="outline"
+                className="mt-4 flex items-center justify-center gap-2 text-sm font-medium text-primary hover:bg-muted/10 cursor-pointer border-dashed border-2 w-full rounded-lg px-7 py-5"
             >
                 <Plus />
                 {t('add_section')}
-            </Button>
+            </button>
             <SectionEditor
                 section={editingIndex !== null ? sections[editingIndex] : null}
                 onSave={(editedSection) => {
