@@ -60,7 +60,7 @@ const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?:
                 navigate(buildPlayerUrl(episode.Id, location.pathname + location.search))
             }
             type="button"
-            className="w-64 shrink-0 scroll-m-6 text-left outline-none"
+            className="w-64 shrink-0 scroll-m-6 text-left outline-none flex flex-col"
         >
             <div
                 className={cn(
