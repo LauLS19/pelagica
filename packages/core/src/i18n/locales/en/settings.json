@@ -10,6 +10,7 @@
     "homesections_description": "Configure the sections displayed on the home screen.",
     "no_sections_configured": "No sections configured.",
     "add_section": "Add Section",
+    "reorder_section": "Reorder section",
     "edit_section": "Edit Section",
     "section_title_label": "Section Title",
     "section_type_label": "Section Type",
