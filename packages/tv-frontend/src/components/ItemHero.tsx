@@ -109,8 +109,8 @@ const ItemHero = ({
                                     alt={item.Name + ' Primary'}
                                     className={[
                                         'object-cover rounded-xl w-full h-full relative z-10',
-                                        'transition-[filter,opacity] duration-700 ease-out',
-                                        isPosterLoaded ? 'blur-0 opacity-100' : 'blur-md opacity-0',
+                                        'transition-opacity duration-700 ease-out',
+                                        isPosterLoaded ? 'opacity-100' : 'opacity-0',
                                     ].join(' ')}
                                     onLoad={() => setIsPosterLoaded(true)}
                                     onError={() => setPostersFailed(true)}
