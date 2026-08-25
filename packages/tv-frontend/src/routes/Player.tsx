@@ -174,7 +174,7 @@ const Player = () => {
 
     const posterUrl = useMemo(() => {
         if (!item?.Id) return undefined;
-        return getPrimaryImageUrl(item?.Id);
+        return getPrimaryImageUrl(item?.Id, { width: 1920 });
     }, [item?.Id]);
 
     const startTicks = item?.UserData?.PlaybackPositionTicks || 0;

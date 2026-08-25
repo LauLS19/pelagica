@@ -72,7 +72,7 @@ const EpisodeCard = ({ episode, autoFocus }: { episode: BaseItemDto; autoFocus?:
                     <img
                         src={getPrimaryImageUrl(
                             episode.Id,
-                            { width: 400 },
+                            { width: 1024 },
                             episode.ImageTags?.Primary
                         )}
                         alt={episode.Name || t('unknown_episode')}

@@ -84,7 +84,7 @@ const ItemHero = ({
             <div className="absolute inset-0 bg-muted">
                 {item.Id && !backdropError && (
                     <img
-                        src={getBackdropUrl(item.Id, { width: 1280 }, item.BackdropImageTags?.[0])}
+                        src={getBackdropUrl(item.Id, { width: 1920 }, item.BackdropImageTags?.[0])}
                         alt=""
                         className="h-full w-full object-cover"
                         onError={() => setBackdropError(true)}
