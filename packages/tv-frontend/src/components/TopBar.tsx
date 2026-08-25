@@ -37,8 +37,8 @@ const TopBar = ({ activeItem }: { activeItem?: TopBarItem }) => {
                         'pointer-events-auto relative flex h-11 items-center px-2 sm:px-4 mx-3 w-full md:w-auto rounded-full transition-all duration-300 border',
                         'justify-between md:justify-start gap-1 md:gap-2',
                         scrolled
-                            ? 'border-border bg-background/60 backdrop-blur shadow-sm'
-                            : 'border-white/10 bg-background/20 backdrop-blur-md'
+                            ? 'border-border bg-background/85 shadow-sm'
+                            : 'border-white/10 bg-background/55'
                     )}
                 >
                     <div className="flex items-center gap-1 md:gap-2">
