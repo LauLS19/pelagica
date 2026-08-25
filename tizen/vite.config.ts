@@ -16,7 +16,6 @@ export default defineConfig({
             'react-i18next',
             'react',
             'react-dom',
-            'react-router-dom',
             '@tanstack/react-query',
             '@noriginmedia/norigin-spatial-navigation',
         ],
