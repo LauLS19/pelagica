@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { getBackdropUrl, getLogoUrl, getPrimaryImageUrl } from '@pelagica/core';
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models';
@@ -9,10 +9,21 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { FocusContext } from '@noriginmedia/norigin-spatial-navigation';
 import { useLayerFocusable as useFocusable } from '@/router/useLayerFocusable';
 
-const MainButtonRow = ({ children }: { children: ReactNode }) => {
-    const { ref, focusKey } = useFocusable<object, HTMLDivElement>({
+const MainButtonRow = ({
+    children,
+    onFocusChange,
+}: {
+    children: ReactNode;
+    onFocusChange: (hasFocus: boolean) => void;
+}) => {
+    const { ref, focusKey, hasFocusedChild } = useFocusable<object, HTMLDivElement>({
         saveLastFocusedChild: true,
+        trackChildren: true,
     });
+
+    useEffect(() => {
+        onFocusChange(hasFocusedChild);
+    }, [hasFocusedChild, onFocusChange]);
 
     return (
         <FocusContext.Provider value={focusKey}>
@@ -39,6 +50,13 @@ const ItemHero = ({
     const [postersFailed, setPostersFailed] = useState(false);
     const [isPosterLoaded, setIsPosterLoaded] = useState(false);
     const [failedLogo, setFailedLogo] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const handleButtonRowFocusChange = useCallback((hasFocus: boolean) => {
+        if (hasFocus) {
+            containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, []);
 
     if (isLoading) {
         return (
@@ -80,7 +98,7 @@ const ItemHero = ({
     }
 
     return (
-        <div className="relative -mx-6 -mt-20 overflow-hidden rounded-b-xl">
+        <div ref={containerRef} className="relative -mx-6 -mt-20 overflow-hidden rounded-b-xl">
             <div className="absolute inset-0 bg-muted">
                 {item.Id && !backdropError && (
                     <img
@@ -161,7 +179,11 @@ const ItemHero = ({
                         </p>
                     )}
 
-                    {mainButtonRow && <MainButtonRow>{mainButtonRow}</MainButtonRow>}
+                    {mainButtonRow && (
+                        <MainButtonRow onFocusChange={handleButtonRowFocusChange}>
+                            {mainButtonRow}
+                        </MainButtonRow>
+                    )}
                 </div>
             </div>
         </div>
