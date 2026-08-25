@@ -1,34 +1,26 @@
 import { useConfig } from '@pelagica/core';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { House, Library, Search, Settings } from 'lucide-react';
 import FocusableNavLink from './FocusableNavLink';
-import { FocusContext, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { FocusContext } from '@noriginmedia/norigin-spatial-navigation';
+import { useLayerFocusable } from '@/router/useLayerFocusable';
+import { LayerScrollContext, useLayerId } from '@/router/hooks';
+import { topBarFocusKey, type TopBarItem } from '@/router/types';
 
-export type TopBarItem = 'home' | 'library' | 'search' | 'settings';
+export type { TopBarItem };
 
 const TopBar = ({ activeItem }: { activeItem?: TopBarItem }) => {
     const { t } = useTranslation(['sidebar', 'common', 'settings']);
     const { config } = useConfig();
-    const [scrolled, setScrolled] = useState(false);
+    const scrolled = useContext(LayerScrollContext);
+    const layerId = useLayerId();
 
-    const { ref, focusKey } = useFocusable<object, HTMLDivElement>({
+    const { ref, focusKey } = useLayerFocusable<object, HTMLDivElement>({
         focusable: true,
     });
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
-
-        handleScroll();
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     const logoSrc = config?.logoDarkUrl || 'logo.svg';
 
@@ -60,22 +52,38 @@ const TopBar = ({ activeItem }: { activeItem?: TopBarItem }) => {
 
                         {/* Desktop nav */}
                         <nav className="hidden md:flex items-center gap-0.5">
-                            <FocusableNavLink to="/" active={activeItem === 'home'}>
+                            <FocusableNavLink
+                                to="/"
+                                focusKey={topBarFocusKey('home', layerId)}
+                                active={activeItem === 'home'}
+                            >
                                 <House className="h-4 w-4" />
                                 {t('sidebar:home')}
                             </FocusableNavLink>
 
-                            <FocusableNavLink to="/library" active={activeItem === 'library'}>
+                            <FocusableNavLink
+                                to="/library"
+                                focusKey={topBarFocusKey('library', layerId)}
+                                active={activeItem === 'library'}
+                            >
                                 <Library className="h-4 w-4" />
                                 {t('sidebar:library')}
                             </FocusableNavLink>
 
-                            <FocusableNavLink to="/search" active={activeItem === 'search'}>
+                            <FocusableNavLink
+                                to="/search"
+                                focusKey={topBarFocusKey('search', layerId)}
+                                active={activeItem === 'search'}
+                            >
                                 <Search className="h-4 w-4" />
                                 {t('common:search')}
                             </FocusableNavLink>
 
-                            <FocusableNavLink to="/settings" active={activeItem === 'settings'}>
+                            <FocusableNavLink
+                                to="/settings"
+                                focusKey={topBarFocusKey('settings', layerId)}
+                                active={activeItem === 'settings'}
+                            >
                                 <Settings className="h-4 w-4" />
                                 {t('settings:title')}
                             </FocusableNavLink>

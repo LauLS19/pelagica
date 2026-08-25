@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { ImageOff, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { FocusContext, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { FocusContext } from '@noriginmedia/norigin-spatial-navigation';
+import { useLayerFocusable as useFocusable } from '@/router/useLayerFocusable';
 
 const MainButtonRow = ({ children }: { children: ReactNode }) => {
     const { ref, focusKey } = useFocusable<object, HTMLDivElement>({

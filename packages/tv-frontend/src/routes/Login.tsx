@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@/router';
 import { useTranslation } from 'react-i18next';
 import {
     getJellyfinInstance,
@@ -146,7 +146,7 @@ const Login = () => {
 
         quickConnectAuthenticate
             .mutateAsync({ server: serverUrl, secret: quickConnectSecret })
-            .then(() => navigate('/', { replace: true }))
+            .then(() => navigate('/', { mode: 'reset' }))
             .catch(() => {
                 setQuickConnectError(t('login:quick_connect_auth_failed'));
                 setQuickConnectApproved(false);
@@ -167,7 +167,7 @@ const Login = () => {
             setLoginError(null);
             try {
                 await login.mutateAsync({ server: serverUrl, username, password });
-                navigate('/', { replace: true });
+                navigate('/', { mode: 'reset' });
             } catch {
                 setLoginError(t('login:invalid_credentials'));
             }

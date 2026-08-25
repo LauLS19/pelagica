@@ -2,9 +2,10 @@ import { clearCredentials, getServerUrl, useCurrentUser } from '@pelagica/core';
 import i18n, { SUPPORTED_LANGUAGES } from '@pelagica/core/i18n';
 import { useTranslation } from 'react-i18next';
 import FocusableButton from '../components/FocusableButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@/router';
 import { Eraser, LogOut } from 'lucide-react';
-import { FocusContext, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { FocusContext } from '@noriginmedia/norigin-spatial-navigation';
+import { useLayerFocusable as useFocusable } from '@/router/useLayerFocusable';
 import { cn } from '@/lib/utils';
 import { FOCUS_RING_LARGE } from '@/lib/focus-styles';
 import { useScrollIntoViewOnFocus } from '@/lib/use-scroll-into-view-on-focus';
@@ -65,7 +66,7 @@ const Settings = () => {
                         <FocusableButton
                             onClick={() => {
                                 clearCredentials();
-                                navigate('/login', { replace: true });
+                                navigate('/login', { mode: 'reset' });
                             }}
                         >
                             <LogOut />
