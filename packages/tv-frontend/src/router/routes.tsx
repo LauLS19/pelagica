@@ -9,6 +9,7 @@ const MovieDetailPage = lazy(() => import('@/routes/MovieDetail'));
 const SeriesDetailPage = lazy(() => import('@/routes/SeriesDetail'));
 const BoxSetDetailPage = lazy(() => import('@/routes/BoxSetDetail'));
 const GenreDetailPage = lazy(() => import('@/routes/GenreDetail'));
+const StudiosPage = lazy(() => import('@/routes/Studios'));
 const StudioDetailPage = lazy(() => import('@/routes/StudioDetail'));
 const PlayerPage = lazy(() => import('@/routes/Player'));
 const SettingsPage = lazy(() => import('@/routes/Settings'));
@@ -30,6 +31,7 @@ export const routes: RouteDef[] = [
     { pattern: '/series/:itemId', component: SeriesDetailPage, chrome: 'shell' },
     { pattern: '/boxset/:itemId', component: BoxSetDetailPage, chrome: 'shell' },
     { pattern: '/genre/:genreId', component: GenreDetailPage, chrome: 'shell' },
+    { pattern: '/studios', component: StudiosPage, chrome: 'shell' },
     { pattern: '/studio/:itemId', component: StudioDetailPage, chrome: 'shell' },
     { pattern: '/search', component: SearchPage, chrome: 'shell', activeItem: 'search' },
 ];
